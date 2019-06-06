@@ -64,6 +64,7 @@ getDropDown().removeClass('showDropDown').addClass('hideDropDown');
 if(resultname) {
 if(resultname == "acct") {
 if(ele.display_name == "") ele.display_name = ele.username;
+ele.display_name = htmlEscape(ele.display_name);
 for(var i=0;i<ele.emojis.length;i++) {
 ele.display_name = ele.display_name.replace(new RegExp(":"+ele.emojis[i].shortcode+":","g"),"<img src='"+ele.emojis[i].url+"' class='emoji'>");
 }

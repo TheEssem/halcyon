@@ -1,4 +1,5 @@
 <?php
+include("../language.php");
 require_once('../authorize/mastodon.php');
 use HalcyonSuite\HalcyonForMastodon\Mastodon;
 if (isset($_POST['acct'])) {
@@ -20,7 +21,6 @@ die();
 }
 }
 }
-include("../language.php");
 ?>
 <!DOCTYPE HTML>
 <html lang="en">

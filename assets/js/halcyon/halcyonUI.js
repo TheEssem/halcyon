@@ -1007,12 +1007,22 @@ replace_emoji();
 }
 function setRecentImages(mid) {
 api.get("accounts/"+mid+"/statuses", [{name:'only_media',data:'true'},{name:'limit',data:'6'}], function(statuses) {
-if ( statuses.length ) {
+if (statuses.length) {
 $('#js_profile_recent_images span').text(`${statuses[0].account.statuses_count} ${__('Photos and toots')}`);
 $('#js_profile_recent_images a').attr('href', $("#media_link").attr('href'));
-for ( i in statuses ) {
-$(`<div class="profile_recent_images_item media_attachment" otype="image" sid="${statuses[i].id}" url="${statuses[i].media_attachments[0].preview_url}">
-<img src="${statuses[i].media_attachments[0].preview_url}" />
+for (i in statuses) {
+if(statuses[i].sensitive) {
+if(statuses[i].media_attachments[0].blurhash) var imgurl = getBlurImage(statuses[i].media_attachments[0].blurhash);
+else var imgurl = "https://"+current_instance+"/avatars/original/missing.png";
+}
+else {
+if(statuses[i].media_attachments[0].remote_url != null) statuses[i].media_attachments[0].url = statuses[i].media_attachments[0].remote_url;
+if(statuses[i].media_attachments[0].type == "image") var imgurl = statuses[i].media_attachments[0].url;
+else if(statuses[i].media_attachments[0].type == "video" || statuses[i].media_attachments[0].type == "gifv") var imgurl = statuses[i].media_attachments[0].preview_url;
+else var imgurl = "https://"+current_instance+"/avatars/original/missing.png";
+}
+$(`<div class="profile_recent_images_item media_attachment" otype="image" sid="${statuses[i].id}" oid="${statuses[i].media_attachments[0].id}" url="${imgurl}" mediacount="0">
+<img src="${imgurl}">
 </div>`).appendTo('#js_profile_recent_images_box');
 };
 }
@@ -2008,6 +2018,10 @@ $(".poll_"+poll_id).remove();
 }
 }
 return false;
+});
+$(document).on('click','.link_preview',function(e) {
+e.stopPropagation();
+window.open($(this).data("url"),"_blank");
 });
 $(document).on('focus','.status_textarea textarea,.status_top .status_spoiler',function(e) {
 global_focus_textfield = $(this).data("random");

@@ -1,6 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
 include("language.php");
 ?>
 <!DOCTYPE HTML>
@@ -33,6 +31,7 @@ document.write('<link rel="stylesheet" href="/assets/css/dark.css" media="all">'
 <script src="/assets/js/autocomplete/textarea.js"></script>
 <script src="/assets/js/shortcut.js"></script>
 <script src="/assets/js/replace_emoji.js"></script>
+<script src="/assets/js/blurhash.js"></script>
 <script src="/assets/js/emojipicker/emojidata.js"></script>
 <script src="/assets/js/emojipicker/emojipicker.js"></script>
 <script src="/assets/js/halcyon/halcyonTemplates.js"></script>

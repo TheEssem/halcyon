@@ -1,5 +1,9 @@
 <?php
 $config = parse_ini_file(__DIR__.'/config/config.ini',true);
+if($config["App"]["debug_mode"]) {
+ini_set('display_errors',1);
+error_reporting(E_ALL);
+}
 $locale = '';
 if(isset($_COOKIE['language'])) $locale = $_COOKIE['language'];
 else if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {

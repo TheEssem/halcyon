@@ -2,6 +2,7 @@ function mediaattachments_template(status) {
 let media_views = "";
 var border = "";
 var mvfullheight = "";
+var blurbackground = "";
 var dsplength = status.media_attachments.length;
 if(status.media_attachments[0].remote_url != null) {
 status.media_attachments[0].url = status.media_attachments[0].remote_url;
@@ -18,8 +19,9 @@ else if(!status.sensitive || localStorage.setting_show_nsfw == "true") {
 media_views = `<div class='media_views${mvfullheight}' sid="${status.id}" media_length='${dsplength}'${border}>`;
 }
 else {
+if(status.media_attachments[0].blurhash) blurbackground = 'style="background-image:url('+getBlurImage(status.media_attachments[0].blurhash)+')"';
 media_views = `<div class='media_views sensitive${mvfullheight}' media_length='${dsplength}'${border}>
-<div class='sensitive_alart'>
+<div class='sensitive_alart'${blurbackground}>
 <span class="text1">${__('Sensitive content')}</span>
 <span class="text2">${__('Click to view')}</span>
 </div>`;
@@ -81,6 +83,27 @@ media_views += "</div>";
 media_views += "</div>";
 }
 return media_views;
+}
+function link_preview_template(card) {
+if(localStorage.setting_link_previews == "true") {
+const ytcom = card.url.match(/https?:\/\/(www\.)?youtube\.com\/watch\?v=([a-zA-Z\d_-]+)/);
+const htcom = card.url.match(/https?:\/\/(www\.)?hooktube\.com\/watch\?v=([a-zA-Z\d_-]+)/);
+const ivcom = card.url.match(/https?:\/\/(www\.)?invidio\.us\/watch\?v=([a-zA-Z\d_-]+)/);
+const ytbe = card.url.match(/https?:\/\/(www\.)?youtu\.be\/([a-zA-Z\d_-]+)/);
+const htbe = card.url.match(/https?:\/\/(www\.)?hooktube\.com\/([a-zA-Z\d_-]+)/);
+const vimeo = card.url.match(/https?:\/\/(www\.)?vimeo\.com\/([\d]+)/);
+const peertube = card.url.match(/https?:\/\/.+..+\/videos\/watch\/([\da-z]{8}-[\da-z]{4}-[\da-z]{4}-[\da-z]{4}-[\da-z]{12})\/?$/);
+if(((!ytcom && !htcom && !ivcom && !ytbe && !htbe) || (localStorage.setting_play_youplay == "false" && localStorage.setting_play_invidious == "false")) && (!vimeo || localStorage.setting_play_vimeo) && (!peertube || localStorage.setting_play_peertube)) {
+let preview_html = (`<div class="media_views link_preview" media_length="1" style="height:unset" data-url="${card.url}">
+<img src="${card.image}" style="width:${card.width};max-width:200px;float:left;margin-right:5px">
+<strong>${card.title}</strong><br/>
+<span>${card.description}</span><br/>
+<span style="color:#777777">${card.url}</span>`);
+return preview_html;
+}
+else return "";
+}
+else return "";
 }
 function poll_template(poll) {
 let poll_html = "";
@@ -159,6 +182,7 @@ toot_reblogs_count= "",
 toot_favourites_count = "",
 media_views = "",
 poll_object = "";
+preview_object = "";
 if(status.spoiler_text && localStorage.setting_show_content_warning == "false") {
 alart_text = "<span>"+status.spoiler_text+"</span><button class='cw_button'>"+__('SHOW MORE')+"</button>",
 article_option = "content_warning";
@@ -180,6 +204,9 @@ media_views = mediaattachments_template(status);
 }
 if(status.poll) {
 poll_object = poll_template(status.poll);
+}
+if(status.card) {
+preview_object = link_preview_template(status.card);
 }
 if(status.account.display_name.length == 0) {
 status.account.display_name = status.account.username;
@@ -263,6 +290,7 @@ ${alart_text}
 <span class="status_content emoji_poss">
 ${status.content}
 </span>
+${preview_object}
 </article>
 <footer class="toot_footer"${toot_footer_width}>
 <div class="toot_reaction">
@@ -326,6 +354,7 @@ toot_reblogs_count= "",
 toot_favourites_count = "",
 media_views = "",
 poll_object = "";
+preview_object = "";
 if(status.reblog.spoiler_text && localStorage.setting_show_content_warning == "false") {
 alart_text = "<span>"+status.reblog.spoiler_text+"</span><button class='cw_button'>"+__('SHOW MORE')+"</button>",
 article_option = "content_warning";
@@ -347,6 +376,9 @@ media_views = mediaattachments_template(status.reblog);
 }
 if(status.reblog.poll) {
 poll_object = poll_template(status.reblog.poll);
+}
+if(status.reblog.card) {
+preview_object = link_preview_template(status.reblog.card);
 }
 if(status.account.display_name.length == 0) {
 status.account.display_name = status.account.username;
@@ -423,6 +455,7 @@ ${alart_text}
 <span class="status_content emoji_poss">
 ${status.reblog.content}
 </span>
+${preview_object}
 </article>
 <footer class="toot_footer" style="width:320px">
 <div class="toot_reaction">
@@ -487,6 +520,7 @@ toot_reblogs_count= "",
 toot_favourites_count = "",
 media_views = "",
 poll_object = "";
+preview_object = "";
 if(status.spoiler_text && localStorage.setting_show_content_warning == "false") {
 alart_text = "<span>"+status.spoiler_text+"</span><button class='cw_button'>"+__('SHOW MORE')+"</button>",
 article_option = "content_warning";
@@ -508,6 +542,9 @@ media_views = mediaattachments_template(status);
 }
 if(status.poll) {
 poll_object = poll_template(status.poll);
+}
+if(status.card) {
+preview_object = link_preview_template(status.card);
 }
 if(status.account.display_name.length == 0) {
 status.account.display_name = status.account.username;
@@ -574,6 +611,7 @@ ${alart_text}
 <span class="status_content emoji_poss">
 ${status.content}
 </span>
+${preview_object}
 </article>
 <footer class="toot_footer" style="width:320px">
 <div class="toot_reaction">
@@ -739,6 +777,7 @@ toot_reblogs_count= "",
 toot_favourites_count = "",
 media_views = "",
 poll_object = "";
+preview_object = "";
 for(i=0;i<NotificationObj.status.emojis.length;i++) {
 NotificationObj.status.content = NotificationObj.status.content.replace(new RegExp(":"+NotificationObj.status.emojis[i].shortcode+":","g"),"<img src='"+NotificationObj.status.emojis[i].url+"' class='emoji'>");
 }
@@ -777,6 +816,9 @@ media_views = mediaattachments_template(NotificationObj.status);
 }
 if(NotificationObj.status.poll) {
 poll_object = poll_template(NotificationObj.status.poll);
+}
+if(NotificationObj.status.card) {
+preview_object = link_preview_template(NotificationObj.status.card);
 }
 if(NotificationObj.status.account.display_name.length == 0) {
 NotificationObj.status.account.display_name = NotificationObj.status.account.username;
@@ -860,6 +902,7 @@ ${alart_text}
 <span class="status_content emoji_poss">
 ${NotificationObj.status.content}
 </span>
+${preview_object}
 </article>
 <footer class="toot_footer"${toot_footer_width}>
 <div class="toot_reaction">
@@ -900,6 +943,7 @@ toot_reblogs_count= "",
 toot_favourites_count = "",
 media_views = "",
 poll_object = "";
+preview_object = "";
 for(i=0;i<NotificationObj.status.emojis.length;i++) {
 NotificationObj.status.content = NotificationObj.status.content.replace(new RegExp(":"+NotificationObj.status.emojis[i].shortcode+":","g"),"<img src='"+NotificationObj.status.emojis[i].url+"' class='emoji'>");
 }
@@ -938,6 +982,9 @@ media_views = mediaattachments_template(NotificationObj.status);
 }
 if(NotificationObj.status.poll) {
 poll_object = poll_template(NotificationObj.status.poll);
+}
+if(NotificationObj.status.card) {
+preview_object = link_preview_template(NotificationObj.status.card);
 }
 if(NotificationObj.status.account.display_name.length == 0) {
 NotificationObj.status.account.display_name = NotificationObj.status.account.username;
@@ -1027,6 +1074,7 @@ ${alart_text}
 <span class="status_content emoji_poss">
 ${NotificationObj.status.content}
 </span>
+${preview_object}
 </article>
 <footer class="toot_footer"${toot_footer_width}>
 <div class="toot_reaction">
@@ -1131,6 +1179,7 @@ toot_reblogs_count= "",
 toot_favourites_count = "",
 media_views = "",
 poll_object = "";
+preview_object = "";
 for(i=0;i<status.emojis.length;i++) {
 status.content = status.content.replace(new RegExp(":"+status.emojis[i].shortcode+":","g"),"<img src='"+status.emojis[i].url+"' class='emoji'>");
 }
@@ -1169,6 +1218,9 @@ media_views = mediaattachments_template(status);
 }
 if(status.poll) {
 poll_object = poll_template(status.poll);
+}
+if(status.card) {
+preview_object = link_preview_template(status.card);
 }
 if(status.account.display_name.length == 0) {
 status.account.display_name = status.account.username;
@@ -1251,6 +1303,7 @@ ${alart_text}
 <span class="status_content emoji_poss">
 ${status.content}
 </span>
+${preview_object}
 </article>
 <time datetime="${status_attr_datetime}">${status_datetime}</time>
 </section>
@@ -1390,6 +1443,7 @@ toot_reblogs_count= "",
 toot_favourites_count = "",
 media_views = "",
 poll_object = "";
+preview_object = "";
 for(i=0;i<status.reblog.emojis.length;i++) {
 status.reblog.content = status.reblog.content.replace(new RegExp(":"+status.reblog.emojis[i].shortcode+":","g"),"<img src='"+status.reblog.emojis[i].url+"' class='emoji'>");
 }
@@ -1432,6 +1486,9 @@ media_views = mediaattachments_template(status.reblog);
 }
 if(status.reblog.poll) {
 poll_object = poll_template(status.reblog.poll);
+}
+if(status.reblog.card) {
+preview_object = link_preview_template(status.reblog.card);
 }
 if(status.account.display_name.length == 0) {
 status.account.display_name = status.account.username;
@@ -1500,6 +1557,7 @@ ${alart_text}
 <span class="status_content emoji_poss">
 ${status.reblog.content}
 </span>
+${preview_object}
 </article>
 <time datetime="${status_attr_datetime}">${status_datetime}</time>
 </section>

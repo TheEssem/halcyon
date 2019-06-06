@@ -577,6 +577,9 @@ border-top: 1px solid #E1E8ED;
 .single_reply_status .status_preview .toot_entry .toot_footer,.report_stauts .status_preview .toot_entry .toot_footer {
 display: none!important;
 }
+.single_reply_status .status_preview .toot_entry .link_preview,.report_stauts .status_preview .toot_entry .link_preview {
+display: none!important;
+}
 .single_reply_status .status_form .status_bottom,.report_status .status_form .status_bottom {
 width: 100%;
 margin-left: 0;
@@ -993,6 +996,9 @@ position: absolute;
 width: 100%;
 height: 100%;
 background-color: #000;
+background-size:cover;
+background-position:center;
+text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 .media_views.sensitive .sensitive_alart .text1 {
 font-size: 26px;
