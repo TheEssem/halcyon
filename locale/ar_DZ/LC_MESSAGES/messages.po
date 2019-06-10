@@ -1,0 +1,488 @@
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2019-06-10 14:05+0000\n"
+"Last-Translator: ButterflyOfFire <butterflyoffire@protonmail.com>\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 3.6.1\n"
+
+msgid "Language"
+msgstr "اللغة"
+
+msgid "Language_en_US"
+msgstr "الإنجليزية (أمريكا)"
+
+msgid "Language_cs_CZ"
+msgstr "التشيكية"
+
+msgid "Language_de_DE"
+msgstr "الألمانية"
+
+msgid "Language_fr_FR"
+msgstr "الفرنسية"
+
+msgid "Language_ja_JP"
+msgstr "اليابانية"
+
+msgid "Language_ko_KR"
+msgstr "الكورية"
+
+msgid "Language_pl_PL"
+msgstr "البولندية"
+
+msgid "Language_gl_ES"
+msgstr "الغاليكية"
+
+msgid "Language_pt_BR"
+msgstr "البرتغالية (البرازيل)"
+
+msgid "Language_it_IT"
+msgstr "الإيطالية"
+
+msgid "Sensitive content"
+msgstr "محتوى حساس"
+
+msgid "Click to view"
+msgstr "اضغط للعرض"
+
+msgid "SHOW MORE"
+msgstr "عرض المزيد"
+
+msgid "SHOW LESS"
+msgstr "اعرض أقل"
+
+msgid "Public"
+msgstr "للعامة"
+
+msgid "Unlisted"
+msgstr "غير مدرج"
+
+msgid "Followers-only"
+msgstr "للمُتابِعين فقط"
+
+msgid "Direct"
+msgstr "المباشِرة"
+
+msgid "Delete Toot"
+msgstr "احذف التبويق"
+
+msgid "Unpin Toot"
+msgstr "فك تدبيس التبويق"
+
+msgid "Pin Toot"
+msgstr "تدبيس التبويق"
+
+msgid "Mute"
+msgstr "كتم"
+
+msgid "Block"
+msgstr "حجب"
+
+msgid "Report this Toot"
+msgstr "الإبلاغ عن هذا التبويق"
+
+msgid "Copy link to Toot"
+msgstr "نسخ رابط التبويق"
+
+msgid "View original"
+msgstr "عر الأصلي"
+
+msgid "Boosted"
+msgstr "تمت ترقيته"
+
+msgid "Follow"
+msgstr "تابع"
+
+msgid "Reply"
+msgstr "رد"
+
+msgid "Content warning"
+msgstr "تحذير عن المحتوى"
+
+msgid "Jan"
+msgstr "جان"
+
+msgid "Feb"
+msgstr "فيف"
+
+msgid "Mar"
+msgstr "مار"
+
+msgid "Apr"
+msgstr "أفر"
+
+msgid "May"
+msgstr "ماي"
+
+msgid "Jun"
+msgstr "جوا"
+
+msgid "Jul"
+msgstr "جوي"
+
+msgid "Aug"
+msgstr "أوت"
+
+msgid "Sep"
+msgstr "سبت"
+
+msgid "Oct"
+msgstr "أكت"
+
+msgid "Nov"
+msgstr "نوف"
+
+msgid "Dec"
+msgstr "ديس"
+
+msgid "Reply to"
+msgstr "ردا على"
+
+msgid "Report"
+msgstr "الإبلاغ"
+
+msgid "What's happening?"
+msgstr "ما الحدث؟"
+
+msgid "Compose new Toot"
+msgstr "تحرير تبويق جديد"
+
+msgid "TOOTS"
+msgstr "تبويقات"
+
+msgid "PEOPLE"
+msgstr "الأشخاص"
+
+msgid "Settings"
+msgstr "الإعدادات"
+
+msgid "APPEARANCE"
+msgstr "المظهر"
+
+msgid "About"
+msgstr "عن"
+
+msgid "Terms"
+msgstr "الشروط"
+
+msgid "Apps"
+msgstr "التطبيقات"
+
+msgid "Source code"
+msgstr "الشفرة المصدرية"
+
+msgid "Other instances"
+msgstr "مثيلات الخوادم الأخرى"
+
+msgid "Privacy policy"
+msgstr "سياسة الخصوصية"
+
+msgid "Version"
+msgstr "الإصدار"
+
+msgid "Who to follow"
+msgstr "مَن عليك متابَعته"
+
+msgid "MORE"
+msgstr "المزيد"
+
+msgid "FOLLOWERS"
+msgstr "المتابِعون"
+
+msgid "Following"
+msgstr "المتابَعون"
+
+msgid "Edit profile"
+msgstr "تعديل الملف الشخصي"
+
+msgid "FAVOURITES"
+msgstr "المفضلة"
+
+msgid "Show"
+msgstr "عرض"
+
+msgid "Photos and toots"
+msgstr "الصور والتبويقات"
+
+msgid "boosted your toot"
+msgstr "قام بترقية تبويقك"
+
+msgid "mentioned you"
+msgstr "أشار إليك"
+
+msgid "News"
+msgstr "المستجدات"
+
+msgid "Source"
+msgstr "المصدر"
+
+msgid "Privacy"
+msgstr "الخصوصية"
+
+msgid "Contact"
+msgstr "للاتصال"
+
+msgid "Login"
+msgstr "تسجيل الدخول"
+
+msgid "Login to Halcyon"
+msgstr "تسجيل الدخول إلى هالسيون"
+
+msgid "create an account"
+msgstr "إنشاء حساب"
+
+msgid "or"
+msgstr "أو"
+
+msgid "What is Halcyon"
+msgstr "ما هو هالسيون Halcyon"
+
+msgid "Help us"
+msgstr "ساعدنا"
+
+msgid "Halcyon Terms of Use"
+msgstr "شروط خدمة هالسيُون"
+
+msgid "Link successfully copied!"
+msgstr "تم نسخ الرابط بنجاح!"
+
+msgid "Home"
+msgstr "الرئيسية"
+
+msgid "Local"
+msgstr "المحلي"
+
+msgid "Federated"
+msgstr "الفديرالي"
+
+msgid "Notifications"
+msgstr "الإشعارات"
+
+msgid "Search Mastodon"
+msgstr "البحث في ماستدون"
+
+msgid "View profile"
+msgstr "عرض الملف الشخصي"
+
+msgid "Log out"
+msgstr "الخروج"
+
+msgid "All"
+msgstr "الكل"
+
+msgid "new notitification"
+msgstr "إشعار جديد"
+
+msgid "Show replies"
+msgstr "عرض الردود"
+
+msgid "Desktop notifications"
+msgstr "الإشعارات المكتبية"
+
+msgid "Enable link previews"
+msgstr "عرض معاينات الروابط"
+
+msgid "Auto update"
+msgstr "تحديث تلقائي"
+
+msgid "Manual update"
+msgstr "تحديث يدوي"
+
+msgid "Appearance settings"
+msgstr "إعدادات المظهر"
+
+msgid "replies"
+msgstr "ردود"
+
+msgid "General settings"
+msgstr "الإعدادات العامة"
+
+msgid "Default post privacy"
+msgstr "الخصوصية الافتراضية عند النشر"
+
+msgid "Media"
+msgstr "الوسائط"
+
+msgid "FOLLOWS YOU"
+msgstr "يتابعك"
+
+msgid "All instances"
+msgstr "كافة مثيلات الخوادم"
+
+msgid "Local only"
+msgstr "المحلي فقط"
+
+msgid "Header"
+msgstr "الرأسية"
+
+msgid "Avatar"
+msgstr "الصورة الرمزية"
+
+msgid "About me"
+msgstr "عني"
+
+msgid "Display name"
+msgstr "الاسم العلني"
+
+msgid "Profile settings"
+msgstr "إعدادات الملف الشخصي"
+
+msgid "Toots"
+msgstr "التبويقات"
+
+msgid "Favourites"
+msgstr "المفضلة"
+
+msgid "Add"
+msgstr "إضافة"
+
+msgid "Remove"
+msgstr "إزالة"
+
+msgid "Add to list"
+msgstr "إضافة إلى القائمة"
+
+msgid "Joined at"
+msgstr "انضم في"
+
+msgid "Direct messages"
+msgstr "الرسائل المباشِرة"
+
+msgid "Lists"
+msgstr "القوائم"
+
+msgid "My Lists"
+msgstr "قوائمي"
+
+msgid "Confirmation"
+msgstr "التأكيد"
+
+msgid "Yes"
+msgstr "نعم"
+
+msgid "Cancel"
+msgstr "إلغاء"
+
+msgid "Prompt"
+msgstr "أطلب"
+
+msgid "Ok"
+msgstr "موافق"
+
+msgid "Thread"
+msgstr "المحادثة"
+
+msgid "Never"
+msgstr "أبدا"
+
+msgid "Administrated by"
+msgstr "يديره"
+
+msgid "Users"
+msgstr "مستخدم"
+
+msgid "Connections"
+msgstr "إتصالات"
+
+msgid "Filter settings"
+msgstr "إعدادات التصفية"
+
+msgid "Show toots of bots"
+msgstr "إظهار تبويقات الروبوتات"
+
+msgid "Add new filter"
+msgstr "إضافة عامل تصفية جديد"
+
+msgid "Expires in"
+msgstr "تنتهي صلاحيته في"
+
+msgid "Media settings"
+msgstr "إعدادات الوسائط"
+
+msgid "Language_nl_NL"
+msgstr "الهولندية"
+
+msgid "Pinned Toot"
+msgstr "تبويق مدبس"
+
+msgid "followed you"
+msgstr "يتابِعك"
+
+msgid "favourited Your Toot"
+msgstr "أعجب بتبويقك"
+
+msgid "boosted Your Toot"
+msgstr "قام بترقية تبويقك"
+
+msgid "Account locked"
+msgstr "الحساب مؤمّن"
+
+msgid "Link previews enabled"
+msgstr "معاينة الروابط مفعّلة"
+
+msgid "Desktop notifications enabled"
+msgstr "إشعارات سطح المكتب مفعّلة"
+
+msgid "GENERAL"
+msgstr "عام"
+
+msgid "PROFILE"
+msgstr "الملف الشخصي"
+
+msgid "Change instance"
+msgstr "تغيير مثيل الخادم"
+
+msgid "Blank for default"
+msgstr "فارغ للافتراضي"
+
+msgid "FOLLOWING"
+msgstr "المتابَعون"
+
+msgid "Halcyon for"
+msgstr "هالسيون Halcyon لـ"
+
+msgid "Your Toot has been deleted"
+msgstr "لقد تم حذف تبويقك"
+
+msgid "Your Toot has been pinned"
+msgstr "تم تدبيس تبويقك"
+
+msgid "Your Toot was posted!"
+msgstr "تم نشر تبويقك!"
+
+msgid "I agree with the"
+msgstr "أوافق على"
+
+msgid "Halcyon is a webclient for"
+msgstr "هالسيون Halcyon تطبيق ويب لـ"
+
+msgid "Your Reply was posted!"
+msgstr "تم نشر جوابك!"
+
+msgid "Toot reported successfully!"
+msgstr "تم الإبلاغ عن التبويق بنجاح!"
+
+msgid "Local instance"
+msgstr "مثيل الخادم المحلي"
+
+msgid "Lock account"
+msgstr "قفل الحساب"
+
+msgid "New favourite"
+msgstr "مفضلة جديدة"
+
+msgid "New boost"
+msgstr "ترقية جديدة"
+
+msgid "New follower"
+msgstr "متابِع جديد"
+
+msgid "New mention"
+msgstr "إشارة جديدة"
+
+msgid "Your list has been renamed"
+msgstr "تم إعادة تسمية قائمتك"
