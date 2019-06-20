@@ -26,6 +26,10 @@
 </a>
 </li>
 <li id="js-profile_nav_favourites" class="profile_nav_item profile_favourites">
+<a style="display:none">
+<h2><?=_('FAVOURITES')?></h2>
+<span><?=_('Show')?></span>
+</a>
 </li>
 <li class="profile_button_box">
 </li>

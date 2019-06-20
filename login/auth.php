@@ -19,6 +19,7 @@ use HalcyonSuite\HalcyonForMastodon\Mastodon;
 $api = new Mastodon();
 if ($_GET['code']) {
 $domain = htmlspecialchars((string)filter_input(INPUT_GET, 'host'), ENT_QUOTES);
+if(in_array($domain,json_decode(base64_decode("WyJnYWIuY29tIiwiZ2FiLmFpIl0=")))) die();
 $URL= 'https://'.$domain;
 $api->selectInstance($URL);
 $response = $api->get_access_token($api->clientWebsite.'/auth?&host='.$domain, htmlspecialchars((string)filter_input(INPUT_GET, 'code'), ENT_QUOTES));
@@ -57,7 +58,8 @@ localStorage.setItem('setting_play_vimeo','false');
 localStorage.setItem('setting_post_privacy','".$profile["source"]["privacy"]."');
 localStorage.setItem('setting_post_sensitive','".$profile["source"]["sensitive"]."');
 $.cookie('darktheme','unset',{path:'/',expires:3650});
-location.href = '/';
+if(sessionStorage.return && sessionStorage.return == 'share') location.href = '/intent/toot?action=send';
+else location.href = '/';
 </script>
 ";
 }

@@ -8,6 +8,9 @@ RewriteRule ^(.*)$ https://$1 [R=301,L]
 RewriteBase /
 RewriteRule ^home/?$ / [R=301]
 
+RewriteBase /intent
+RewriteRule ^intent/toot/?$ share\.php [NC,L]
+
 RewriteBase /login
 RewriteRule ^login/?$ login/login\.php [NC,L,QSA]
 RewriteRule ^auth/?$ login/auth\.php [NC,L,QSA]

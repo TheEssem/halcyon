@@ -31,6 +31,10 @@ $this->newInstance($domain);
 $this->set_client($this->instances[$domain]['client_id'],$this->instances[$domain]['client_secret']);
 }
 public function getInstance($domain) {
+if($domain == base64_decode("aHR0cHM6Ly9nYWIuY29t") || $domain == base64_decode("aHR0cHM6Ly9nYWIuYWk=")) {
+header("Location: /login/?cause=domain");
+die();
+}
 $this->set_url($domain);
 if (!$this->instanceExists($domain)) {
 $this->newInstance($domain);

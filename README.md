@@ -21,12 +21,14 @@ We moved our instances list to our webpage: https://www.halcyon.social/instances
 - Supports multiple languages.
 - Privacy-friendly video embeds.
 - Full support for Mastodon polls.
+- Share links using Halcyon.
 
 ## Install
 [![Install Halcyon with YunoHost](https://install-app.yunohost.org/install-with-yunohost.png)](https://install-app.yunohost.org/?app=halcyon)  
 or read our new documentation pages to install it manually: https://www.halcyon.social/documentation.php?page=install
 
 ## Blog
+- Release of Version 2.4.0 - Share links to Halcyon,preview overlays for mentions and more (blog article coming soon)
 - Release of Version 2.3.4 - Introduce BlurHash,repair YouPlay,improve link previews feature,add debug mode,add lighttpd example config,bug fixes
 - Release of Version 2.3.3 - New media uploader,sort uploads,drag&drop and copy&paste uploads,fix automatic dark mode
 - Release of Version 2.3.2 - Add block and mute management,add management for follow requests,add Catalan translation

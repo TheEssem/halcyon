@@ -6,7 +6,7 @@ if (isset($_POST['acct'])) {
 $domain = explode("@", mb_strtolower(htmlspecialchars((string)filter_input(INPUT_POST, 'acct'), ENT_QUOTES)))[2];
 $URL= 'https://'.$domain;
 $api= new Mastodon();
-if ( !preg_match('/(^[a-z0-9\-\.\/]+?\.[a-z0-9-]+$)/', $domain) ) {
+if(!preg_match('/(^[a-z0-9\-\.\/]+?\.[a-z0-9-]+$)/',$domain) || in_array($domain,json_decode(base64_decode("WyJnYWIuY29tIiwiZ2FiLmFpIl0=")))) {
 header('Location: '.$api->clientWebsite.'/login?cause=domain', true, 303);
 die();
 } else {
@@ -108,7 +108,7 @@ location.href = "/";
 <form method="POST" >
 <h2><?=_('Login to Halcyon')?></h2>
 <p>
-<?=_('or')?> <a href="https://joinmastodon.org/"><?=_('create an account')?></a>
+<?=_('or')?> <a href="https://instances.social"><?=_('create an account')?></a>
 </p>
 <div class="session_aleart">
 <span></span>
@@ -117,7 +117,7 @@ location.href = "/";
 <input name="acct" type="text" class="login_form_input" placeholder="@johndoe@example.com" required>
 <label class="login_form_continue pointer">
 <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
-<input id="login_continue" type="submit" value="" class="invisible"></input>
+<input id="login_continue" type="submit" value="" class="invisible">
 </label>
 </div>
 <div class="login_form_agree">

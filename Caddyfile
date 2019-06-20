@@ -21,6 +21,10 @@ halcyon.domain.tld {
     to /
   }
   rewrite {
+    r ^/intent/toot/?$
+    to /share.php
+  }
+  rewrite {
     r ^/login/?$
     to /login/login.php
   }
@@ -130,15 +134,15 @@ halcyon.domain.tld {
     to /settings_media.php
   }
   rewrite {
-    r ^/settings/followers/?$
+  		r ^/settings/followers/?$
     to /settings_accounts.php
   }
-  rewrite {
-    r ^/settings/mutes/?$
+		rewrite {
+  		r ^/settings/mutes/?$
     to /settings_accounts.php
   }
-  rewrite {
-    r ^/settings/blocks/?$
+		rewrite {
+  		r ^/settings/blocks/?$
     to /settings_accounts.php
   }
   # End settings

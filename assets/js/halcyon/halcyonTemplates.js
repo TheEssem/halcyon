@@ -161,8 +161,8 @@ for(var i=0;i<status.account.emojis.length;i++) {
 status.account.display_name = status.account.display_name.replace(new RegExp(":"+status.account.emojis[i].shortcode+":","g"),"<img src='"+status.account.emojis[i].url+"' class='emoji'>");
 }
 for(var i=0;i<status.mentions.length;i++) {
-if(status.mentions[i].acct.indexOf("@") == -1) status.content = status.content.replace(new RegExp('href="'+status.mentions[i].url+'"',"g"),'href="/@'+status.mentions[i].acct+'@'+current_instance+'?mid='+status.mentions[i].id+'"');
-else status.content = status.content.replace(new RegExp('href="'+status.mentions[i].url+'"',"g"),'href="/@'+status.mentions[i].acct+'?mid='+status.mentions[i].id+'"');
+if(status.mentions[i].acct.indexOf("@") == -1) status.content = status.content.replace(new RegExp('href="'+status.mentions[i].url+'"',"g"),'href="/@'+status.mentions[i].acct+'@'+current_instance+'?mid='+status.mentions[i].id+'" data-mid="'+status.mentions[i].id+'"');
+else status.content = status.content.replace(new RegExp('href="'+status.mentions[i].url+'"',"g"),'href="/@'+status.mentions[i].acct+'?mid='+status.mentions[i].id+'" data-mid="'+status.mentions[i].id+'"');
 }
 var writtenby = new Object();
 writtenby.id = status.account.id;
@@ -331,8 +331,8 @@ for(i=0;i<status.reblog.account.emojis.length;i++) {
 status.reblog.account.display_name = status.reblog.account.display_name.replace(new RegExp(":"+status.reblog.account.emojis[i].shortcode+":","g"),"<img src='"+status.reblog.account.emojis[i].url+"' class='emoji'>");
 }
 for(var i=0;i<status.reblog.mentions.length;i++) {
-if(status.reblog.mentions[i].acct.indexOf("@") == -1) status.reblog.content = status.reblog.content.replace(new RegExp('href="'+status.reblog.mentions[i].url+'"',"g"),'href="/@'+status.reblog.mentions[i].acct+'@'+current_instance+'?mid='+status.reblog.mentions[i].id+'"');
-else status.reblog.content = status.reblog.content.replace(new RegExp('href="'+status.reblog.mentions[i].url+'"',"g"),'href="/@'+status.reblog.mentions[i].acct+'?mid='+status.reblog.mentions[i].id+'"');
+if(status.reblog.mentions[i].acct.indexOf("@") == -1) status.reblog.content = status.reblog.content.replace(new RegExp('href="'+status.reblog.mentions[i].url+'"',"g"),'href="/@'+status.reblog.mentions[i].acct+'@'+current_instance+'?mid='+status.reblog.mentions[i].id+'" data-mid="'+status.reblog.mentions[i].id+'"');
+else status.reblog.content = status.reblog.content.replace(new RegExp('href="'+status.reblog.mentions[i].url+'"',"g"),'href="/@'+status.reblog.mentions[i].acct+'?mid='+status.reblog.mentions[i].id+'" data-mid="'+status.reblog.mentions[i].id+'"');
 }
 var writtenby = new Object();
 writtenby.id = status.reblog.account.id;
@@ -499,8 +499,8 @@ for(i=0;i<status.account.emojis.length;i++) {
 status.account.display_name = status.account.display_name.replace(new RegExp(":"+status.account.emojis[i].shortcode+":","g"),"<img src='"+status.account.emojis[i].url+"' class='emoji'>");
 }
 for(var i=0;i<status.mentions.length;i++) {
-if(status.mentions[i].acct.indexOf("@") == -1) status.content = status.content.replace(new RegExp('href="'+status.mentions[i].url+'"',"g"),'href="/@'+status.mentions[i].acct+'@'+current_instance+'?mid='+status.mentions[i].id+'"');
-else status.content = status.content.replace(new RegExp('href="'+status.mentions[i].url+'"',"g"),'href="/@'+status.mentions[i].acct+'?mid='+status.mentions[i].id+'"');
+if(status.mentions[i].acct.indexOf("@") == -1) status.content = status.content.replace(new RegExp('href="'+status.mentions[i].url+'"',"g"),'href="/@'+status.mentions[i].acct+'@'+current_instance+'?mid='+status.mentions[i].id+'" data-mid="'+status.mentions[i].id+'"');
+else status.content = status.content.replace(new RegExp('href="'+status.mentions[i].url+'"',"g"),'href="/@'+status.mentions[i].acct+'?mid='+status.mentions[i].id+'" data-mid="'+status.mentions[i].id+'"');
 }
 var writtenby = new Object();
 writtenby.id = status.account.id;
@@ -671,8 +671,8 @@ for(i=0;i<NotificationObj.status.account.emojis.length;i++) {
 NotificationObj.status.account.display_name = NotificationObj.status.account.display_name.replace(new RegExp(":"+NotificationObj.status.account.emojis[i].shortcode+":","g"),"<img src='"+NotificationObj.status.account.emojis[i].url+"' class='emoji'>");
 }
 for(var i=0;i<NotificationObj.status.mentions.length;i++) {
-if(NotificationObj.status.mentions[i].acct.indexOf("@") == -1) NotificationObj.status.content = NotificationObj.status.content.replace(new RegExp('href="'+NotificationObj.status.mentions[i].url+'"',"g"),'href="/@'+NotificationObj.status.mentions[i].acct+'@'+current_instance+'?mid='+NotificationObj.status.mentions[i].id+'"');
-else NotificationObj.status.content = NotificationObj.status.content.replace(new RegExp('href="'+NotificationObj.status.mentions[i].url+'"',"g"),'href="/@'+NotificationObj.status.mentions[i].acct+'?mid='+NotificationObj.status.mentions[i].id+'"');
+if(NotificationObj.status.mentions[i].acct.indexOf("@") == -1) NotificationObj.status.content = NotificationObj.status.content.replace(new RegExp('href="'+NotificationObj.status.mentions[i].url+'"',"g"),'href="/@'+NotificationObj.status.mentions[i].acct+'@'+current_instance+'?mid='+NotificationObj.status.mentions[i].id+'" data-mid="'+NotificationObj.status.mentions[i].id+'"');
+else NotificationObj.status.content = NotificationObj.status.content.replace(new RegExp('href="'+NotificationObj.status.mentions[i].url+'"',"g"),'href="/@'+NotificationObj.status.mentions[i].acct+'?mid='+NotificationObj.status.mentions[i].id+'" data-mid="'+NotificationObj.status.mentions[i].id+'"');
 }
 var account_state_icons = "";
 if(NotificationObj.status.account.locked == true) account_state_icons += " <i class='fa fa-lock'></i>";
@@ -721,8 +721,8 @@ for(i=0;i<NotificationObj.status.account.emojis.length;i++) {
 NotificationObj.status.account.display_name = NotificationObj.status.account.display_name.replace(new RegExp(":"+NotificationObj.status.account.emojis[i].shortcode+":","g"),"<img src='"+NotificationObj.status.account.emojis[i].url+"' class='emoji'>");
 }
 for(var i=0;i<NotificationObj.status.mentions.length;i++) {
-if(NotificationObj.status.mentions[i].acct.indexOf("@") == -1) NotificationObj.status.content = NotificationObj.status.content.replace(new RegExp('href="'+NotificationObj.status.mentions[i].url+'"',"g"),'href="/@'+NotificationObj.status.mentions[i].acct+'@'+current_instance+'?mid='+NotificationObj.status.mentions[i].id+'"');
-else NotificationObj.status.content = NotificationObj.status.content.replace(new RegExp('href="'+NotificationObj.status.mentions[i].url+'"',"g"),'href="/@'+NotificationObj.status.mentions[i].acct+'?mid='+NotificationObj.status.mentions[i].id+'"');
+if(NotificationObj.status.mentions[i].acct.indexOf("@") == -1) NotificationObj.status.content = NotificationObj.status.content.replace(new RegExp('href="'+NotificationObj.status.mentions[i].url+'"',"g"),'href="/@'+NotificationObj.status.mentions[i].acct+'@'+current_instance+'?mid='+NotificationObj.status.mentions[i].id+'" data-mid="'+NotificationObj.status.mentions[i].id+'"');
+else NotificationObj.status.content = NotificationObj.status.content.replace(new RegExp('href="'+NotificationObj.status.mentions[i].url+'"',"g"),'href="/@'+NotificationObj.status.mentions[i].acct+'?mid='+NotificationObj.status.mentions[i].id+'" data-mid="'+NotificationObj.status.mentions[i].id+'"');
 }
 const sid= NotificationObj.status.id;
 var account_state_icons = "";
@@ -786,8 +786,8 @@ for(i=0;i<NotificationObj.status.account.emojis.length;i++) {
 NotificationObj.status.account.display_name = NotificationObj.status.account.display_name.replace(new RegExp(":"+NotificationObj.status.account.emojis[i].shortcode+":","g"),"<img src='"+NotificationObj.status.account.emojis[i].url+"' class='emoji'>");
 }
 for(var i=0;i<NotificationObj.status.mentions.length;i++) {
-if(NotificationObj.status.mentions[i].acct.indexOf("@") == -1) NotificationObj.status.content = NotificationObj.status.content.replace(new RegExp('href="'+NotificationObj.status.mentions[i].url+'"',"g"),'href="/@'+NotificationObj.status.mentions[i].acct+'@'+current_instance+'?mid='+NotificationObj.status.mentions[i].id+'"');
-else NotificationObj.status.content = NotificationObj.status.content.replace(new RegExp('href="'+NotificationObj.status.mentions[i].url+'"',"g"),'href="/@'+NotificationObj.status.mentions[i].acct+'?mid='+NotificationObj.status.mentions[i].id+'"');
+if(NotificationObj.status.mentions[i].acct.indexOf("@") == -1) NotificationObj.status.content = NotificationObj.status.content.replace(new RegExp('href="'+NotificationObj.status.mentions[i].url+'"',"g"),'href="/@'+NotificationObj.status.mentions[i].acct+'@'+current_instance+'?mid='+NotificationObj.status.mentions[i].id+'" data-mid="'+NotificationObj.status.mentions[i].id+'"');
+else NotificationObj.status.content = NotificationObj.status.content.replace(new RegExp('href="'+NotificationObj.status.mentions[i].url+'"',"g"),'href="/@'+NotificationObj.status.mentions[i].acct+'?mid='+NotificationObj.status.mentions[i].id+'" data-mid="'+NotificationObj.status.mentions[i].id+'"');
 }
 var writtenby = new Object();
 writtenby.id = NotificationObj.status.account.id;
@@ -952,8 +952,8 @@ for(i=0;i<NotificationObj.status.account.emojis.length;i++) {
 NotificationObj.status.account.display_name = NotificationObj.status.account.display_name.replace(new RegExp(":"+NotificationObj.status.account.emojis[i].shortcode+":","g"),"<img src='"+NotificationObj.status.account.emojis[i].url+"' class='emoji'>");
 }
 for(var i=0;i<NotificationObj.status.mentions.length;i++) {
-if(NotificationObj.status.mentions[i].acct.indexOf("@") == -1) NotificationObj.status.content = NotificationObj.status.content.replace(new RegExp('href="'+NotificationObj.status.mentions[i].url+'"',"g"),'href="/@'+NotificationObj.status.mentions[i].acct+'@'+current_instance+'?mid='+NotificationObj.status.mentions[i].id+'"');
-else NotificationObj.status.content = NotificationObj.status.content.replace(new RegExp('href="'+NotificationObj.status.mentions[i].url+'"',"g"),'href="/@'+NotificationObj.status.mentions[i].acct+'?mid='+NotificationObj.status.mentions[i].id+'"');
+if(NotificationObj.status.mentions[i].acct.indexOf("@") == -1) NotificationObj.status.content = NotificationObj.status.content.replace(new RegExp('href="'+NotificationObj.status.mentions[i].url+'"',"g"),'href="/@'+NotificationObj.status.mentions[i].acct+'@'+current_instance+'?mid='+NotificationObj.status.mentions[i].id+'" data-mid="'+NotificationObj.status.mentions[i].id+'"');
+else NotificationObj.status.content = NotificationObj.status.content.replace(new RegExp('href="'+NotificationObj.status.mentions[i].url+'"',"g"),'href="/@'+NotificationObj.status.mentions[i].acct+'?mid='+NotificationObj.status.mentions[i].id+'" data-mid="'+NotificationObj.status.mentions[i].id+'"');
 }
 var writtenby = new Object();
 writtenby.id = NotificationObj.status.account.id;
@@ -1188,8 +1188,8 @@ for(i=0;i<status.account.emojis.length;i++) {
 status.account.display_name = status.account.display_name.replace(new RegExp(":"+status.account.emojis[i].shortcode+":","g"),"<img src='"+status.account.emojis[i].url+"' class='emoji'>");
 }
 for(var i=0;i<status.mentions.length;i++) {
-if(status.mentions[i].acct.indexOf("@") == -1) status.content = status.content.replace(new RegExp('href="'+status.mentions[i].url+'"',"g"),'href="/@'+status.mentions[i].acct+'@'+current_instance+'?mid='+status.mentions[i].id+'"');
-else status.content = status.content.replace(new RegExp('href="'+status.mentions[i].url+'"',"g"),'href="/@'+status.mentions[i].acct+'?mid='+status.mentions[i].id+'"');
+if(status.mentions[i].acct.indexOf("@") == -1) status.content = status.content.replace(new RegExp('href="'+status.mentions[i].url+'"',"g"),'href="/@'+status.mentions[i].acct+'@'+current_instance+'?mid='+status.mentions[i].id+'" data-mid="'+status.mentions[i].id+'"');
+else status.content = status.content.replace(new RegExp('href="'+status.mentions[i].url+'"',"g"),'href="/@'+status.mentions[i].acct+'?mid='+status.mentions[i].id+'" data-mid="'+status.mentions[i].id+'"');
 }
 var writtenby = new Object();
 writtenby.id = status.account.id;
@@ -1456,8 +1456,8 @@ for(i=0;i<status.reblog.account.emojis.length;i++) {
 status.reblog.account.display_name = status.reblog.account.display_name.replace(new RegExp(":"+status.reblog.account.emojis[i].shortcode+":","g"),"<img src='"+status.reblog.account.emojis[i].url+"' class='emoji'>");
 }
 for(var i=0;i<status.reblog.mentions.length;i++) {
-if(status.reblog.mentions[i].acct.indexOf("@") == -1) status.reblog.content = status.reblog.content.replace(new RegExp('href="'+status.reblog.mentions[i].url+'"',"g"),'href="/@'+status.reblog.mentions[i].acct+'@'+current_instance+'?mid='+status.reblog.mentions[i].id+'"');
-else status.reblog.content = status.reblog.content.replace(new RegExp('href="'+status.reblog.mentions[i].url+'"',"g"),'href="/@'+status.reblog.mentions[i].acct+'?mid='+status.reblog.mentions[i].id+'"');
+if(status.reblog.mentions[i].acct.indexOf("@") == -1) status.reblog.content = status.reblog.content.replace(new RegExp('href="'+status.reblog.mentions[i].url+'"',"g"),'href="/@'+status.reblog.mentions[i].acct+'@'+current_instance+'?mid='+status.reblog.mentions[i].id+'" data-mid="'+status.reblog.mentions[i].id+'"');
+else status.reblog.content = status.reblog.content.replace(new RegExp('href="'+status.reblog.mentions[i].url+'"',"g"),'href="/@'+status.reblog.mentions[i].acct+'?mid='+status.reblog.mentions[i].id+'" data-mid="'+status.reblog.mentions[i].id+'"');
 }
 var writtenby = new Object();
 writtenby.id = status.reblog.account.id;
@@ -1748,8 +1748,8 @@ for(i=0;i<status.account.emojis.length;i++) {
 status.account.display_name = status.account.display_name.replace(new RegExp(":"+status.account.emojis[i].shortcode+":","g"),"<img src='"+status.account.emojis[i].url+"' class='emoji'>");
 }
 for(var i=0;i<status.mentions.length;i++) {
-if(status.mentions[i].acct.indexOf("@") == -1) status.content = status.content.replace(new RegExp('href="'+status.mentions[i].url+'"',"g"),'href="/@'+status.mentions[i].acct+'@'+current_instance+'?mid='+status.mentions[i].id+'"');
-else status.content = status.content.replace(new RegExp('href="'+status.mentions[i].url+'"',"g"),'href="/@'+status.mentions[i].acct+'?mid='+status.mentions[i].id+'"');
+if(status.mentions[i].acct.indexOf("@") == -1) status.content = status.content.replace(new RegExp('href="'+status.mentions[i].url+'"',"g"),'href="/@'+status.mentions[i].acct+'@'+current_instance+'?mid='+status.mentions[i].id+'" data-mid="'+status.mentions[i].id+'"');
+else status.content = status.content.replace(new RegExp('href="'+status.mentions[i].url+'"',"g"),'href="/@'+status.mentions[i].acct+'?mid='+status.mentions[i].id+'" data-mid="'+status.mentions[i].id+'"');
 }
 var writtenby = new Object();
 writtenby.id = status.account.id;
@@ -1911,8 +1911,8 @@ for(i=0;i<status.reblog.account.emojis.length;i++) {
 status.reblog.account.display_name = status.reblog.account.display_name.replace(new RegExp(":"+status.reblog.account.emojis[i].shortcode+":","g"),"<img src='"+status.reblog.account.emojis[i].url+"' class='emoji'>");
 }
 for(var i=0;i<status.reblog.mentions.length;i++) {
-if(status.reblog.mentions[i].acct.indexOf("@") == -1) status.reblog.content = status.reblog.content.replace(new RegExp('href="'+status.reblog.mentions[i].url+'"',"g"),'href="/@'+status.reblog.mentions[i].acct+'@'+current_instance+'?mid='+status.reblog.mentions[i].id+'"');
-else status.reblog.content = status.reblog.content.replace(new RegExp('href="'+status.reblog.mentions[i].url+'"',"g"),'href="/@'+status.reblog.mentions[i].acct+'?mid='+status.reblog.mentions[i].id+'"');
+if(status.reblog.mentions[i].acct.indexOf("@") == -1) status.reblog.content = status.reblog.content.replace(new RegExp('href="'+status.reblog.mentions[i].url+'"',"g"),'href="/@'+status.reblog.mentions[i].acct+'@'+current_instance+'?mid='+status.reblog.mentions[i].id+'" data-mid="'+status.reblog.mentions[i].id+'"');
+else status.reblog.content = status.reblog.content.replace(new RegExp('href="'+status.reblog.mentions[i].url+'"',"g"),'href="/@'+status.reblog.mentions[i].acct+'?mid='+status.reblog.mentions[i].id+'" data-mid="'+status.reblog.mentions[i].id+'"');
 }
 var writtenby = new Object();
 writtenby.id = status.reblog.account.id;

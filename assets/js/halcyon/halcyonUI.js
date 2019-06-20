@@ -456,6 +456,7 @@ $('#header .header_nav_list .'+scope+'_badge').removeClass('invisible');
 }
 }
 else if (streaming_option === "auto") {
+var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 if(!$('.toot_entry[sid="'+userstream.payload.id+'"]').length) {
 var filterstatus = false;
 for(var a=0;a<current_filters.length;a++) {
@@ -470,6 +471,9 @@ if(userstream.payload.content.match(new RegExp("[^a-zA-Z1-9]"+current_filters[a]
 }
 if(filterstatus == false && !(show_replies == "false" && userstream.payload.in_reply_to_id) && !(localStorage.setting_show_bots == "false" && userstream.payload.account.bot == true && !level.match(/accounts\/\d+\/statuses/)) && !(userstream.payload.visibility == "direct" && level == "timelines/home")) {
 timeline_template(userstream.payload).prependTo("#js-timeline");
+if(scrollTop != 0) {
+window.scrollBy(0,$("#js-timeline .toot_entry[sid='"+userstream.payload.id+"']").height());
+}
 replaceInternalLink();
 replace_emoji();
 if(level === "timelines/home" | level === "timelines/public") {
@@ -489,6 +493,9 @@ if(in_reply_statuses.content.match(new RegExp("[^a-zA-Z1-9]"+current_filters[a].
 }
 if(filterreplystatus == false) {
 $("#js-timeline .toot_entry[sid='"+reply_source+"']").before(context_template(in_reply_statuses, 'ancestors_status default_padding'));
+if(scrollTop != 0) {
+window.scrollBy(0,$("#js-timeline .toot_entry[sid='"+in_reply_statuses.id+"']").height());
+}
 replaceInternalLink();
 replace_emoji();
 }
@@ -966,12 +973,9 @@ if( AccountObj.id == current_id ) {
 $(`<a href="/settings/profile">
 <button class="profile_edit_button relationship_button">
 <span>${__('Edit profile')}</span>
-</button
+</button>
 </a>`).appendTo('.profile_button_box');
-$(`<a href="${current_favourites_link}">
-<h2>${__('FAVOURITES')}</h2>
-<span>${__('Show')}</span>
-</a>`).appendTo("#js-profile_nav_favourites");
+$("#js-profile_nav_favourites a").show();
 } else {
 $("#profile_toot_buttons").show();
 api.get('accounts/relationships', [{name:'id', data:String(AccountObj.id)}], function(RelationshipObj) {
@@ -2026,6 +2030,68 @@ window.open($(this).data("url"),"_blank");
 $(document).on('focus','.status_textarea textarea,.status_top .status_spoiler',function(e) {
 global_focus_textfield = $(this).data("random");
 $(".status_textarea textarea").change();
+});
+$(document).on('mouseenter','a.mention',function(e) {
+if($(this).data("mid")) {
+var hover_user = this;
+var user_to = setTimeout(function() {
+api.get("accounts/"+$(hover_user).data("mid"),function(data) {
+var user_popup = follows_template(data);
+$(user_popup).addClass("user_popup");
+$(user_popup).children(".follows_profile").append(`<ul class="follows_profile_counts">
+<li class="follows_profile_count follows_profile_toots_count">
+<a class="follows_toots_count_link">
+<span class="title">${__('TOOTS')}</span>
+<span class="js_follows_toots_count count">${data.statuses_count}</span>
+</a>
+</li>
+<li class="follows_profile_count follows_profile_follows_count">
+<a class="follows_following_count_link">
+<span class="title">${__('FOLLOWING')}</span>
+<span class="js_follows_following_count count">${data.following_count}</span>
+</a>
+</li>
+<li class="follows_profile_count follows_profile_followers_count">
+<a class="follows_followers_count_link">
+<span class="title">${__('FOLLOWERS')}</span>
+<span class="js_follows_followers_count count">${data.followers_count}</span>
+</a>
+</li>
+</ul>`);
+$(user_popup).attr("style","left:"+($(hover_user).position().left)+"px");
+$(user_popup).click(function(e) {
+e.stopPropagation();
+});
+$(hover_user).parent().append(user_popup);
+replace_emoji();
+api.get('accounts/relationships?id[]='+data.id,function(RelationshipsObj) {
+if(RelationshipsObj[0].following) {
+const button = $('.follows_profile_box .follow_button[mid="'+RelationshipsObj[0].id+'"]');
+button.removeClass("follow_button");
+button.addClass("following_button");
+button.children("span").text(__('Following'));
+button.children("i").removeClass("fa-user-plus").addClass("fa-user-times");
+}
+});
+$(this).mouseleave(function(e) {
+$(this).off("mouseleave");
+var hide_user_to = setTimeout(function() {
+$(".user_popup[mid="+$(hover_user).data("mid")+"]").remove();
+},200);
+$(".user_popup[mid="+$(hover_user).data("mid")+"]").mouseenter(function() {
+clearTimeout(hide_user_to);
+$(".user_popup[mid="+$(hover_user).data("mid")+"]").mouseleave(function() {
+$(".user_popup[mid="+$(hover_user).data("mid")+"]").remove();
+});
+});
+});
+});
+},1000);
+$(this).mouseleave(function() {
+$(this).off("mouseleave");
+clearTimeout(user_to);
+});
+}
 });
 shortcut.add("n",function() {
 $("#creat_status").click();

@@ -231,33 +231,39 @@ background-color:#243447;
 border:1px solid #000;
 color:#AAB8C2;
 }
-#js-follows_profile .follows_profile_box {
+.follows_profile_box {
 background-color:#243447;
 border:1px solid #000;
 }
-#js-follows_profile .follows_profile_box .follows_profile .follows_profile_icon {
+.follows_profile_box .follows_profile .follows_profile_name_box a {
+text-decoration-color:#e6dede;
+}
+.follows_profile_box .follows_profile .follows_profile_name_box h2 {
+color:#e6dede;
+}
+.follows_profile_box .follows_profile .follows_profile_icon {
 background-color:#243447;
 }
-#js-follows_profile .follows_profile_box .follows_profile .follows_profile_name_box span {
+.follows_profile_box .follows_profile .follows_profile_name_box span {
 color:#657786;
 }
-#js-follows_profile .follows_profile_box .follows_profile .follows_profile_bio {
+.follows_profile_box .follows_profile .follows_profile_bio {
 color:#eee;
 }
-#js-follows_profile .follow_button {
+.follows_profile_box .follow_button {
 border:1px solid #189EFC;
 }
-#js-follows_profile .following_button {
+.follows_profile_box .following_button {
 border:1px solid #2B94DA;
 background-color:#189EFC;
 }
-#js-follows_profile .following_button i {
+.follows_profile_box .following_button i {
 color:#fff;
 }
-#js-follows_profile .following_button span {
+.follows_profile_box .following_button span {
 color:#fff;
 }
-#js-follows_profile .following_button:hover,#js-follows_profile .following_button:hover i {
+.follows_profile_box .following_button:hover,.follows_profile_box .following_button:hover i {
 background-color:#E20055;
 color:#fff!important;
 }
@@ -280,10 +286,12 @@ background-color:#243447;
 .current_profile_box .current_profile .current_profile_name_box span {
 color:#657786;
 }
-.current_profile_box .current_profile .current_profile_counts .current_profile_count a .title {
+.current_profile_box .current_profile .current_profile_counts .current_profile_count a .title,
+.follows_profile_box .follows_profile .follows_profile_counts .follows_profile_count a .title {
 color:#8899a6;
 }
-.current_profile_box .current_profile .current_profile_counts .current_profile_count a .count {
+.current_profile_box .current_profile .current_profile_counts .current_profile_count a .count,
+.follows_profile_box .follows_profile .follows_profile_counts .follows_profile_count a .count {
 color:#189EFC;
 }
 .side_widget {

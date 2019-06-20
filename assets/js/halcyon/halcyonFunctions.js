@@ -54,38 +54,7 @@ di[re[4]] = re[3];
 }
 return di;
 }
-function getRelativeURL(url, id, options) {
-const array = url.split('/');
-if ( array.length >= 4 ) {
-if ( !options ) {
-var options = ""
-};
-if(array[array.length-1] == "") array[array.length-1] = "blog";
-if (id) {
-if (array[array.length-1].substr(0,1) === '@') {
-const link= '/'+array[array.length-1]+'@'+array[2]+options+'?mid='+id+'&';
-return link;
-}
-else {
-const link= '/@'+array[array.length-1]+'@'+array[2]+options+'?mid='+id+'&';
-return link;
-}
-}
-else {
-if (array[array.length-1].substr(0,1) === '@') {
-const link= '/'+array[array.length-1]+'@'+array[2]+options;
-return link;
-} else {
-const link= '/@'+array[array.length-1]+'@'+array[2]+options;
-return link;
-}
-}
-}
-}
 function replaceInternalLink(){
-$(".h-card > a").each(function(i) {
-$(this).attr('href',getRelativeURL($(this).attr('href')));
-});
 $(".toot_article a,.profile_bio a,.follows_profile_bio a").each(function(i) {
 const pltags = $(this).attr('href').match(/https?:\/\/.+..+\/tag\/([a-zA-Z\d_%]+)\/?$/);
 if(pltags) $(this).attr('target','_self').attr('href','/search?q='+pltags[1]);
@@ -180,7 +149,7 @@ res += handleString(values[i]);
 return res;
 }
 function resetApp() {
-current_id = Number(localStorage.getItem("current_id"));
+current_id = localStorage.getItem("current_id");
 current_instance = localStorage.getItem("current_instance");
 authtoken= localStorage.getItem("current_authtoken");
 api = new MastodonAPI({
@@ -194,17 +163,13 @@ AccountObj.display_name = AccountObj.display_name.replace(new RegExp(":"+Account
 }
 localStorage.setItem("current_display_name",AccountObj["display_name"]);
 localStorage.setItem("current_acct",AccountObj["acct"]);
-localStorage.setItem("current_url",getRelativeURL(AccountObj["url"],AccountObj["id"]));
+localStorage.setItem("current_url","/@"+AccountObj["acct"]+"@"+current_instance+"?mid="+current_id);
 localStorage.setItem("current_header",AccountObj["header"]);
 localStorage.setItem("current_avatar",AccountObj["avatar"]);
 localStorage.setItem("current_locked",AccountObj["locked"]);
 localStorage.setItem("current_statuses_count",AccountObj["statuses_count"]);
 localStorage.setItem("current_following_count",AccountObj["following_count"]);
 localStorage.setItem("current_followers_count",AccountObj["followers_count"]);
-localStorage.setItem("current_statuses_count_link",getRelativeURL(AccountObj["url"],AccountObj["id"]));
-localStorage.setItem("current_following_count_link",getRelativeURL(AccountObj["url"],AccountObj["id"],'/following'));
-localStorage.setItem("current_followers_count_link",getRelativeURL(AccountObj["url"],AccountObj["id"],'/followers'));
-localStorage.setItem("current_favourites_link",getRelativeURL(AccountObj["url"],AccountObj["id"],'/favourites'));
 localStorage.setItem("current_follow_loaded","false");
 localStorage.setItem("current_filters","[]");
 current_display_name = localStorage.getItem("current_display_name");
@@ -216,10 +181,6 @@ current_locked = localStorage.getItem("current_locked");
 current_statuses_count = localStorage.getItem("current_statuses_count");
 current_following_count = localStorage.getItem("current_following_count");
 current_followers_count = localStorage.getItem("current_followers_count");
-current_statuses_count_link = localStorage.getItem("current_statuses_count_link");
-current_following_count_link = localStorage.getItem("current_following_count_link");
-current_followers_count_link = localStorage.getItem("current_followers_count_link");
-current_favourites_link = localStorage.getItem("current_favourites_link");
 current_filters = JSON.parse(localStorage.getItem("current_filters"));
 current_search_history = JSON.parse(localStorage.getItem("current_search_history"));
 setCurrentProfile();
@@ -285,7 +246,7 @@ current_filters = data;
 $.cookie("session","true",{path:'/'});
 }
 function refreshApp() {
-current_id = Number(localStorage.getItem("current_id"));
+current_id = localStorage.getItem("current_id");
 current_instance = localStorage.getItem("current_instance");
 authtoken= localStorage.getItem("current_authtoken");
 api = new MastodonAPI({
@@ -301,10 +262,6 @@ current_locked = localStorage.getItem("current_locked");
 current_statuses_count = localStorage.getItem("current_statuses_count");
 current_following_count = localStorage.getItem("current_following_count");
 current_followers_count = localStorage.getItem("current_followers_count");
-current_statuses_count_link = localStorage.getItem("current_statuses_count_link");
-current_following_count_link = localStorage.getItem("current_following_count_link");
-current_followers_count_link = localStorage.getItem("current_followers_count_link");
-current_favourites_link = localStorage.getItem("current_favourites_link");
 current_following_accts = localStorage.getItem("current_following_accts");
 current_instance_charlimit = localStorage.getItem("current_instance_charlimit");
 current_blocked_accts = localStorage.getItem("current_blocked_accts");
@@ -327,9 +284,9 @@ $(".js_current_profile_image").attr("src", current_avatar);
 $(".js_current_toots_count").text(current_statuses_count);
 $(".js_current_following_count").text(current_following_count);
 $(".js_current_followers_count").text(current_followers_count);
-$(".current_toots_count_link").attr("href", current_statuses_count_link);
-$(".current_following_count_link").attr("href", current_following_count_link);
-$(".current_followers_count_link").attr("href", current_followers_count_link);
+$(".current_toots_count_link").attr("href",current_url);
+$(".current_following_count_link").attr("href",current_url);
+$(".current_followers_count_link").attr("href",current_url);
 if($(window).width() < 1200) {
 responsive_design = true;
 $(".left_column").append($("<div>").attr("class","responsive_left").append($(".right_column").children()));
