@@ -28,6 +28,8 @@ We moved our instances list to our webpage: https://www.halcyon.social/instances
 or read our new documentation pages to install it manually: https://www.halcyon.social/documentation.php?page=install
 
 ## Blog
+- Release of Version 2.4.1 - Improve French and German translation,respect Pleromas/GlitchSocs custom poll limits,add extension download link,many bugfixes
+- We published the new Halcyon Share Extension at [Firefox Addons](https://addons.mozilla.org/en-US/firefox/addon/halcyon-share/) and [NotABug](https://notabug.org/halcyon-suite/halcyon-share)
 - Release of Version 2.4.0 - Share links to Halcyon,preview overlays for mentions and more (blog article coming soon)
 - Release of Version 2.3.4 - Introduce BlurHash,repair YouPlay,improve link previews feature,add debug mode,add lighttpd example config,bug fixes
 - Release of Version 2.3.3 - New media uploader,sort uploads,drag&drop and copy&paste uploads,fix automatic dark mode

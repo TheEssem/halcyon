@@ -34,6 +34,11 @@ txt.focus();
 });
 }
 })(jQuery);
+$.extend($.expr[':'],{
+blank:function(el){
+return $(el).val().match(/^\s*$/);
+}
+});
 });
 function indicesOf(input,value) {
 var indices = new Array();
@@ -160,6 +165,7 @@ api.get("accounts/verify_credentials",function(AccountObj) {
 AccountObj.display_name = htmlEscape(AccountObj.display_name);
 for(var i=0;i<AccountObj.emojis.length;i++) {
 AccountObj.display_name = AccountObj.display_name.replace(new RegExp(":"+AccountObj.emojis[i].shortcode+":","g"),"<img src='"+AccountObj.emojis[i].url+"' class='emoji'>");
+current_filters = new Array;
 }
 localStorage.setItem("current_display_name",AccountObj["display_name"]);
 localStorage.setItem("current_acct",AccountObj["acct"]);
@@ -171,7 +177,6 @@ localStorage.setItem("current_statuses_count",AccountObj["statuses_count"]);
 localStorage.setItem("current_following_count",AccountObj["following_count"]);
 localStorage.setItem("current_followers_count",AccountObj["followers_count"]);
 localStorage.setItem("current_follow_loaded","false");
-localStorage.setItem("current_filters","[]");
 current_display_name = localStorage.getItem("current_display_name");
 current_acct = localStorage.getItem("current_acct");
 current_url = localStorage.getItem("current_url");
@@ -181,7 +186,6 @@ current_locked = localStorage.getItem("current_locked");
 current_statuses_count = localStorage.getItem("current_statuses_count");
 current_following_count = localStorage.getItem("current_following_count");
 current_followers_count = localStorage.getItem("current_followers_count");
-current_filters = JSON.parse(localStorage.getItem("current_filters"));
 current_search_history = JSON.parse(localStorage.getItem("current_search_history"));
 setCurrentProfile();
 });
@@ -219,14 +223,18 @@ localStorage.setItem("current_muted_accts",JSON.stringify(mutes));
 current_muted_accts = mutes;
 });
 api.get("instance",function(data) {
-if(data.max_toot_chars) {
+if(!data.max_toot_chars) data.max_toot_chars = 500;
+if(!data.poll_limits) {
+data.poll_limits = new Object();
+data.poll_limits.max_options	= 4;
+data.poll_limits.max_option_chars	= 25;
+data.poll_limits.min_expiration =	300;
+data.poll_limits.max_expiration =	2629746;
+}
 localStorage.setItem("current_instance_charlimit",data.max_toot_chars);
 current_instance_charlimit = data.max_toot_chars;
-}
-else {
-localStorage.setItem("current_instance_charlimit",500);
-current_instance_charlimit = 500;
-}
+localStorage.setItem("current_instance_poll_limits",JSON.stringify(data.poll_limits));
+current_instance_poll_limits = data.poll_limits;
 });
 api.get("custom_emojis",function(data) {
 var emojis = new Array();
@@ -264,6 +272,7 @@ current_following_count = localStorage.getItem("current_following_count");
 current_followers_count = localStorage.getItem("current_followers_count");
 current_following_accts = localStorage.getItem("current_following_accts");
 current_instance_charlimit = localStorage.getItem("current_instance_charlimit");
+current_instance_poll_limits = JSON.parse(localStorage.getItem("current_instance_poll_limits"));
 current_blocked_accts = localStorage.getItem("current_blocked_accts");
 current_muted_accts = localStorage.getItem("current_muted_accts");
 current_filters = JSON.parse(localStorage.getItem("current_filters"));
@@ -308,6 +317,7 @@ localStorage.setItem("setting_desktop_notifications","false");
 if(localStorage.setting_who_to_follow == "true") {
 setWhoToFollow();
 }
+if(!localStorage.hide_firefox_download || localStorage.hide_firefox_download != "true") $("#widget_ffdl").show();
 replace_emoji();
 }
 function putMessage(Message) {

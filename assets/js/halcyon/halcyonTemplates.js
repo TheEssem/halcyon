@@ -2,87 +2,96 @@ function mediaattachments_template(status) {
 let media_views = "";
 var border = "";
 var mvfullheight = "";
-var blurbackground = "";
+var media_embeds = new Array();
+var audio_embeds = new Array();
 var dsplength = status.media_attachments.length;
-if(status.media_attachments[0].remote_url != null) {
-status.media_attachments[0].url = status.media_attachments[0].remote_url;
+for(var i=0;i<dsplength;i++) {
+var blurbackground = "";
+if(status.media_attachments[i].remote_url != null) status.media_attachments[i].url = status.media_attachments[i].remote_url;
+if(status.media_attachments[i].description == null) status.media_attachments[i].description = "";
+if(status.media_attachments[i].blurhash) blurbackground = ' style="background-image:url('+getBlurImage(status.media_attachments[i].blurhash)+')"';
+if((status.media_attachments[i].type === "video" && localStorage.setting_play_video == "false") || (status.media_attachments[i].type === "gifv" && localStorage.setting_play_gif == "false")) {
+if(status.media_attachments[i].preview_url != status.media_attachments[i].url) media_embeds.push(`
+<div class="media_attachment" mediacount="${i}">
+<img src="${status.media_attachments[i].preview_url}" title="${status.media_attachments[i].description}">
+<div class='sensitive_alert'${blurbackground}>
+<span class="text1">${__('Sensitive content')}</span>
+<span class="text2">${status.media_attachments[i].description}</span>
+</div>
+</div>`);
 }
-if(status.media_attachments[0].type === "video" && localStorage.setting_play_video != "false") border = ' style="border:0;border-radius:0"';
-if(localStorage.setting_full_height == "true" && status.media_attachments.length == 1 && (status.media_attachments[0].type == "image" || (status.media_attachments[0].type === "video" && localStorage.setting_play_video == "false") || (status.media_attachments[0].type === "gifv" && localStorage.setting_play_gif == "false"))) {
+else if(status.media_attachments[i].type === "video") {
+var vidprev = "";
+if(status.media_attachments[i].preview_url != status.media_attachments[i].url) vidprev = "&preview="+encodeURIComponent(status.media_attachments[i].preview_url);
+media_embeds.push(`
+<div class="media_attachment" otype="video/gifv" mediacount="${i}">
+<iframe src="/media/video.php?url=${encodeURIComponent(status.media_attachments[i].url)}&title=${encodeURIComponent(status.media_attachments[i].description)+vidprev}" title="${status.media_attachments[i].description}" frameborder="0" allowfullscreen></iframe>
+<div class='sensitive_alert'${blurbackground}>
+<span class="text1">${__('Sensitive content')}</span>
+<span class="text2">${status.media_attachments[i].description}</span>
+</div>
+</div>`);
+}
+else if(status.media_attachments[i].type === "gifv") {
+var vidprev = "";
+if(status.media_attachments[i].preview_url != status.media_attachments[i].url) vidprev = "<img src='"+status.media_attachments[i].preview_url+"'>";
+media_embeds.push(`
+<div class="media_attachment" otype="video/gifv" mediacount="${i}">
+<video frameborder="0" title="${status.media_attachments[i].description}" autoplay loop muted>
+<source src="${status.media_attachments[i].url}">
+${vidprev}
+</video>
+<div class='sensitive_alert'${blurbackground}>
+<span class="text1">${__('Sensitive content')}</span>
+<span class="text2">${status.media_attachments[i].description}</span>
+</div>
+</div>`);
+}
+else if(status.media_attachments[i].type === "audio" || (status.media_attachments[i].type === "unknown" && status.media_attachments[i].url.substring(status.media_attachments[i].url.length-4) == ".mp3")) {
+if(localStorage.setting_play_audio != "false") {
+var audio_embed = $("<div>").attr("title",status.media_attachments[i].description).addClass("player");
+audio_embed.player(status.media_attachments[i].url);
+audio_embeds.push(audio_embed);
+}
+}
+else if(status.media_attachments[i].type === "image") {
+media_embeds.push(`
+<div class="media_attachment" otype="image" sid="${status.id}" oid="${status.media_attachments[i].id}" url="${status.media_attachments[i].url}" mediacount="${i}">
+<img src="${status.media_attachments[i].url}" title="${status.media_attachments[i].description}" window_view="enable"/>
+<div class='sensitive_alert'${blurbackground}>
+<span class="text1">${__('Sensitive content')}</span>
+<span class="text2">${status.media_attachments[i].description}</span>
+</div>
+</div>`);
+}
+}
+if(status.media_attachments[0].type === "video" && localStorage.setting_play_video != "false" && dsplength == 1) border = ' style="border:0;border-radius:0"';
+if(localStorage.setting_full_height == "true" && status.media_attachments.length == 1 && (status.media_attachments[0].type == "image" || (status.media_attachments[0].type === "video" && localStorage.setting_play_video == "false") || (status.media_attachments[0].type === "gifv" && localStorage.setting_play_gif == "false")))
 mvfullheight = " media_full_height";
-dsplength = "1";
-}
-if(status.media_attachments[0].url === "/files/original/missing.png") {
-return "";
-}
-else if(!status.sensitive || localStorage.setting_show_nsfw == "true") {
 media_views = `<div class='media_views${mvfullheight}' sid="${status.id}" media_length='${dsplength}'${border}>`;
+if(media_embeds.length < 3) {
+for(let i in media_embeds) {
+media_views += media_embeds[i];
+}
 }
 else {
-if(status.media_attachments[0].blurhash) blurbackground = 'style="background-image:url('+getBlurImage(status.media_attachments[0].blurhash)+')"';
-media_views = `<div class='media_views sensitive${mvfullheight}' media_length='${dsplength}'${border}>
-<div class='sensitive_alart'${blurbackground}>
-<span class="text1">${__('Sensitive content')}</span>
-<span class="text2">${__('Click to view')}</span>
-</div>`;
+for(let i in media_embeds) {
+if(Number(i) === 1) {
+media_views += (`<div class="media_attachments_right">`);
+media_views += media_embeds[i];
 }
-if((status.media_attachments[0].type === "video" && localStorage.setting_play_video == "false") || (status.media_attachments[0].type === "gifv" && localStorage.setting_play_gif == "false")) {
-media_views += (`
-<div class="media_attachment" otype="image" sid="${status.id}" oid="${status.media_attachments[0].id}" url="${status.media_attachments[0].preview_url}" mediacount="0">
-<img src="${status.media_attachments[0].preview_url}" window_view="enable" />
-</div>`);
-} else if(status.media_attachments[0].type === "video") {
-media_views += (`
-<div class="media_attachment" otype="video/gifv" mediacount="0">
-<iframe src="/media/video.php?url=${encodeURIComponent(status.media_attachments[0].url)}&preview=${encodeURIComponent(status.media_attachments[0].preview_url)}" frameborder="0" allowfullscreen></iframe>
-</div>`);
-} else if(status.media_attachments[0].type === "gifv") {
-media_views += (`
-<div class="media_attachment" otype="video/gifv" mediacount="0">
-<video frameborder="0" autoplay loop muted>
-<source src="${status.media_attachments[0].url}">
-<img src="${status.media_attachments[0].preview_url}">
-</video>
-</div>`);
-} else if(status.media_attachments[0].type === "audio" || (status.media_attachments[0].type === "unknown" && status.media_attachments[0].url.substring(status.media_attachments[0].url.length-4) == ".mp3")) {
-if(localStorage.setting_play_audio != "false") {
-media_views = $("<div>").addClass("player");
-media_views.player(status.media_attachments[0].url);
-}
-} else {
-if ( status.media_attachments.length <= 2 ) {
-for ( let i in status.media_attachments ) {
-if(status.media_attachments[i].remote_url != null) {
-status.media_attachments[i].url = status.media_attachments[i].remote_url;
-}
-media_views += (`
-<div class="media_attachment" otype="image" sid="${status.id}" oid="${status.media_attachments[i].id}" url="${status.media_attachments[i].url}" mediacount="${i}">
-<img src="${status.media_attachments[i].url}" window_view="enable" />
-</div>`);
-}
-} else {
-for ( let i in status.media_attachments ) {
-if (Number(i) === 1) {
-if(status.media_attachments[i].remote_url != null) {
-status.media_attachments[i].url = status.media_attachments[i].remote_url;
-}
-media_views += (`
-<div class="media_attachments_right">
-<div class="media_attachment" otype="image" sid="${status.id}" oid="${status.media_attachments[i].id}" url="${status.media_attachments[i].url}" mediacount="${i}">
-<img src="${status.media_attachments[i].url}" window_view="enable"/>
-</div>`);
-} else {
-media_views += (`
-<div class="media_attachment" otype="image" sid="${status.id}" oid="${status.media_attachments[i].id}" url="${status.media_attachments[i].url}" mediacount="${i}">
-<img src="${status.media_attachments[i].url}" window_view="enable"/>
-</div>`);
-}
+else media_views += media_embeds[i];
 }
 media_views += "</div>";
 }
 media_views += "</div>";
+var media_view = $("<div>");
+media_view.append(media_views);
+if(status.sensitive) media_view.find(".media_attachment").addClass("sensitive");
+for(let i in audio_embeds) {
+media_view.append(audio_embeds[i]);
 }
-return media_views;
+return media_view;
 }
 function link_preview_template(card) {
 if(localStorage.setting_link_previews == "true") {
@@ -109,7 +118,9 @@ function poll_template(poll) {
 let poll_html = "";
 var expires_at = new Date(new Date(poll.expires_at).getTime()-Date.now());
 var expires_string;
-if(expires_at.getUTCDate() == 2) expires_string = "1 "+__("day");
+if(expires_at.getUTCMonth() == 1) expires_string = "1 "+__("month");
+else if(expires_at.getUTCMonth() > 1) expires_string = (expires_at.getUTCMonth())+" "+__("months");
+else if(expires_at.getUTCDate() == 2) expires_string = "1 "+__("day");
 else if(expires_at.getUTCDate() > 2) expires_string = (expires_at.getUTCDate()-1)+" "+__("days");
 else if(expires_at.getUTCHours() == 1) expires_string = "1 "+__("hour");
 else if(expires_at.getUTCHours() > 1) expires_string = expires_at.getUTCHours()+" "+__("hours");
@@ -1342,14 +1353,15 @@ ${toot_reblog_button}
 <textarea class="emoji_poss" name="status_textarea" placeholder="${__('Toot your reply')}" data-random="${Math.round(Math.random()*1000)}"></textarea>
 <div class="media_attachments_preview_area invisible"></div>
 <div class="status_poll_editor invisible">
-<i class="fa fa-circle-o"></i> <input name="options[]" type="text" class="disallow_enter textfield poll_field" maxlength="25"><br/>
-<i class="fa fa-circle-o"></i> <input name="options[]" type="text" class="disallow_enter textfield poll_field" maxlength="25"><br/>
-<i class="fa fa-circle-o"></i> <input name="options[]" type="text" class="disallow_enter textfield poll_field" maxlength="25"><br/>
-<i class="fa fa-circle-o"></i> <input name="options[]" type="text" class="disallow_enter textfield poll_field" maxlength="25"><br/>
+<i class="fa fa-circle-o"></i> <input name="options[]" type="text" class="disallow_enter textfield poll_field"><br/>
+<i class="fa fa-circle-o"></i> <input name="options[]" type="text" class="disallow_enter textfield poll_field"><br/>
+<i class="fa fa-circle-o"></i> <input name="options[]" type="text" class="disallow_enter textfield poll_field"><br/>
+<i class="fa fa-circle-o"></i> <input name="options[]" type="text" class="disallow_enter textfield poll_field"><br/>
 <div style="height:32px;display:inline-block;padding-top:10px">${__("Expires in")} </div>
-<div style="float:right;margin-right:5px"><div class="poll_time"><input type="number" min="0" max="7" placeholder="0-7" class="poll_days">${__('Days')}</div>
+<div style="float:right;margin-right:5px"><div class="poll_time"><input type="number" min="0" class="poll_days">${__('Days')}</div>
 <div class="poll_time"><input type="number" min="0" max="24" placeholder="0-24" class="poll_hours">${__('Hours')}</div>
 <div class="poll_time"><input type="number" min="0" max="60" placeholder="0-60" class="poll_mins">${__('Minutes')}</div></div><br/>
+<div class="poll_time_warning invisible"></div>
 <div class="switch poll_mc_switch">
 <input type="checkbox" class="poll_multiple_choice">
 <div class="switch-btn">
@@ -1601,14 +1613,15 @@ ${preview_object}
 <textarea class="emoji_poss" name="status_textarea" placeholder="${__('Toot your reply')}" data-random="${Math.round(Math.random()*1000)}"></textarea>
 <div class="media_attachments_preview_area invisible"></div>
 <div class="status_poll_editor invisible">
-<i class="fa fa-circle-o"></i> <input name="options[]" type="text" class="disallow_enter textfield poll_field" maxlength="25"><br/>
-<i class="fa fa-circle-o"></i> <input name="options[]" type="text" class="disallow_enter textfield poll_field" maxlength="25"><br/>
-<i class="fa fa-circle-o"></i> <input name="options[]" type="text" class="disallow_enter textfield poll_field" maxlength="25"><br/>
-<i class="fa fa-circle-o"></i> <input name="options[]" type="text" class="disallow_enter textfield poll_field" maxlength="25"><br/>
+<i class="fa fa-circle-o"></i> <input name="options[]" type="text" class="disallow_enter textfield poll_field"><br/>
+<i class="fa fa-circle-o"></i> <input name="options[]" type="text" class="disallow_enter textfield poll_field"><br/>
+<i class="fa fa-circle-o"></i> <input name="options[]" type="text" class="disallow_enter textfield poll_field"><br/>
+<i class="fa fa-circle-o"></i> <input name="options[]" type="text" class="disallow_enter textfield poll_field"><br/>
 <div style="height:32px;display:inline-block;padding-top:10px">${__("Expires in")} </div>
-<div style="float:right;margin-right:5px"><div class="poll_time"><input type="number" min="0" max="7" placeholder="0-7" class="poll_days">${__('Days')}</div>
+<div style="float:right;margin-right:5px"><div class="poll_time"><input type="number" min="0" class="poll_days">${__('Days')}</div>
 <div class="poll_time"><input type="number" min="0" max="24" placeholder="0-24" class="poll_hours">${__('Hours')}</div>
 <div class="poll_time"><input type="number" min="0" max="60" placeholder="0-60" class="poll_mins">${__('Minutes')}</div></div><br/>
+<div class="poll_time_warning invisible"></div>
 <div class="switch poll_mc_switch">
 <input type="checkbox" class="poll_multiple_choice">
 <div class="switch-btn">
@@ -1705,15 +1718,17 @@ var pictures = new Array;
 var hidebackward = "";
 var hideforward ="";
 for(var i=0;i<status.media_attachments.length;i++) {
-if(status.media_attachments[i].remote_url != null) {
-status.media_attachments[i].url = status.media_attachments[i].remote_url;
-pictures.push(status.media_attachments[i].url);
+if(status.media_attachments[i].remote_url != null) status.media_attachments[i].url = status.media_attachments[i].remote_url;
+if(status.media_attachments[i].type == "image") pictures.push(status.media_attachments[i].url);
 }
-}
-if(media == 0) hidebackward = " style='display:none'";
-if(media == status.media_attachments.length-1) hideforward = " style='display:none'";
+console.log(media);
+console.log(parseInt(media));
+var mediacnt = pictures.indexOf(pictures.find(function(data) {if(data==this) return true},status.media_attachments[parseInt(media)].url));
+console.log(mediacnt);
+if(mediacnt == 0) hidebackward = " style='display:none'";
+if(mediacnt == pictures.length-1) hideforward = " style='display:none'";
 const status_template = timeline_template(status).html(),
-html = (`<div class="media_detail" pictures='${JSON.stringify(pictures)}' cid="${media}">
+html = (`<div class="media_detail" pictures='${JSON.stringify(pictures)}' cid="${mediacnt}">
 <div class="media_box">
 <span class="media_backward"${hidebackward}><i class="fa fa-2x fa-chevron-left"></i></span>
 <img src="${status.media_attachments[media].url}">

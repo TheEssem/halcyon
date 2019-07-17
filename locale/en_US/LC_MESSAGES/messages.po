@@ -1,18 +1,22 @@
+# Niklas Poslovski <ni.pos@yandex.com>, 2018. #zanata
+# Niklas Poslovski <ni.pos@yandex.com>, 2019. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-07 17:12+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2019-06-21 08:47+0000\n"
+"PO-Revision-Date: 2019-06-21 09:13+0000\n"
+"Last-Translator: Niklas Poslovski <ni.pos@yandex.com>\n"
+"Language-Team: English (United States)\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.2.5\n"
-"X-Pootle-Path: /en/halcyon/en.po\n"
-"X-Pootle-Revision: 75\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 2.8\n"
+"X-Loco-Source-Locale: de_DE\n"
+"X-Loco-Parser: loco_parse_po\n"
+"X-POOTLE-MTIME: 1561108411.448793\n"
 
 msgid "Language"
 msgstr "Language"
@@ -46,9 +50,15 @@ msgstr "Czech"
 
 msgid "Language_fr_FR"
 msgstr "French"
-  
+
 msgid "Language_nl_NL"
 msgstr "Dutch"
+
+msgid "Language_ca_ES"
+msgstr "Catalan"
+
+msgid "Language_ar_DZ"
+msgstr "Arabic"
 
 msgid "Sensitive content"
 msgstr "Sensitive content"
@@ -932,3 +942,78 @@ msgstr "Show pictures in full height"
 
 msgid "Show threads in thread view in timeline"
 msgstr "Show threads in thread view in timeline"
+
+msgid "Unblock"
+msgstr "Unblock"
+
+msgid "Unmute"
+msgstr "Unmute"
+
+msgid "Accept"
+msgstr "Accept"
+
+msgid "Reject"
+msgstr "Reject"
+
+msgid "You can only add four pictures to one post!"
+msgstr "You can only add four pictures to one post!"
+
+msgid "You can not add media files to posts with polls!"
+msgstr "You can not add media files to posts with polls!"
+
+msgid "Add a caption to the media file"
+msgstr "Add a caption to the media file"
+
+msgid "Caption added successfully!"
+msgstr "Caption added successfully!"
+
+msgid "Share a link on Mastodon"
+msgstr "Share a link on Mastodon"
+
+msgid "Share a link with your followers"
+msgstr "Share a link with your followers"
+
+msgid "Post a Toot on Mastodon"
+msgstr "Post a Toot on Mastodon"
+
+msgid ""
+"Toot posted successfully but your browser doesn't allow closing the window"
+msgstr ""
+"Toot posted successfully but your browser doesn't allow closing the window"
+
+msgid "Sign up"
+msgstr "Sign up"
+
+msgid "Username"
+msgstr "Username"
+
+msgid "Log in and Toot"
+msgstr "Log in and Toot"
+
+msgid "New to Mastodon?"
+msgstr "New to Mastodon?"
+
+msgid ""
+"Get instant updates from your friends, industry experts, favorite "
+"celebrities, and what's happening around the world."
+msgstr ""
+"Get instant updates from your friends, industry experts, favorite "
+"celebrities, and what's happening around the world."
+
+msgid "What is Mastodon? Learn more."
+msgstr "What is Mastodon? Learn more."
+
+msgid "Please describe what you can see in the picture."
+msgstr "Please describe what you can see in the picture."
+
+msgid "Save"
+msgstr "Save"
+
+msgid "BLOCKS"
+msgstr "BLOCKS"
+
+msgid "MUTES"
+msgstr "MUTES"
+
+msgid "FOLLOW REQUESTS"
+msgstr "FOLLOW REQUESTS"

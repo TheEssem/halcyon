@@ -250,7 +250,7 @@ article.addClass('content_warning');
 }
 return false;
 });
-$(document).on('click','.sensitive_alart', function(e) {
+$(document).on('click','.sensitive_alert', function(e) {
 e.stopPropagation();
 $(this).toggleClass('invisible');
 return false;
@@ -1015,19 +1015,34 @@ if (statuses.length) {
 $('#js_profile_recent_images span').text(`${statuses[0].account.statuses_count} ${__('Photos and toots')}`);
 $('#js_profile_recent_images a').attr('href', $("#media_link").attr('href'));
 for (i in statuses) {
-if(statuses[i].sensitive) {
+if(statuses[i].sensitive && localStorage.setting_show_nsfw == "false") {
 if(statuses[i].media_attachments[0].blurhash) var imgurl = getBlurImage(statuses[i].media_attachments[0].blurhash);
+else if(statuses[i].pleroma) var imgurl = "https://"+current_instance+"/images/avi.png";
 else var imgurl = "https://"+current_instance+"/avatars/original/missing.png";
-}
-else {
-if(statuses[i].media_attachments[0].remote_url != null) statuses[i].media_attachments[0].url = statuses[i].media_attachments[0].remote_url;
-if(statuses[i].media_attachments[0].type == "image") var imgurl = statuses[i].media_attachments[0].url;
-else if(statuses[i].media_attachments[0].type == "video" || statuses[i].media_attachments[0].type == "gifv") var imgurl = statuses[i].media_attachments[0].preview_url;
-else var imgurl = "https://"+current_instance+"/avatars/original/missing.png";
-}
+if(statuses[i].media_attachments[0].type == "image")
 $(`<div class="profile_recent_images_item media_attachment" otype="image" sid="${statuses[i].id}" oid="${statuses[i].media_attachments[0].id}" url="${imgurl}" mediacount="0">
 <img src="${imgurl}">
 </div>`).appendTo('#js_profile_recent_images_box');
+else
+$(`<div class="profile_recent_images_item media_attachment">
+<img src="${imgurl}">
+</div>`).appendTo('#js_profile_recent_images_box');
+}
+else {
+if(statuses[i].media_attachments[0].remote_url != null) statuses[i].media_attachments[0].url = statuses[i].media_attachments[0].remote_url;
+if(statuses[i].media_attachments[0].type == "image")
+$(`<div class="profile_recent_images_item media_attachment" otype="image" sid="${statuses[i].id}" oid="${statuses[i].media_attachments[0].id}" url="${statuses[i].media_attachments[0].url}" mediacount="0">
+<img src="${statuses[i].media_attachments[0].url}">
+</div>`).appendTo('#js_profile_recent_images_box');
+else {
+if((statuses[i].media_attachments[0].type == "video" || statuses[i].media_attachments[0].type == "gifv") && statuses[i].media_attachments[0].preview_url != statuses[i].media_attachments[0].url) var imgurl = statuses[i].media_attachments[0].preview_url;
+else if(statuses[i].pleroma) var imgurl = "https://"+current_instance+"/images/avi.png";
+else var imgurl = "https://"+current_instance+"/avatars/original/missing.png";
+$(`<div class="profile_recent_images_item media_attachment">
+<img src="${imgurl}">
+</div>`).appendTo('#js_profile_recent_images_box');
+}
+}
 };
 }
 });
@@ -1342,6 +1357,28 @@ $('#'+place+'_status_form .character_count').text(textLen);
 }
 });
 }
+if($('#'+place+'_status_form .poll_days').val() != "" || $('#'+place+'_status_form .poll_hours').val() != "" || $('#'+place+'_status_form .poll_mins').val() != "") {
+if($('#'+place+'_status_form .poll_days').val()*86400+$('#'+place+'_status_form .poll_hours').val()*3600+$('#'+place+'_status_form .poll_mins').val()*60 > current_instance_poll_limits.max_expiration) {
+is_ready = true;
+var pl_days = Math.floor(current_instance_poll_limits.max_expiration/86400);
+var pl_hours = Math.floor(current_instance_poll_limits.max_expiration/3600-pl_days*24);
+var pl_minutes = Math.floor(current_instance_poll_limits.max_expiration/60-pl_hours*60-pl_days*1440);
+$('#'+place+'_status_form .poll_time_warning').removeClass("invisible").text(__("The maximum poll time limit is:")+" "+pl_days+" "+__("Days")+", "+pl_hours+" "+__("Hours")+" "+__("and")+" "+pl_minutes+" "+__("Minutes"));
+}
+else if($('#'+place+'_status_form .poll_days').val()*86400+$('#'+place+'_status_form .poll_hours').val()*3600+$('#'+place+'_status_form .poll_mins').val()*60 < current_instance_poll_limits.min_expiration) {
+is_ready = true;
+var pl_days = Math.floor(current_instance_poll_limits.min_expiration/86400);
+var pl_hours = Math.floor(current_instance_poll_limits.min_expiration/3600-pl_days*24);
+var pl_minutes = Math.floor(current_instance_poll_limits.min_expiration/60-pl_hours*60-pl_days*1440);
+var plt_days = "";
+var plt_hours = "";
+if(pl_days > 0) plt_days = pl_days+" "+__("Days")+", "+pl_hours+" "+__("Hours")+" "+__("and")+" ";
+else if(pl_hours > 0) plt_hours = pl_hours+" "+__("Hours")+" "+__("and")+" ";
+$('#'+place+'_status_form .poll_time_warning').removeClass("invisible").text(__("The minimum poll time limit is:")+" "+plt_days+plt_hours+pl_minutes+" "+__("Minutes"));
+}
+else $('#'+place+'_status_form .poll_time_warning').addClass("invisible");
+}
+else $('#'+place+'_status_form .poll_time_warning').addClass("invisible");
 }
 if($('#'+place+'_status_form .status_poll_editor').hasClass("invisible")) {
 if(is_ready) $('#'+place+'_status_form').addClass('ready');
@@ -1354,6 +1391,12 @@ else $('#'+place+'_status_form').removeClass('ready');
 }
 else $('#'+place+'_status_form').addClass('ready');
 }
+});
+$(document).on('change keyup','#'+place+'_status_form .poll_field',function() {
+if($('#'+place+'_status_form .poll_field:blank').length == 0 && $('#'+place+'_status_form .poll_field').length < current_instance_poll_limits.max_options)
+$('#'+place+'_status_form .poll_field:last').after(
+$("<input>").addClass("disallow_enter").addClass("textfield").addClass("poll_field").attr("name","options[]").attr("type","text").attr("maxlength",current_instance_poll_limits.max_option_chars)).after(" ").after(
+$("<i>").addClass("fa").addClass("fa-circle-o")).after($("<br>"));
 });
 $(document).on('click','#'+place+'_status_form .status_CW', function(e) {
 $('#'+place+'_status_form .status_spoiler').toggleClass('invisible');
@@ -1488,8 +1531,6 @@ visibility : form.privacy_option.value
 }
 if(place == "reply") params.in_reply_to_id = $('#reply_status_form').attr('sid');
 else if(place == "single_reply") params.in_reply_to_id = $('#single_reply_status_form').attr('tid');
-console.log(params);
-console.log(place);
 if(!$('#'+place+'_status_form .status_poll_editor').hasClass("invisible")) {
 params.poll = new Object;
 params.poll.options = new Array;
@@ -1575,6 +1616,9 @@ enableAutoComplete($('#'+place+'_status_form .status_top .status_spoiler'));
 enableAutoComplete($('#'+place+'_status_form .status_textarea textarea'));
 $('#'+place+'_status_form .status_bottom').removeClass('invisible');
 $('#'+place+'_status_form .submit_status_label').addClass('active_submit_button');
+$('#'+place+'_status_form .poll_field').attr("maxlength",current_instance_poll_limits.max_option_chars);
+$('#'+place+'_status_form .poll_days').attr("max",Math.floor(current_instance_poll_limits.max_expiration/86400));
+$('#'+place+'_status_form .poll_days').attr("placeholder","0-"+Math.floor(current_instance_poll_limits.max_expiration/86400));
 const textCount = $('#'+place+'_status_form textarea').val().length + $('#'+place+'_status_form .status_spoiler').val().length;
 let textLen = (current_instance_charlimit - textCount);
 $('#'+place+'_status_form .character_count').html(textLen);
@@ -1966,6 +2010,10 @@ $("#enable_follow").click(function() {
 localStorage.setItem("setting_who_to_follow","true");
 setWhoToFollow(true);
 });
+$("#hide_ffdl").click(function() {
+localStorage.hide_firefox_download = "true";
+$("#widget_ffdl").slideUp();
+});
 $("#search_form").focus(function() {
 if($("#search_form").val() == "") searchlocalfill();
 else searchremotefill($("#search_form").val());
@@ -1999,7 +2047,6 @@ $(".media_detail .media_backward").fadeIn();
 $(".media_detail .media_box img").attr("src",JSON.parse($(".media_detail").attr("pictures"))[$(".media_detail").attr("cid")]);
 });
 $(document).on("keyup",".status_poll_editor .poll_time input",function() {
-console.log("checked");
 if($(this).is(":invalid")) $(this).parent().addClass("redborder");
 else $(this).parent().removeClass("redborder");
 });

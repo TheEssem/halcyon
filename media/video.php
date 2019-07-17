@@ -12,7 +12,7 @@ die('Forbidden');
 <script src="/assets/js/player/youplay.js"></script>
 </head>
 <body style="margin:0;height:100%;overflow:hidden">
-<video class="video-js vjs-default-skin" controls id="player" poster="<?=htmlspecialchars($_GET["preview"])?>" style="width:100%;height:100%">
+<video class="video-js vjs-default-skin" controls id="player" poster="<?=htmlspecialchars($_GET["preview"])?>" title="<?=htmlspecialchars($_GET["title"])?>" style="width:100%;height:100%">
 Your browser does not support the video tag.
 </video>
 <script>
