@@ -59,7 +59,7 @@ di[re[4]] = re[3];
 }
 return di;
 }
-function replaceInternalLink(){
+function replaceInternalLink() {
 $(".toot_article a,.profile_bio a,.follows_profile_bio a").each(function(i) {
 const pltags = $(this).attr('href').match(/https?:\/\/.+..+\/tag\/([a-zA-Z\d_%]+)\/?$/);
 if(pltags) $(this).attr('target','_self').attr('href','/search?q='+pltags[1]);
@@ -77,6 +77,24 @@ const gsstatus = $(this).attr('href').match(/https?:\/\/.+..+\/notice\/(\d+)\/?$
 if(gsstatus) $(this).attr('target','_self').attr('href',"javascript:openStatus('"+gsstatus[0]+"');void(0)");
 const plstatus = $(this).attr('href').match(/https?:\/\/.+..+\/objects\/([\da-z]{8}-[\da-z]{4}-[\da-z]{4}-[\da-z]{4}-[\da-z]{12})\/?$/);
 if(plstatus) $(this).attr('target','_self').attr('href',"javascript:openStatus('"+plstatus[0]+"');void(0)");
+const ytcom = $(this).attr('href').match(/https?:\/\/(www\.)?youtube\.com\/watch\?v=([a-zA-Z\d_-]+)/);
+if(ytcom) $(this).attr('target','_self').attr('href',"javascript:openVideo('"+ytcom[2]+"');void(0)");
+const ytbe = $(this).attr('href').match(/https?:\/\/(www\.)?youtu\.be\/([a-zA-Z\d_-]+)/);
+if(ytbe) $(this).attr('target','_self').attr('href',"javascript:openVideo('"+ytbe[2]+"');void(0)");
+if(server_setting_unshorten && checkURLshortener($(this).attr('href'))) {
+var linkrand = Math.round(Math.random()*1000000);
+$(this).attr("data-random",linkrand);
+$.ajax("/unshorten.php?url="+encodeURIComponent($(this).attr('href'))).done(function(data) {
+$(".toot_article a,.profile_bio a,.follows_profile_bio a").filter("[data-random="+linkrand+"]").attr("href",data);
+$(".toot_article a,.profile_bio a,.follows_profile_bio a").filter("[data-random="+linkrand+"]").children().eq(1).text(data.split("//")[0]);
+link = data.replace("https://","");
+link = link.replace("http://","");
+if(link.length > 30) $(".toot_article a,.profile_bio a,.follows_profile_bio a").filter("[data-random="+linkrand+"]").children().eq(1).addClass("ellipsis");
+else $(".toot_article a,.profile_bio a,.follows_profile_bio a").filter("[data-random="+linkrand+"]").children().eq(1).removeClass("ellipsis");
+$(".toot_article a,.profile_bio a,.follows_profile_bio a").filter("[data-random="+linkrand+"]").children().eq(1).text(link.substr(0,30));
+$(".toot_article a,.profile_bio a,.follows_profile_bio a").filter("[data-random="+linkrand+"]").children().eq(2).text(link.substr(30));
+});
+}
 });
 $(".toot_article a").each(function(i) {
 const ytcom = $(this).attr('href').match(/https?:\/\/(www\.)?youtube\.com\/watch\?v=([a-zA-Z\d_-]+)/);
@@ -169,7 +187,6 @@ current_filters = new Array;
 }
 localStorage.setItem("current_display_name",AccountObj["display_name"]);
 localStorage.setItem("current_acct",AccountObj["acct"]);
-localStorage.setItem("current_url","/@"+AccountObj["acct"]+"@"+current_instance+"?mid="+current_id);
 localStorage.setItem("current_header",AccountObj["header"]);
 localStorage.setItem("current_avatar",AccountObj["avatar"]);
 localStorage.setItem("current_locked",AccountObj["locked"]);
@@ -179,7 +196,6 @@ localStorage.setItem("current_followers_count",AccountObj["followers_count"]);
 localStorage.setItem("current_follow_loaded","false");
 current_display_name = localStorage.getItem("current_display_name");
 current_acct = localStorage.getItem("current_acct");
-current_url = localStorage.getItem("current_url");
 current_header = localStorage.getItem("current_header");
 current_avatar = localStorage.getItem("current_avatar");
 current_locked = localStorage.getItem("current_locked");
@@ -263,7 +279,6 @@ api_user_token: authtoken
 });
 current_display_name = localStorage.getItem("current_display_name");
 current_acct = localStorage.getItem("current_acct");
-current_url = localStorage.getItem("current_url");
 current_header = localStorage.getItem("current_header");
 current_avatar = localStorage.getItem("current_avatar");
 current_locked = localStorage.getItem("current_locked");
@@ -287,15 +302,15 @@ is_account_locked = " <i class='fa fa-lock'></i>";
 }
 $(".js_current_profile_displayname").html(current_display_name);
 $(".js_current_profile_username").html(current_acct+is_account_locked);
-$(".js_current_profile_link").attr("href", current_url);
+$(".js_current_profile_link").attr("href","/@"+current_acct+"@"+current_instance+"?mid="+current_id);
 $(".js_current_header_image").attr("src", current_header);
 $(".js_current_profile_image").attr("src", current_avatar);
 $(".js_current_toots_count").text(current_statuses_count);
 $(".js_current_following_count").text(current_following_count);
 $(".js_current_followers_count").text(current_followers_count);
-$(".current_toots_count_link").attr("href",current_url);
-$(".current_following_count_link").attr("href",current_url);
-$(".current_followers_count_link").attr("href",current_url);
+$(".current_toots_count_link").attr("href","/@"+current_acct+"@"+current_instance+"?mid="+current_id);
+$(".current_following_count_link").attr("href","/@"+current_acct+"@"+current_instance+"/following?mid="+current_id);
+$(".current_followers_count_link").attr("href","/@"+current_acct+"@"+current_instance+"/followers?mid="+current_id);
 if($(window).width() < 1200) {
 responsive_design = true;
 $(".left_column").append($("<div>").attr("class","responsive_left").append($(".right_column").children()));
@@ -317,6 +332,7 @@ localStorage.setItem("setting_desktop_notifications","false");
 if(localStorage.setting_who_to_follow == "true") {
 setWhoToFollow();
 }
+setTrendingHashtags();
 if(!localStorage.hide_firefox_download || localStorage.hide_firefox_download != "true") $("#widget_ffdl").show();
 replace_emoji();
 }
@@ -418,6 +434,33 @@ $('.what_to_follow_'+id+' .label_box > .follow_button').attr('data',search.accou
 follow_loaded++;
 });
 }
+function setTrendingHashtags() {
+api.get("trends",function(data) {
+if(data.length == 0) $("#trends_icon").removeClass("fa-circle-o-notch").removeClass("fa-spin").addClass("fa-hashtag").addClass("fa-stack-1x").after($("<i>").addClass("fa").addClass("fa-ban").addClass("fa-stack-2x"));
+else {
+for(var i=0;i<5;i++) {
+if(i < data.length) {
+var ht_toots = 0;
+var ht_users = 0;
+for(var a=0;a<data[i].history.length;a++) {
+ht_toots += parseInt(data[i].history[a].uses);
+ht_users += parseInt(data[i].history[a].accounts);
+}
+$(".trending_hashtags .trending_"+i+" a").attr("href","/search?q="+data[i].name);
+$(".trending_hashtags .trending_"+i+" .dn").text("#"+data[i].name);
+$(".trending_hashtags .trending_"+i+" .un").text(ht_toots+" "+__("toots by")+" "+ht_users+" "+__("users"));
+}
+else {
+$(".trending_hashtags .trending_"+i).remove();
+}
+}
+$(".trends_loading").hide();
+$(".trending_hashtags").show();
+}
+},function() {
+$("#trends_icon").removeClass("fa-circle-o-notch").removeClass("fa-spin").addClass("fa-hashtag").addClass("fa-stack-1x").after($("<i>").addClass("fa").addClass("fa-ban").addClass("fa-stack-2x"));
+});
+}
 function checkEmojiSupport() {
 var ctx = document.createElement("canvas").getContext("2d");
 ctx.fillText("😗",-2,4);
@@ -437,6 +480,17 @@ window.location.href = "/404";
 }
 });
 }
+function openVideo(video) {
+if(localStorage.setting_redirect_invidious == "true") window.open("https://"+server_setting_invidious+"/watch?v="+video,"_blank");
+else if(localStorage.setting_redirect_invidious == "false") window.open("https://www.youtube.com/watch?v="+video,"_blank");
+else {
+$("#js-overlay_content_wrap .temporary_object").empty();
+$('#js-overlay_content_wrap').addClass('view');
+$('#js-overlay_content_wrap').addClass('black_08');
+$('.overlay_redirect_invidious').data("video",video);
+$('.overlay_redirect_invidious').removeClass('invisible');
+}
+}
 function embedMedia(source,element,watchid) {
 if(element.children(".media_views").length == 0) {
 let media_views = `<div class='media_views' sid="${element.parent().parent().parent().attr("sid")}" media_length='1' style="border:0;border-radius:0">`;
@@ -449,7 +503,7 @@ media_views += (`
 else if( source == "youtube" && localStorage.setting_play_invidious == "true") {
 media_views += (`
 <div class="media_attachment" otype="video/gifv" mediacount="0">
-<iframe src="https://www.invidio.us/embed/${watchid}" frameborder="0" allowfullscreen></iframe>
+<iframe src="https://${server_setting_invidious}/embed/${watchid}" frameborder="0" allowfullscreen></iframe>
 </div>`);
 }
 else if(source == "vimeo" && server_setting_vimeo == true && localStorage.setting_play_vimeo == "true") {
@@ -494,4 +548,22 @@ nparams.in_reply_to_id = data.id;
 submitStatusArray(nparams,callback);
 }
 });
+}
+function checkURLshortener(link) {
+var short = true;
+if(link.indexOf("https://") != -1 || link.indexOf("http://") != -1) {
+if(link.indexOf("://www.") != -1) short = false;
+link = link.replace("https://","");
+link = link.replace("http://","");
+var short_handle = link.split("/");
+var domain = link.split(".");
+if(domain.length == 2) var sld = domain[0];
+else var sld = domain[1];
+if(sld.length < 1 || sld.length > 7) short = false;
+if(short_handle.length != 2) short = false;
+else if(!short_handle[1].match(/^[a-zA-Z0-9_-]+$/)) short = false;
+else if(short_handle[1].length > 10) short = false;
+}
+else short = false;
+return short;
 }

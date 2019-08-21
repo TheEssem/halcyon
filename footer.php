@@ -15,6 +15,7 @@ include dirname(__FILE__).('/widgets/overlay_copy_link.php');
 include dirname(__FILE__).('/widgets/overlay_confirm.php');
 include dirname(__FILE__).('/widgets/overlay_prompt.php');
 include dirname(__FILE__).('/widgets/overlay_addlist.php');
+include dirname(__FILE__).('/widgets/overlay_redirect_invidious.php');
 if($_SERVER["REQUEST_URI"] == "/settings/filters") include dirname(__FILE__).('/widgets/overlay_filter.php');
 ?>
 </div>

@@ -443,6 +443,12 @@ $("#setting_play_invidious")[0].checked = true;
 if(localStorage.setting_play_vimeo == "true" && $("#setting_play_vimeo").length == 1) {
 $("#setting_play_vimeo")[0].checked = true;
 }
+if(localStorage.setting_redirect_invidious == "true") {
+$("#setting_redirect_invidious")[0].checked = true;
+}
+if(localStorage.setting_redirect_invidious != "unset") {
+$("#setting_redirect_invidious_reset").show();
+}
 });
 $("#setting_play_gif").change(function() {
 if(this.checked) {
@@ -513,6 +519,23 @@ else {
 localStorage.setItem("setting_play_vimeo","false");
 putMessage(__("Vimeo embeds disabled"));
 }
+});
+$("#setting_redirect_invidious").change(function() {
+$("#setting_redirect_invidious_reset").fadeIn();
+if(this.checked) {
+localStorage.setItem("setting_redirect_invidious","true");
+putMessage(__("YouTube links redirected to Invidious"));
+}
+else {
+localStorage.setItem("setting_redirect_invidious","false");
+putMessage(__("Youtube links not redirected anymore"));
+}
+});
+$("#setting_redirect_invidious_reset").click(function() {
+localStorage.setItem("setting_redirect_invidious","unset");
+$("#setting_redirect_invidious_reset").fadeOut();
+$("#setting_redirect_invidious")[0].checked = false;
+putMessage(__("Youtube link redirect reset to default"));
 });
 }
 else if(window.location.pathname == "/settings/blocks") {

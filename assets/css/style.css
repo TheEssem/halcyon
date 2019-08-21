@@ -579,10 +579,10 @@ font-weight: 300;
 .single_reply_status .status_preview,.report_status .status_preview {
 border-top: 1px solid #E1E8ED;
 }
-.single_reply_status .status_preview .toot_entry .toot_footer,.report_stauts .status_preview .toot_entry .toot_footer {
+.single_reply_status .status_preview .toot_entry .toot_footer,.report_status .status_preview .toot_entry .toot_footer {
 display: none!important;
 }
-.single_reply_status .status_preview .toot_entry .link_preview,.report_stauts .status_preview .toot_entry .link_preview {
+.single_reply_status .status_preview .toot_entry .link_preview,.report_status .status_preview .toot_entry .link_preview {
 display: none!important;
 }
 .single_reply_status .status_form .status_bottom,.report_status .status_form .status_bottom {
@@ -974,6 +974,9 @@ overflow: hidden;
 position: relative;
 box-sizing: border-box;
 border: 1px solid #DCDFE1;
+}
+.media_views.link_preview {
+cursor:pointer;
 }
 .media_views.media_full_height {
 height:auto;
@@ -1517,8 +1520,11 @@ overflow: hidden;
 margin-right: 8px;
 border-radius: 5px;
 }
-.account_box .label_box {
+.what_to_follow .account_box .label_box {
 width: 200px;
+}
+.trending_hashtags .account_box .label_box {
+width:100%;
 }
 .account_box .label_box h3 {
 overflow: hidden;

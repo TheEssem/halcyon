@@ -3,16 +3,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-19 16:33+0000\n"
-"PO-Revision-Date: 2019-07-15 10:37+0000\n"
-"Last-Translator: ButterflyOfFire <butterflyoffire@protonmail.com>\n"
+"POT-Creation-Date: 2019-06-21 08:47+0000\n"
+"PO-Revision-Date: 2019-08-16 19:06+0000\n"
+"Last-Translator: ButterflyOfFire <butterflyoffire+halcyon@protonmail.com>\n"
 "Language-Team: French\n"
-"Language: fr_FR\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.7.1\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Pootle 2.8\n"
+"X-Loco-Source-Locale: de_DE\n"
+"X-Loco-Parser: loco_parse_po\n"
+"X-POOTLE-MTIME: 1565982394.994635\n"
 
 msgid "Language"
 msgstr "Langue"
@@ -40,6 +43,22 @@ msgstr "Portuguese (Brazil)"
 
 msgid "Language_it_IT"
 msgstr "Italian"
+
+msgid "Language_cs_CZ"
+msgstr "Tchèque"
+
+msgid "Language_fr_FR"
+msgstr "Français"
+
+msgid "Language_nl_NL"
+msgstr "Néerlandais"
+
+#, fuzzy
+msgid "Language_ca_ES"
+msgstr "Galician"
+
+msgid "Language_ar_DZ"
+msgstr "Arabe"
 
 msgid "Sensitive content"
 msgstr "Contenu sensible"
@@ -825,6 +844,15 @@ msgstr "Message"
 msgid "Filter"
 msgstr "Filtre"
 
+msgid "second"
+msgstr "seconde"
+
+msgid "seconds"
+msgstr "secondes"
+
+msgid "minute"
+msgstr "minute"
+
 msgid "minutes"
 msgstr "minutes"
 
@@ -836,6 +864,9 @@ msgstr "heures"
 
 msgid "day"
 msgstr "jour"
+
+msgid "days"
+msgstr "jours"
 
 msgid "week"
 msgstr "semaine"
@@ -852,26 +883,17 @@ msgstr "FILTRES"
 msgid "MEDIA"
 msgstr "MÉDIA"
 
-msgid "Language_cs_CZ"
-msgstr "Tchèque"
+msgid "Dark theme reset to standard"
+msgstr ""
 
-msgid "Language_fr_FR"
-msgstr "Français"
+msgid "Pictures shown in full height"
+msgstr ""
 
-msgid "Language_nl_NL"
-msgstr "Néerlandais"
+msgid "Pictures shown in default height"
+msgstr ""
 
-msgid "second"
-msgstr "seconde"
-
-msgid "seconds"
-msgstr "secondes"
-
-msgid "minute"
-msgstr "minute"
-
-msgid "days"
-msgstr "jours"
+msgid "Threads shown in thread view"
+msgstr ""
 
 msgid "Threads shown in chronological order"
 msgstr "Discussions affichées dans un ordre chronologique"
@@ -906,5 +928,88 @@ msgstr "Choix multiples"
 msgid "Poll finished"
 msgstr "Sondage terminé"
 
+msgid ""
+"If you close the overlay, your text will get deleted! Are you sure you want "
+"to close it?"
+msgstr ""
+
 msgid "Website"
 msgstr "Site web"
+
+msgid "Show pictures in full height"
+msgstr ""
+
+msgid "Show threads in thread view in timeline"
+msgstr ""
+
+msgid "Unblock"
+msgstr "Débloquer"
+
+msgid "Unmute"
+msgstr "Annuler la sourdine"
+
+msgid "Accept"
+msgstr "Accepter"
+
+msgid "Reject"
+msgstr "Rejeter"
+
+msgid "You can only add four pictures to one post!"
+msgstr ""
+
+msgid "You can not add media files to posts with polls!"
+msgstr ""
+
+msgid "Add a caption to the media file"
+msgstr "Ajouter une description au fichier média"
+
+msgid "Caption added successfully!"
+msgstr "La description a été rajoutée avec succès !"
+
+msgid "Share a link on Mastodon"
+msgstr "Partager un lien sur Mastodon"
+
+msgid "Share a link with your followers"
+msgstr "Partager un lien avec vos abonné·e·s"
+
+msgid "Post a Toot on Mastodon"
+msgstr "Publier un pouet sur Mastodon"
+
+msgid ""
+"Toot posted successfully but your browser doesn't allow closing the window"
+msgstr ""
+
+msgid "Sign up"
+msgstr "Connexion"
+
+msgid "Username"
+msgstr "Nom d'utilisateur"
+
+msgid "Log in and Toot"
+msgstr "Se connecter et pouetter"
+
+msgid "New to Mastodon?"
+msgstr "Êtes-vous nouveau·elle sur Mastodon ?"
+
+msgid ""
+"Get instant updates from your friends, industry experts, favorite "
+"celebrities, and what's happening around the world."
+msgstr ""
+
+msgid "What is Mastodon? Learn more."
+msgstr "C'est quoi Mastodon ? Apprenez d'avantage."
+
+msgid "Please describe what you can see in the picture."
+msgstr "Veuillez décrire ce que vous voyez dans l'image."
+
+msgid "Save"
+msgstr "Enregistrer"
+
+msgid "BLOCKS"
+msgstr "COMPTES BLOQUÉS"
+
+msgid "MUTES"
+msgstr "COMPTES EN SOURDINE"
+
+msgid "FOLLOW REQUESTS"
+msgstr "DEMANDES D'ABONNEMENT"

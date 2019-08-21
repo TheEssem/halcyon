@@ -87,7 +87,7 @@ media_views += "</div>";
 media_views += "</div>";
 var media_view = $("<div>");
 media_view.append(media_views);
-if(status.sensitive) media_view.find(".media_attachment").addClass("sensitive");
+if(status.sensitive && localStorage.setting_show_nsfw == "false") media_view.find(".media_attachment").addClass("sensitive");
 for(let i in audio_embeds) {
 media_view.append(audio_embeds[i]);
 }
@@ -103,11 +103,21 @@ const htbe = card.url.match(/https?:\/\/(www\.)?hooktube\.com\/([a-zA-Z\d_-]+)/)
 const vimeo = card.url.match(/https?:\/\/(www\.)?vimeo\.com\/([\d]+)/);
 const peertube = card.url.match(/https?:\/\/.+..+\/videos\/watch\/([\da-z]{8}-[\da-z]{4}-[\da-z]{4}-[\da-z]{4}-[\da-z]{12})\/?$/);
 if(((!ytcom && !htcom && !ivcom && !ytbe && !htbe) || (localStorage.setting_play_youplay == "false" && localStorage.setting_play_invidious == "false")) && (!vimeo || localStorage.setting_play_vimeo) && (!peertube || localStorage.setting_play_peertube)) {
-let preview_html = (`<div class="media_views link_preview" media_length="1" style="height:unset" data-url="${card.url}">
+var randattr = "";
+if(server_setting_unshorten && checkURLshortener(card.url)) {
+var linkrand = Math.round(Math.random()*1000000);
+randattr = ' data-random="'+linkrand+'"';
+$(this).attr("data-random",linkrand);
+$.ajax("/unshorten.php?url="+encodeURIComponent(card.url)).done(function(data) {
+$(".media_views.link_preview").filter("[data-random="+linkrand+"]").data("url",data);
+$(".media_views.link_preview").filter("[data-random="+linkrand+"]").find(".card_link").text(data);
+});
+}
+let preview_html = (`<div class="media_views link_preview" media_length="1" style="height:unset" data-url="${card.url}"${randattr}>
 <img src="${card.image}" style="width:${card.width};max-width:200px;float:left;margin-right:5px">
 <strong>${card.title}</strong><br/>
 <span>${card.description}</span><br/>
-<span style="color:#777777">${card.url}</span>`);
+<span style="color:#777777" class="card_link">${card.url}</span>`);
 return preview_html;
 }
 else return "";
@@ -175,12 +185,16 @@ for(var i=0;i<status.mentions.length;i++) {
 if(status.mentions[i].acct.indexOf("@") == -1) status.content = status.content.replace(new RegExp('href="'+status.mentions[i].url+'"',"g"),'href="/@'+status.mentions[i].acct+'@'+current_instance+'?mid='+status.mentions[i].id+'" data-mid="'+status.mentions[i].id+'"');
 else status.content = status.content.replace(new RegExp('href="'+status.mentions[i].url+'"',"g"),'href="/@'+status.mentions[i].acct+'?mid='+status.mentions[i].id+'" data-mid="'+status.mentions[i].id+'"');
 }
+if(!status.mentions.find(function(account) {
+return account.id == this;
+},status.account.id)) {
 var writtenby = new Object();
 writtenby.id = status.account.id;
 writtenby.username = status.account.username;
 writtenby.url = status.account.url;
 writtenby.acct = status.account.acct;
 status.mentions.push(writtenby);
+}
 var status_account_link;
 if(status.account.acct.indexOf("@") == -1)  status_account_link = "/@"+status.account.acct+"@"+current_instance+"?mid="+status.account.id;
 else status_account_link = "/@"+status.account.acct+"?mid="+status.account.id;
@@ -305,7 +319,7 @@ ${preview_object}
 </article>
 <footer class="toot_footer"${toot_footer_width}>
 <div class="toot_reaction">
-<button class="reply_button" tid="${status.id}" mentions='${JSON.stringify(status.mentions)}' display_name="${status.account.display_name}" privacy="${status.visibility}">
+<button class="reply_button" tid="${status.id}" mentions='${JSON.stringify(status.mentions)}' display_name="${status.account.display_name}" privacy="${status.visibility}" content_warning="${htmlEscape(status.spoiler_text)}">
 <i class="fa fa-fw fa-reply"></i>
 <span class="reaction_count reply_count">${toot_replies_count}</span>
 </button>
@@ -345,12 +359,16 @@ for(var i=0;i<status.reblog.mentions.length;i++) {
 if(status.reblog.mentions[i].acct.indexOf("@") == -1) status.reblog.content = status.reblog.content.replace(new RegExp('href="'+status.reblog.mentions[i].url+'"',"g"),'href="/@'+status.reblog.mentions[i].acct+'@'+current_instance+'?mid='+status.reblog.mentions[i].id+'" data-mid="'+status.reblog.mentions[i].id+'"');
 else status.reblog.content = status.reblog.content.replace(new RegExp('href="'+status.reblog.mentions[i].url+'"',"g"),'href="/@'+status.reblog.mentions[i].acct+'?mid='+status.reblog.mentions[i].id+'" data-mid="'+status.reblog.mentions[i].id+'"');
 }
+if(!status.reblog.mentions.find(function(account) {
+return account.id == this;
+},status.reblog.account.id)) {
 var writtenby = new Object();
 writtenby.id = status.reblog.account.id;
 writtenby.username = status.reblog.account.username;
 writtenby.url = status.reblog.account.url;
 writtenby.acct = status.reblog.account.acct;
 status.reblog.mentions.push(writtenby);
+}
 const status_datetime= getRelativeDatetime(Date.now(), getConversionedDate(null, status.reblog.created_at)),
 status_attr_datetime = getConversionedDate(null, status.reblog.created_at);
 var status_reblog_account_link,status_account_link;
@@ -470,7 +488,7 @@ ${preview_object}
 </article>
 <footer class="toot_footer" style="width:320px">
 <div class="toot_reaction">
-<button class="reply_button" tid="${status.reblog.id}" mentions='${JSON.stringify(status.reblog.mentions)}' display_name="${status.reblog.account.display_name}" privacy="${status.reblog.visibility}">
+<button class="reply_button" tid="${status.reblog.id}" mentions='${JSON.stringify(status.reblog.mentions)}' display_name="${status.reblog.account.display_name}" privacy="${status.reblog.visibility}" content_warning="${htmlEscape(status.reblog.spoiler_text)}">
 <i class="fa fa-fw fa-reply"></i>
 <span class="reaction_count reply_count">${toot_replies_count}</span>
 </button>
@@ -513,12 +531,16 @@ for(var i=0;i<status.mentions.length;i++) {
 if(status.mentions[i].acct.indexOf("@") == -1) status.content = status.content.replace(new RegExp('href="'+status.mentions[i].url+'"',"g"),'href="/@'+status.mentions[i].acct+'@'+current_instance+'?mid='+status.mentions[i].id+'" data-mid="'+status.mentions[i].id+'"');
 else status.content = status.content.replace(new RegExp('href="'+status.mentions[i].url+'"',"g"),'href="/@'+status.mentions[i].acct+'?mid='+status.mentions[i].id+'" data-mid="'+status.mentions[i].id+'"');
 }
+if(!status.mentions.find(function(account) {
+return account.id == this;
+},status.account.id)) {
 var writtenby = new Object();
 writtenby.id = status.account.id;
 writtenby.username = status.account.username;
 writtenby.url = status.account.url;
 writtenby.acct = status.account.acct;
 status.mentions.push(writtenby);
+}
 var status_account_link;
 if(status.account.acct.indexOf("@") == -1) status_account_link = "/@"+status.account.acct+"@"+current_instance+"?mid="+status.account.id;
 else status_account_link = "/@"+status.account.acct+"?mid="+status.account.id;
@@ -626,7 +648,7 @@ ${preview_object}
 </article>
 <footer class="toot_footer" style="width:320px">
 <div class="toot_reaction">
-<button class="reply_button" tid="${status.id}" mentions='${JSON.stringify(status.mentions)}' display_name="${status.account.display_name}" privacy="${status.visibility}">
+<button class="reply_button" tid="${status.id}" mentions='${JSON.stringify(status.mentions)}' display_name="${status.account.display_name}" privacy="${status.visibility}" content_warning="${htmlEscape(status.spoiler_text)}">
 <i class="fa fa-fw fa-reply"></i>
 <span class="reaction_count reply_count">${toot_replies_count}</span>
 </button>
@@ -800,12 +822,16 @@ for(var i=0;i<NotificationObj.status.mentions.length;i++) {
 if(NotificationObj.status.mentions[i].acct.indexOf("@") == -1) NotificationObj.status.content = NotificationObj.status.content.replace(new RegExp('href="'+NotificationObj.status.mentions[i].url+'"',"g"),'href="/@'+NotificationObj.status.mentions[i].acct+'@'+current_instance+'?mid='+NotificationObj.status.mentions[i].id+'" data-mid="'+NotificationObj.status.mentions[i].id+'"');
 else NotificationObj.status.content = NotificationObj.status.content.replace(new RegExp('href="'+NotificationObj.status.mentions[i].url+'"',"g"),'href="/@'+NotificationObj.status.mentions[i].acct+'?mid='+NotificationObj.status.mentions[i].id+'" data-mid="'+NotificationObj.status.mentions[i].id+'"');
 }
+if(!NotificationObj.status.mentions.find(function(account) {
+return account.id == this;
+},NotificationObj.status.account.id)) {
 var writtenby = new Object();
 writtenby.id = NotificationObj.status.account.id;
 writtenby.username = NotificationObj.status.account.username;
 writtenby.url = NotificationObj.status.account.url;
 writtenby.acct = NotificationObj.status.account.acct;
 NotificationObj.status.mentions.push(writtenby);
+}
 if(NotificationObj.status.spoiler_text && localStorage.setting_show_content_warning == "false") {
 alart_text = "<span>"+NotificationObj.status.spoiler_text+"</span><button class='cw_button'>"+__('SHOW MORE')+"</button>",
 article_option = "content_warning";
@@ -917,7 +943,7 @@ ${preview_object}
 </article>
 <footer class="toot_footer"${toot_footer_width}>
 <div class="toot_reaction">
-<button class="reply_button" tid="${NotificationObj.status.id}" mentions='${JSON.stringify(NotificationObj.status.mentions)}' display_name="${NotificationObj.account.display_name}" privacy="${NotificationObj.status.visibility}">
+<button class="reply_button" tid="${NotificationObj.status.id}" mentions='${JSON.stringify(NotificationObj.status.mentions)}' display_name="${NotificationObj.account.display_name}" privacy="${NotificationObj.status.visibility}" content_warning="${htmlEscape(NotificationObj.status.spoiler_text)}">
 <i class="fa fa-fw fa-reply"></i>
 <span class="reaction_count reply_count">${toot_replies_count}</span>
 </button>
@@ -966,12 +992,16 @@ for(var i=0;i<NotificationObj.status.mentions.length;i++) {
 if(NotificationObj.status.mentions[i].acct.indexOf("@") == -1) NotificationObj.status.content = NotificationObj.status.content.replace(new RegExp('href="'+NotificationObj.status.mentions[i].url+'"',"g"),'href="/@'+NotificationObj.status.mentions[i].acct+'@'+current_instance+'?mid='+NotificationObj.status.mentions[i].id+'" data-mid="'+NotificationObj.status.mentions[i].id+'"');
 else NotificationObj.status.content = NotificationObj.status.content.replace(new RegExp('href="'+NotificationObj.status.mentions[i].url+'"',"g"),'href="/@'+NotificationObj.status.mentions[i].acct+'?mid='+NotificationObj.status.mentions[i].id+'" data-mid="'+NotificationObj.status.mentions[i].id+'"');
 }
+if(!NotificationObj.status.mentions.find(function(account) {
+return account.id == this;
+},NotificationObj.status.account.id)) {
 var writtenby = new Object();
 writtenby.id = NotificationObj.status.account.id;
 writtenby.username = NotificationObj.status.account.username;
 writtenby.url = NotificationObj.status.account.url;
 writtenby.acct = NotificationObj.status.account.acct;
 NotificationObj.status.mentions.push(writtenby);
+}
 if(NotificationObj.status.spoiler_text && localStorage.setting_show_content_warning == "false") {
 alart_text = "<span>"+NotificationObj.status.spoiler_text+"</span><button class='cw_button'>"+__('SHOW MORE')+"</button>",
 article_option = "content_warning";
@@ -1089,7 +1119,7 @@ ${preview_object}
 </article>
 <footer class="toot_footer"${toot_footer_width}>
 <div class="toot_reaction">
-<button class="reply_button" tid="${NotificationObj.status.id}" mentions='${JSON.stringify(NotificationObj.status.mentions)}' display_name="${NotificationObj.account.display_name}" privacy="${NotificationObj.status.visibility}">
+<button class="reply_button" tid="${NotificationObj.status.id}" mentions='${JSON.stringify(NotificationObj.status.mentions)}' display_name="${NotificationObj.account.display_name}" privacy="${NotificationObj.status.visibility}" content_warning="${htmlEscape(NotificationObj.status.spoiler_text)}">
 <i class="fa fa-fw fa-reply"></i>
 <span class="reaction_count reply_count">${toot_replies_count}</span>
 </button>
@@ -1202,12 +1232,16 @@ for(var i=0;i<status.mentions.length;i++) {
 if(status.mentions[i].acct.indexOf("@") == -1) status.content = status.content.replace(new RegExp('href="'+status.mentions[i].url+'"',"g"),'href="/@'+status.mentions[i].acct+'@'+current_instance+'?mid='+status.mentions[i].id+'" data-mid="'+status.mentions[i].id+'"');
 else status.content = status.content.replace(new RegExp('href="'+status.mentions[i].url+'"',"g"),'href="/@'+status.mentions[i].acct+'?mid='+status.mentions[i].id+'" data-mid="'+status.mentions[i].id+'"');
 }
+if(!status.mentions.find(function(account) {
+return account.id == this;
+},status.account.id)) {
 var writtenby = new Object();
 writtenby.id = status.account.id;
 writtenby.username = status.account.username;
 writtenby.url = status.account.url;
 writtenby.acct = status.account.acct;
 status.mentions.push(writtenby);
+}
 if(status.spoiler_text && localStorage.setting_show_content_warning == "false") {
 alart_text = "<span>"+status.spoiler_text+"</span><button class='cw_button'>"+__('SHOW MORE')+"</button>",
 article_option = "content_warning";
@@ -1320,7 +1354,7 @@ ${preview_object}
 </section>
 <footer class="toot_footer"${toot_footer_width}>
 <div class="toot_reaction">
-<button class="reply_button" tid="${status.id}" mentions='${JSON.stringify(status.mentions)}' display_name="${status.account.display_name}" privacy="${status.visibility}">
+<button class="reply_button" tid="${status.id}" mentions='${JSON.stringify(status.mentions)}' display_name="${status.account.display_name}" privacy="${status.visibility}" content_warning="${htmlEscape(status.spoiler_text)}">
 <i class="fa fa-fw fa-reply"></i>
 <span class="reaction_count reply_count">${toot_replies_count}</span>
 </button>
@@ -1345,7 +1379,7 @@ ${toot_reblog_button}
 <img class="js_current_profile_image" src="${current_avatar}">
 </div>
 <div class="status_top">
-<input class="status_spoiler invisible" name="status_spoiler" placeholder="${__('Content warning')}" data-random="${Math.round(Math.random()*1000)}" type="text"/>
+<input class="status_spoiler invisible" name="status_spoiler" placeholder="${__('Content warning')}" value="${htmlEscape(status.spoiler_text)}" data-random="${Math.round(Math.random()*1000)}" type="text"/>
 </div>
 <div class="status_main">
 <!-- text area -->
@@ -1471,12 +1505,16 @@ for(var i=0;i<status.reblog.mentions.length;i++) {
 if(status.reblog.mentions[i].acct.indexOf("@") == -1) status.reblog.content = status.reblog.content.replace(new RegExp('href="'+status.reblog.mentions[i].url+'"',"g"),'href="/@'+status.reblog.mentions[i].acct+'@'+current_instance+'?mid='+status.reblog.mentions[i].id+'" data-mid="'+status.reblog.mentions[i].id+'"');
 else status.reblog.content = status.reblog.content.replace(new RegExp('href="'+status.reblog.mentions[i].url+'"',"g"),'href="/@'+status.reblog.mentions[i].acct+'?mid='+status.reblog.mentions[i].id+'" data-mid="'+status.reblog.mentions[i].id+'"');
 }
+if(!status.reblog.mentions.find(function(account) {
+return account.id == this;
+},status.reblog.account.id)) {
 var writtenby = new Object();
 writtenby.id = status.reblog.account.id;
 writtenby.username = status.reblog.account.username;
 writtenby.url = status.reblog.account.url;
 writtenby.acct = status.reblog.account.acct;
 status.reblog.mentions.push(writtenby);
+}
 if(status.reblog.spoiler_text && localStorage.setting_show_content_warning == "false") {
 alart_text = "<span>"+status.reblog.spoiler_text+"</span><button class='cw_button'>"+__('SHOW MORE')+"</button>",
 article_option = "content_warning";
@@ -1575,7 +1613,7 @@ ${preview_object}
 </section>
 <footer class="toot_footer" style="width:320px">
 <div class="toot_reaction">
-<button class="reply_button" tid="${status.reblog.id}" mentions='${JSON.stringify(status.reblog.mentions)}' display_name="${status.reblog.account.display_name}" privacy="${status.reblog.visibility}">
+<button class="reply_button" tid="${status.reblog.id}" mentions='${JSON.stringify(status.reblog.mentions)}' display_name="${status.reblog.account.display_name}" privacy="${status.reblog.visibility}" content_warning="${htmlEscape(status.reblog.spoiler_text)}">
 <i class="fa fa-fw fa-reply"></i>
 <span class="reaction_count reply_count">${toot_replies_count}</span>
 </button>
@@ -1605,7 +1643,7 @@ ${preview_object}
 <img class="js_current_profile_image" src="${current_avatar}">
 </div>
 <div class="status_top">
-<input class="status_spoiler invisible" name="status_spoiler" placeholder="${__('Content warning')}" data-random="${Math.round(Math.random()*1000)}" type="text"/>
+<input class="status_spoiler invisible" name="status_spoiler" placeholder="${__('Content warning')}" value="${htmlEscape(status.reblog.spoiler_text)}" data-random="${Math.round(Math.random()*1000)}" type="text"/>
 </div>
 <div class="status_main">
 <!-- text area -->
@@ -1766,12 +1804,16 @@ for(var i=0;i<status.mentions.length;i++) {
 if(status.mentions[i].acct.indexOf("@") == -1) status.content = status.content.replace(new RegExp('href="'+status.mentions[i].url+'"',"g"),'href="/@'+status.mentions[i].acct+'@'+current_instance+'?mid='+status.mentions[i].id+'" data-mid="'+status.mentions[i].id+'"');
 else status.content = status.content.replace(new RegExp('href="'+status.mentions[i].url+'"',"g"),'href="/@'+status.mentions[i].acct+'?mid='+status.mentions[i].id+'" data-mid="'+status.mentions[i].id+'"');
 }
+if(!status.mentions.find(function(account) {
+return account.id == this;
+},status.account.id)) {
 var writtenby = new Object();
 writtenby.id = status.account.id;
 writtenby.username = status.account.username;
 writtenby.url = status.account.url;
 writtenby.acct = status.account.acct;
 status.mentions.push(writtenby);
+}
 if(status.spoiler_text && localStorage.setting_show_content_warning == "false") {
 alart_text = "<span>"+status.spoiler_text+"</span><button class='cw_button'>"+__('SHOW MORE')+"</button>",
 article_option = "content_warning";
@@ -1875,7 +1917,7 @@ ${status.content}
 </article>
 <footer class="toot_footer"${toot_footer_width}>
 <div class="toot_reaction">
-<button class="reply_button" tid="${status.id}" mentions='${JSON.stringify(status.mentions)}' display_name="${status.account.display_name}" privacy="${status.visibility}">
+<button class="reply_button" tid="${status.id}" mentions='${JSON.stringify(status.mentions)}' display_name="${status.account.display_name}" privacy="${status.visibility}" content_warning="${htmlEscape(status.spoiler_text)}">
 <i class="fa fa-fw fa-reply"></i>
 <span class="reaction_count reply_count">${toot_replies_count}</span>
 </button>
@@ -1929,12 +1971,16 @@ for(var i=0;i<status.reblog.mentions.length;i++) {
 if(status.reblog.mentions[i].acct.indexOf("@") == -1) status.reblog.content = status.reblog.content.replace(new RegExp('href="'+status.reblog.mentions[i].url+'"',"g"),'href="/@'+status.reblog.mentions[i].acct+'@'+current_instance+'?mid='+status.reblog.mentions[i].id+'" data-mid="'+status.reblog.mentions[i].id+'"');
 else status.reblog.content = status.reblog.content.replace(new RegExp('href="'+status.reblog.mentions[i].url+'"',"g"),'href="/@'+status.reblog.mentions[i].acct+'?mid='+status.reblog.mentions[i].id+'" data-mid="'+status.reblog.mentions[i].id+'"');
 }
+if(!status.reblog.mentions.find(function(account) {
+return account.id == this;
+},status.reblog.account.id)) {
 var writtenby = new Object();
 writtenby.id = status.reblog.account.id;
 writtenby.username = status.reblog.account.username;
 writtenby.url = status.reblog.account.url;
 writtenby.acct = status.reblog.account.acct;
 status.reblog.mentions.push(writtenby);
+}
 if(status.reblog.spoiler_text && localStorage.setting_show_content_warning == "false") {
 alart_text = "<span>"+status.reblog.spoiler_text+"</span><button class='cw_button'>"+__('SHOW MORE')+"</button>",
 article_option = "content_warning";
@@ -2031,7 +2077,7 @@ ${status.reblog.content}
 </article>
 <footer class="toot_footer" style="width:320px">
 <div class="toot_reaction">
-<button class="reply_button" tid="${status.reblog.id}" mentions='${JSON.stringify(status.reblog.mentions)}' display_name="${status.reblog.account.display_name}" privacy="${status.reblog.visibility}">
+<button class="reply_button" tid="${status.reblog.id}" mentions='${JSON.stringify(status.reblog.mentions)}' display_name="${status.reblog.account.display_name}" privacy="${status.reblog.visibility}" content_warning="${htmlEscape(status.reblog.spoiler_text)}">
 <i class="fa fa-fw fa-reply"></i>
 <span class="reaction_count reply_count">${toot_replies_count}</span>
 </button>

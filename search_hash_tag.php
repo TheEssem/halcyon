@@ -4,6 +4,7 @@
 <div class="article_wrap">
 <aside class="left_column">
 <?php include dirname(__FILE__).('/widgets/side_who_to_follow.php'); ?>
+<?php include dirname(__FILE__).('/widgets/side_trending.php'); ?>
 <?php include dirname(__FILE__).('/widgets/side_firefox_addon.php'); ?>
 <?php include dirname(__FILE__).('/widgets/side_footer.php'); ?>
 </aside>

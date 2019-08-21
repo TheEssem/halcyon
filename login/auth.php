@@ -23,7 +23,7 @@ if(in_array($domain,json_decode(base64_decode("WyJnYWIuY29tIiwiZ2FiLmFpIl0="))))
 $URL= 'https://'.$domain;
 $api->selectInstance($URL);
 $response = $api->get_access_token($api->clientWebsite.'/auth?&host='.$domain, htmlspecialchars((string)filter_input(INPUT_GET, 'code'), ENT_QUOTES));
-if ($response['html']["access_token"]) {
+if(isset($response) && is_array($response) && isset($response['html']) && is_array($response['html']) && isset($response['html']["access_token"]) && ctype_alnum($response['html']["access_token"])) {
 $access_token = $response['html']["access_token"];
 $profile = $api->accounts_verify_credentials()['html'];
 $account_id = $profile['id'];
@@ -57,12 +57,14 @@ localStorage.setItem('setting_play_invidious','false');
 localStorage.setItem('setting_play_vimeo','false');
 localStorage.setItem('setting_post_privacy','".$profile["source"]["privacy"]."');
 localStorage.setItem('setting_post_sensitive','".$profile["source"]["sensitive"]."');
+localStorage.setItem('setting_redirect_invidious','unset');
 $.cookie('darktheme','unset',{path:'/',expires:3650});
 if(sessionStorage.return && sessionStorage.return == 'share') location.href = '/intent/toot?action=send';
 else location.href = '/';
 </script>
 ";
 }
+else echo "<h1>An error occured</h1><p>There was an error and Halcyon couldn't fetch or validate a access token for this instance</p>";
 }
 ?>
 </head>

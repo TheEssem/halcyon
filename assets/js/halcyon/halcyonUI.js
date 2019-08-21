@@ -303,7 +303,6 @@ if(statuses[i].in_reply_to_id && level === "timelines/home" | level === "timelin
 if(localStorage.setting_thread_view == "true") {
 (function(this_id) {
 api.get('statuses/'+statuses[i].id+"/context", function(context) {
-console.log(this_id);
 for(var b=0;b<context.ancestors.length;b++) {
 var filterreplystatus = false;
 for(var a=0;a<current_filters.length;a++) {
@@ -341,7 +340,8 @@ $(window).scroll(function () {
 if ( $(window).scrollTop()+window.innerHeight >= $(document).height()-700 ) {
 if (!isSyncing) {
 isSyncing = true;
-load_options.unshift( {name:"max_id",data:links['next'].match(/max_id=(.+)&?/)[1]} );
+if(links && links['next']) {
+load_options.unshift({name:"max_id",data:links['next'].match(/max_id=(.+)&?/)[1]});
 api.get(level, load_options, function(statuses) {
 if (statuses.length) {
 for(let i in statuses) {
@@ -399,6 +399,12 @@ isSyncing = true;
 }
 });
 load_options.shift();
+}
+else {
+$('.timeline_footer > i').css({"display":"none"});
+$('.timeline_footer').append('<img style="width: 30%;opacity: .3;" src="/assets/images/halcyon.png">');
+isSyncing = true;
+}
 };
 };
 });
@@ -1696,6 +1702,10 @@ replyto += "@"+mentions[i].acct+" ";
 }
 }
 $('#reply_status_form textarea').val(replyto);
+if($("#reply_status_form .status_spoiler:blank").length == 0) {
+$('#reply_status_form .status_spoiler').removeClass('invisible');
+$('#reply_status_form .status_textarea').addClass('status_has_cw');
+}
 delete image_uploads.reply;
 image_uploads.reply = new Object();
 openStatusEditor("reply");
@@ -1748,6 +1758,11 @@ $('#single_reply_status_form .expand_privacy_menu_button > i').attr('class', "fa
 $('#single_reply_status_form').attr('tid',sid);
 $('.single_reply_status .single_reply_status_header span').addClass("emoji_poss").html(__("Reply to")+" "+display_name);
 $('#single_reply_status_form textarea').val(replyto);
+$('#single_reply_status_form .status_spoiler').val($(this).attr("content_warning"));
+if($(this).attr("content_warning") != "") {
+$('#single_reply_status_form .status_spoiler').removeClass('invisible');
+$('#single_reply_status_form .status_textarea').addClass('status_has_cw');
+}
 openStatusEditor("single_reply")
 api.get('statuses/'+sid+'/', function(status) {
 timeline_template(status).appendTo(".single_reply_status .status_preview");
@@ -2029,6 +2044,16 @@ $(".search_form").submit(function(e) {
 e.preventDefault();
 searchredirect($("#search_form").val());
 });
+$('.overlay_redirect_invidious_yes').click(function() {
+$('.close_button').click();
+window.open("https://"+server_setting_invidious+"/watch?v="+$(".overlay_redirect_invidious").data("video"),"_blank");
+if($("#redirect_invidious_permanent")[0].checked) localStorage.setting_redirect_invidious = "true";
+});
+$('.overlay_redirect_invidious_no').click(function() {
+$('.close_button').click();
+window.open("https://www.youtube.com/watch?v="+$(".overlay_redirect_invidious").data("video"),"_blank");
+if($("#redirect_invidious_permanent")[0].checked) localStorage.setting_redirect_invidious = "false";
+});
 if($("#js-overlay_content_wrap").hasClass("view")) $(document.body).css("overflow-y","hidden");
 $("#js-overlay_content_wrap").attrchange(function(attr) {
 if(attr == "class" && $("#js-overlay_content_wrap").hasClass("view")) $(document.body).css("overflow-y","hidden");
@@ -2072,7 +2097,11 @@ return false;
 });
 $(document).on('click','.link_preview',function(e) {
 e.stopPropagation();
-window.open($(this).data("url"),"_blank");
+const ytcom = $(this).data("url").match(/https?:\/\/(www\.)?youtube\.com\/watch\?v=([a-zA-Z\d_-]+)/);
+const ytbe = $(this).data("url").match(/https?:\/\/(www\.)?youtu\.be\/([a-zA-Z\d_-]+)/);
+if(ytcom) openVideo(ytcom[2]);
+else if(ytbe) openVideo(ytbe[2]);
+else window.open($(this).data("url"),"_blank");
 });
 $(document).on('focus','.status_textarea textarea,.status_top .status_spoiler',function(e) {
 global_focus_textfield = $(this).data("random");

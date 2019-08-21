@@ -13,13 +13,15 @@ getConfig: function(key) {
 return config[key];
 },
 get: function (endpoint) {
-var queryData,callback,queryStringAppend = "?";
+var queryData,callback,failback,queryStringAppend = "?";
 if (typeof arguments[1] === "function") {
 queryData = {};
 callback = arguments[1];
+if(arguments[2]) failback = arguments[2];
 } else {
 queryData = arguments[1];
 callback = arguments[2];
+if(arguments[3]) failback = arguments[3];
 }
 if(typeof queryData == "string") {
 queryStringAppend = queryData;
@@ -49,6 +51,7 @@ error: function(xhr, textStatus, errorThrown) {
 if(xhr.readyState == 0) {
 api.get(endpoint,queryStringAppend,callback);
 }
+else if(typeof failback == "function") failback();
 else {
 if(xhr.responseText.length > 0) {
 putMessage(`[${xhr.status}] ${xhr.responseJSON['error']}`);

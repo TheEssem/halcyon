@@ -1,670 +1,679 @@
+# Antoni Bertran <abertranb@uoc.edu>, 2019. #zanata
+# Thiemo Tiziani <thiemo.tiziani@dev-wiki.de>, 2019. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-21 08:47+0000\n"
-"PO-Revision-Date: 2019-08-16 18:57+0000\n"
-"Last-Translator: ButterflyOfFire <butterflyoffire+halcyon@protonmail.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: ar\n"
+"PO-Revision-Date: 2019-07-25 19:40+0000\n"
+"Last-Translator: tarteka <info@tarteka.net>\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
-"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.8\n"
 "X-Loco-Source-Locale: de_DE\n"
 "X-Loco-Parser: loco_parse_po\n"
-"X-POOTLE-MTIME: 1565981867.626590\n"
+"X-POOTLE-MTIME: 1564083657.655034\n"
 
 msgid "Language"
-msgstr "اللغة"
+msgstr "Idioma"
 
 msgid "Language_en_US"
-msgstr "الإنجليزية (أمريكا)"
+msgstr "Inglés"
 
 msgid "Language_de_DE"
-msgstr "الألمانية"
+msgstr "Alemán"
 
 msgid "Language_ja_JP"
-msgstr "اليابانية"
+msgstr "Japonés"
 
 msgid "Language_ko_KR"
-msgstr "الكورية"
+msgstr "Coreano"
 
 msgid "Language_pl_PL"
-msgstr "البولندية"
+msgstr "Polaco"
 
 msgid "Language_gl_ES"
-msgstr "الغاليكية"
+msgstr "Gallego"
 
 msgid "Language_pt_BR"
-msgstr "البرتغالية (البرازيل)"
+msgstr "Portugués (Brasil)"
 
 msgid "Language_it_IT"
-msgstr "الإيطالية"
+msgstr "Italiano"
 
 msgid "Language_cs_CZ"
-msgstr "التشيكية"
+msgstr "Checo"
 
 msgid "Language_fr_FR"
-msgstr "الفرنسية"
+msgstr "Francés"
 
+#, fuzzy
 msgid "Language_nl_NL"
-msgstr "الهولندية"
+msgstr "Polaco"
 
+#, fuzzy
 msgid "Language_ca_ES"
-msgstr "الكتالانية"
+msgstr "Gallego"
 
+#, fuzzy
 msgid "Language_ar_DZ"
-msgstr "العربية"
+msgstr "Alemán"
 
 msgid "Sensitive content"
-msgstr "محتوى حساس"
+msgstr "Contenido delicado"
 
 msgid "Click to view"
-msgstr "اضغط للعرض"
+msgstr "Haz clic aquí para verlo"
 
 msgid "SHOW MORE"
-msgstr "عرض المزيد"
+msgstr "MUESTRA MÁS"
 
 msgid "SHOW LESS"
-msgstr "اعرض أقل"
+msgstr "MUESTRA MENOS"
 
 msgid "Public"
-msgstr "للعامة"
+msgstr "Público"
 
 msgid "Unlisted"
-msgstr "غير مدرج"
+msgstr "Oculto"
 
 msgid "Followers-only"
-msgstr "للمُتابِعين فقط"
+msgstr "Solo seguidores"
 
 msgid "Direct"
-msgstr "المباشِرة"
+msgstr "Directo"
 
 msgid "Delete Toot"
-msgstr "احذف التبويق"
+msgstr "Suprime el tuut"
 
 msgid "Unpin Toot"
-msgstr "فك تدبيس التبويق"
+msgstr "Desclava el tuut"
 
 msgid "Pin Toot"
-msgstr "تدبيس التبويق"
+msgstr "Clava el tuut"
 
 msgid "Mute"
-msgstr "كتم"
+msgstr "Silencia"
 
 msgid "Block"
-msgstr "حجب"
+msgstr "Bloquea"
 
 msgid "Report this Toot"
-msgstr "الإبلاغ عن هذا التبويق"
+msgstr "Denuncia este tuut"
 
 msgid "Copy link to Toot"
-msgstr "نسخ رابط التبويق"
+msgstr "Copia el enlace en el tuut"
 
 msgid "View original"
-msgstr "عر الأصلي"
+msgstr "Ver el original"
 
 msgid "Boosted"
-msgstr "تمت ترقيته"
+msgstr "Promocionado"
 
 msgid "Pinned Toot"
-msgstr "تبويق مدبس"
+msgstr "El tuut se ha clavado"
 
 msgid "favourited Your Toot"
-msgstr "أعجب بتبويقك"
+msgstr "ha añadido tu tuut a favoritos"
 
 msgid "boosted Your Toot"
-msgstr "قام بترقية تبويقك"
+msgstr "ha promocionado tu tuut"
 
 msgid "followed you"
-msgstr "يتابِعك"
+msgstr "te ha seguido"
 
 msgid "Follow"
-msgstr "تابع"
+msgstr "Sigue"
 
 msgid "Toot your reply"
-msgstr ""
+msgstr "Tuutea tu respuesta"
 
 msgid "Reply"
-msgstr "رد"
+msgstr "Contesta"
 
 msgid "Content warning"
-msgstr "تحذير عن المحتوى"
+msgstr "Aviso sobre el contenido"
 
 msgid "Jan"
-msgstr "جان"
+msgstr "En."
 
 msgid "Feb"
-msgstr "فيف"
+msgstr "Febr."
 
 msgid "Mar"
-msgstr "مار"
+msgstr "Mzo."
 
 msgid "Apr"
-msgstr "أفر"
+msgstr "Abr."
 
 msgid "May"
-msgstr "ماي"
+msgstr "My."
 
 msgid "Jun"
-msgstr "جوا"
+msgstr "Jun."
 
 msgid "Jul"
-msgstr "جوي"
+msgstr "Jul."
 
 msgid "Aug"
-msgstr "أوت"
+msgstr "Ag."
 
 msgid "Sep"
-msgstr "سبت"
+msgstr "Set."
 
 msgid "Oct"
-msgstr "أكت"
+msgstr "Oct."
 
 msgid "Nov"
-msgstr "نوف"
+msgstr "Nov."
 
 msgid "Dec"
-msgstr "ديس"
+msgstr "Dic."
 
 msgid "Changed setting to"
-msgstr ""
+msgstr "Cambia la configuración a"
 
 msgid "Mark as NSFW by default enabled"
-msgstr ""
+msgstr "Se ha activado Marcar como NSFW como predeterminado"
 
 msgid "Mark as NSFW by default disabled"
-msgstr ""
+msgstr "Se ha desactivado Marcar como NSFW como predeterminado"
 
 msgid "Who to follow enabled"
-msgstr ""
+msgstr "Se ha activado A quién te gustaría seguir"
 
 msgid "Who to follow disabled"
-msgstr ""
+msgstr "Se ha desactivado A quién te gustaría seguir"
 
 msgid "Changed about me setting"
-msgstr ""
+msgstr "Se ha cambiado la configuración de Sobre mí"
 
 msgid "Uploaded new avatar"
-msgstr ""
+msgstr "Se ha colgado un nuevo avatar"
 
 msgid "Uploaded new header"
-msgstr ""
+msgstr "Se ha colgado una nueva cabecera"
 
 msgid "Account locked"
-msgstr "الحساب مؤمّن"
+msgstr "Cuenta privada"
 
-#, fuzzy
 msgid "Account unlocked"
-msgstr "الحساب مؤمّن"
+msgstr "Cuenta pública"
 
 msgid "Link previews enabled"
-msgstr "معاينة الروابط مفعّلة"
+msgstr "Se ha activado la vista previa de los enlaces"
 
-#, fuzzy
 msgid "Link previews disabled"
-msgstr "معاينة الروابط مفعّلة"
+msgstr "Se ha desactivado la vista previa de los enlaces"
 
 msgid "You didn't allow notifications"
-msgstr ""
+msgstr "No has permitido notificaciones"
 
 msgid "Desktop notifications enabled"
-msgstr "إشعارات سطح المكتب مفعّلة"
+msgstr "Se han activado las notificaciones en el escritorio"
 
-#, fuzzy
 msgid "Desktop notifications disabled"
-msgstr "إشعارات سطح المكتب مفعّلة"
+msgstr "Se han desactivado las notificaciones en el escritorio"
 
 msgid "Replies shown"
-msgstr ""
+msgstr "Respuestas mostradas"
 
 msgid "Replies hidden"
-msgstr ""
+msgstr "Respuestas ocultas"
 
 msgid "CW content shown"
-msgstr ""
+msgstr "Contenido delicado mostrado"
 
 msgid "CW content hidden"
-msgstr ""
+msgstr "Contenido delicado oculto"
 
 msgid "NSFW content shown"
-msgstr ""
+msgstr "Contenido NSFW mostrado"
 
 msgid "NSFW content hidden"
-msgstr ""
+msgstr "Contenido NSFW oculto"
 
 msgid "Reply to"
-msgstr "ردا على"
+msgstr "Contesta a"
 
 msgid "Report"
-msgstr "الإبلاغ"
+msgstr "Denuncia a"
 
 msgid "Report a Toot of"
-msgstr ""
+msgstr "Denuncia un tuut de"
 
 msgid "What's happening?"
-msgstr "ما الحدث؟"
+msgstr "¿Qué pasa?"
 
 msgid "Toot"
-msgstr "بوّق"
+msgstr "Tuut"
 
 msgid "Compose new Toot"
-msgstr "تحرير تبويق جديد"
+msgstr "Redacta un tuut nuevo"
 
 msgid "Please describe what the problem with the Toot is."
-msgstr ""
+msgstr "Por favor, describe el problema con el tuut."
 
 msgid "TOOTS"
-msgstr "تبويقات"
+msgstr "TUUTS"
 
 msgid "PEOPLE"
-msgstr "الأشخاص"
+msgstr "PERSONAS"
 
 msgid "Settings"
-msgstr "الإعدادات"
+msgstr "Configuración"
 
 msgid "GENERAL"
-msgstr "عام"
+msgstr "GENERAL"
 
 msgid "PROFILE"
-msgstr "الملف الشخصي"
+msgstr "PERFIL"
 
 msgid "APPEARANCE"
-msgstr "المظهر"
+msgstr "APARIENCIA"
 
 msgid "Change instance"
-msgstr "تغيير مثيل الخادم"
+msgstr "Cambia de instancia"
 
 msgid "Blank for default"
-msgstr "فارغ للافتراضي"
+msgstr "En blanco como predeterminado"
 
 msgid "FOLLOWING"
-msgstr "المتابَعون"
+msgstr "USUARIOS A LOS QUE SIGUES"
 
 msgid "Interesting accounts of devs"
-msgstr ""
+msgstr "Cuentas de desarrolladores interesantes"
 
 msgid "Halcyon for"
-msgstr "هالسيون Halcyon لـ"
+msgstr "Halcyon para "
 
 msgid "About"
-msgstr "عن"
+msgstr "Acerca de"
 
 msgid "Terms"
-msgstr "الشروط"
+msgstr "Condiciones"
 
 msgid "Apps"
-msgstr "التطبيقات"
+msgstr "Aplicaciones"
 
 msgid "Source code"
-msgstr "الشفرة المصدرية"
+msgstr "Código fuente"
 
 msgid "Other instances"
-msgstr "مثيلات الخوادم الأخرى"
+msgstr "Otras instancias"
 
 msgid "Privacy policy"
-msgstr "سياسة الخصوصية"
+msgstr "Política de privacidad"
 
 msgid "Version"
-msgstr "الإصدار"
+msgstr "Versión"
 
 msgid "Who to follow"
-msgstr "مَن عليك متابَعته"
+msgstr "A quién te gustaría seguir"
 
 msgid "Enable who to follow"
-msgstr "تفعيل مَن عليك متابَعته"
+msgstr "Activa A quién te gustaría seguir"
 
 msgid ""
 "Halcyon needs to connect to an external server to get a list of users which "
 "have similar interests as you. If you want to use this feature, please opt-"
 "in."
 msgstr ""
+"Halcyon debe conectarse con un servidor externo para obtener una lista de "
+"usuarios que tengan los mismos intereses que tú. Si quieres utilizar esta "
+"función, por favor,elígela"
 
 msgid "MORE"
-msgstr "المزيد"
+msgstr "MÁS"
 
 msgid "FOLLOWERS"
-msgstr "المتابِعون"
+msgstr "SEGUIDORES"
 
 msgid "Following"
-msgstr "المتابَعون"
+msgstr ""
 
 msgid "You'll no longer receive notifications from this user"
-msgstr ""
+msgstr "No recibirás más notificaciones de este usuario"
 
 msgid "Unmuted this user"
-msgstr ""
+msgstr "Deja de silenciar al usuario"
 
 msgid "This user has been blocked"
-msgstr ""
+msgstr "Este usuario ha sido bloqueado"
 
 msgid "Unblocked this user"
-msgstr ""
+msgstr "Este usuario ha sido desbloqueado"
 
 msgid "Your Toot has been deleted"
-msgstr "لقد تم حذف تبويقك"
+msgstr "Se ha suprimido tu tuut"
 
 msgid "Your Toot has been pinned"
-msgstr "تم تدبيس تبويقك"
+msgstr "Se ha clavado tu tuut"
 
 msgid "Your Toot has been unpinned"
-msgstr "تم فك تدبيس تبويقك"
+msgstr "Se ha desclavado tu tuut"
 
 msgid "Edit profile"
-msgstr "تعديل الملف الشخصي"
+msgstr "Edita el perfil"
 
 msgid "FAVOURITES"
-msgstr "المفضلة"
+msgstr "FAVORITOS"
 
 msgid "Show"
-msgstr "عرض"
+msgstr "Mostrar"
 
 msgid "Blocking"
-msgstr ""
+msgstr "Usuarios bloqueados"
 
 msgid "Muting"
-msgstr ""
+msgstr "Usuarios silenciados"
 
 msgid "Requested"
-msgstr ""
+msgstr "Solicitado"
 
 msgid "Photos and toots"
-msgstr "الصور والتبويقات"
+msgstr "Fotos y tuuts"
 
 msgid "favourited your toot"
-msgstr "أعجِب بتبويقك"
+msgstr "ha añadido tu tuut a favoritos"
 
 msgid "boosted your toot"
-msgstr "قام بترقية تبويقك"
+msgstr "ha promocionado tu tuut"
 
 msgid "mentioned you"
-msgstr "أشار إليك"
+msgstr "te ha mencionado"
 
 msgid "Your Toot was posted!"
-msgstr "تم نشر تبويقك!"
+msgstr "¡Se ha colgado tu tuut!"
 
 msgid "News"
-msgstr "المستجدات"
+msgstr "Noticias"
 
 msgid "Source"
-msgstr "المصدر"
+msgstr "Fuente"
 
 msgid "Privacy"
-msgstr "الخصوصية"
+msgstr "Privacidad"
 
 msgid "Imprint"
-msgstr ""
+msgstr "Aviso legal"
 
 msgid "Contact"
-msgstr "للاتصال"
+msgstr "Contacto"
 
 msgid "Login"
-msgstr "تسجيل الدخول"
+msgstr "Inicia sesión"
 
 msgid "Login to Halcyon"
-msgstr "تسجيل الدخول إلى هالسيون"
+msgstr "Inicia sesión en Halcyon"
 
 msgid "create an account"
-msgstr "إنشاء حساب"
+msgstr "crea una cuenta"
 
 msgid "or"
-msgstr "أو"
+msgstr "o"
 
 msgid "I agree with the"
-msgstr "أوافق على"
+msgstr "Acepto"
 
 msgid "What is Halcyon"
-msgstr "ما هو هالسيون Halcyon"
+msgstr "Qué es Halcyon"
 
 msgid ""
 "which aims to recreate the simple and beautiful user interface of Twitter "
 "while keeping all advantages of decentral networks in focus."
 msgstr ""
+"cuyo objetivo es recrear la interfaz sencilla y bonita de Twitter y al mismo "
+"tiempo mantener todas las ventajas de las redes descentralizadas."
 
 msgid "Halcyon is a webclient for"
-msgstr "هالسيون Halcyon تطبيق ويب لـ"
+msgstr "Halcyon es un cliente web"
 
 msgid "Contact / Feedback"
-msgstr ""
+msgstr "Contacto / Retorno"
 
 msgid "Use my contact form"
-msgstr ""
+msgstr "Usa mi formulario de contacto"
 
 msgid "Help us"
-msgstr "ساعدنا"
+msgstr "Ayúdanos"
 
 msgid "Halcyon Terms of Use"
-msgstr "شروط خدمة هالسيُون"
+msgstr "Condiciones de uso de Halcyon"
 
 msgid ""
 "This terms of use agreement is for the users of web service Halcyon for "
 "Mastodon and Pleroma (Halcyon for short) hosted at"
 msgstr ""
+"Este acuerdo de condiciones de uso es para los usuarios del servicio web de "
+"Halcyon para Mastodon y Pleroma («Halcyon», abreviado) alojado en"
 
 msgid "Your Reply was posted!"
-msgstr "تم نشر جوابك!"
+msgstr "¡Se ha colgado tu respuesta!"
 
 msgid "Toot reported successfully!"
-msgstr "تم الإبلاغ عن التبويق بنجاح!"
+msgstr "¡Tuut denunciado!"
 
 msgid "Link successfully copied!"
-msgstr "تم نسخ الرابط بنجاح!"
+msgstr "¡Enlace copiado correctamente!"
 
 msgid "Home"
-msgstr "الرئيسية"
+msgstr "Inicio"
 
 msgid "Local"
-msgstr "المحلي"
+msgstr "Local"
 
 msgid "Federated"
-msgstr "الفديرالي"
+msgstr "Federado"
 
 msgid "Notifications"
-msgstr "الإشعارات"
+msgstr "Notificaciones"
 
 msgid "Search Mastodon"
-msgstr "البحث في ماستدون"
+msgstr "Buscar en Mastodon"
 
 msgid "View profile"
-msgstr "عرض الملف الشخصي"
+msgstr "Visita el perfil"
 
 msgid "Log out"
-msgstr "الخروج"
+msgstr "Cerrar sesión"
 
 msgid "All"
-msgstr "الكل"
+msgstr "Todo"
 
 msgid "new notitification"
-msgstr "إشعار جديد"
+msgstr "nueva notificación"
 
 msgid "Show all NSFW content"
-msgstr "أظهر كافة المحتويات الحساسة"
+msgstr "Muestra todo el contenido NSFW"
 
 msgid "Show all CW content"
-msgstr ""
+msgstr "Muestra todo el contenido delicado"
 
 msgid "Show replies"
-msgstr "عرض الردود"
+msgstr "Muestra las respuestas"
 
 msgid "Desktop notifications"
-msgstr "الإشعارات المكتبية"
+msgstr "Notificaciones del escritorio"
 
 msgid "Enable link previews"
-msgstr "عرض معاينات الروابط"
+msgstr "Activa la vista previa de los enlaces"
 
 msgid "Auto update"
-msgstr "تحديث تلقائي"
+msgstr "Actualización automática"
 
 msgid "Manual update"
-msgstr "تحديث يدوي"
+msgstr "Actualización manual"
 
 msgid "Appearance settings"
-msgstr "إعدادات المظهر"
+msgstr "Configuración de la apariencia"
 
 msgid "New posts streaming"
-msgstr ""
+msgstr "Reproducción de artículos nuevos"
 
 msgid "replies"
-msgstr "ردود"
+msgstr "respuestas"
 
 msgid "General settings"
-msgstr "الإعدادات العامة"
+msgstr "Configuración general"
 
 msgid "Default post privacy"
-msgstr "الخصوصية الافتراضية عند النشر"
+msgstr "Privacidad de los artículos como predeterminado"
 
 msgid "Mark as NSFW by default"
-msgstr "تعيين كمحتوى حساس افتراضيا"
+msgstr "Marcar como NSFW como predeterminado"
 
 msgid "Media"
-msgstr "الوسائط"
+msgstr "Multimedia"
 
 msgid "FOLLOWS YOU"
-msgstr "يتابعك"
+msgstr "TE SIGUE"
 
 msgid "Local instance"
-msgstr "مثيل الخادم المحلي"
+msgstr "Instancia local"
 
 msgid "Hashtag search filter"
-msgstr ""
+msgstr "Filtro de búsqueda de etiqueta"
 
 msgid "All instances"
-msgstr "كافة مثيلات الخوادم"
+msgstr "Todas las instancias"
 
 msgid "Local only"
-msgstr "المحلي فقط"
+msgstr "Solo locales"
 
 msgid "Lock account"
-msgstr "قفل الحساب"
+msgstr "Protege la cuenta"
 
 msgid "Header"
-msgstr "الرأسية"
+msgstr "Cabecera"
 
 msgid "Avatar"
-msgstr "الصورة الرمزية"
+msgstr "Avatar"
 
 msgid "About me"
-msgstr "عني"
+msgstr "Sobre mí"
 
 msgid "Display name"
-msgstr "الاسم العلني"
+msgstr "Muestra el nombre"
 
 msgid "Profile settings"
-msgstr "إعدادات الملف الشخصي"
+msgstr "Configuración del perfil"
 
 msgid "Toots"
-msgstr "التبويقات"
+msgstr "Tuuts"
 
 msgid "Favourites"
-msgstr "المفضلة"
+msgstr "Favoritos"
 
 msgid "New favourite"
-msgstr "مفضلة جديدة"
+msgstr "Nuevo favorito"
 
 msgid "New boost"
-msgstr "ترقية جديدة"
+msgstr "Nueva promoción"
 
 msgid "New follower"
-msgstr "متابِع جديد"
+msgstr "Nuevo seguidor"
 
 msgid "New mention"
-msgstr "إشارة جديدة"
+msgstr "Nueva mención"
 
 msgid "Dark theme enabled"
-msgstr "تم تفعيل السمة الداكنة"
+msgstr "Modo oscuro activado"
 
 msgid "Dark theme disabled"
-msgstr "تم تعطيل السمة الداكنة"
+msgstr "Modo oscuro desactivado"
 
 msgid "Only on top"
-msgstr ""
+msgstr "Solo arriba"
 
 msgid "Enable dark theme"
-msgstr "تفعيل السمة الداكنة"
+msgstr "Activa el modo oscuro"
 
 msgid "Please enter the new name for this list."
-msgstr "يرجى إدخال اسم جديد لهذه القائمة."
+msgstr "Por favor, introduce el nombre nuevo para esta lista."
 
 msgid "The name of your list can't be empty!"
-msgstr ""
+msgstr "¡El nombre de la lista no se puede quedar en blanco!"
 
 msgid "Your list has been renamed"
-msgstr "تم إعادة تسمية قائمتك"
+msgstr "Se ha cambiado el nombre de la lista "
 
 msgid "Are you sure that you want to delete this list?"
-msgstr ""
+msgstr "¿Seguro que quieres suprimir esta lista?"
 
-#, fuzzy
 msgid "Your list has been deleted"
-msgstr "لقد تم حذف تبويقك"
+msgstr "Se ha suprimido la lista"
 
 msgid "Please enter the name of your new list."
-msgstr ""
+msgstr "Por favor, introduce el nombre de tu nueva lista."
 
 msgid "Add"
-msgstr "إضافة"
+msgstr "Añadir"
 
 msgid "Remove"
-msgstr "إزالة"
+msgstr "Eliminar"
 
 msgid "Add to list"
-msgstr "إضافة إلى القائمة"
+msgstr "Añade a la lista"
 
 msgid "Are you sure that you want to mute this user?"
-msgstr ""
+msgstr "¿Seguro que quieres silenciar a este usuario?"
 
 msgid "Are you sure that you want to block this user?"
-msgstr ""
+msgstr "¿Seguro que quieres bloquear a este usuario?"
 
 msgid "Are you sure that you want to delete this toot?"
-msgstr ""
+msgstr "¿Seguro que quieres eliminar este tuut?"
 
 msgid "Added this account to the list"
-msgstr ""
+msgstr "Esta cuenta se ha añadido a la lista"
 
 msgid ""
 "You need to follow this user to add him/her to the list. Do you want to do "
 "that now?"
 msgstr ""
+"Tienes que seguir a este usuario para añadirlo a la lista. ¿Lo quieres hacer "
+"ahora?"
 
 msgid "You successfully followed this user."
-msgstr ""
+msgstr "Has seguido a este usuario correctamente."
 
 msgid "Removed this account from the list"
-msgstr ""
+msgstr "Esta cuenta se ha eliminado de la lista"
 
 msgid "Joined at"
-msgstr "انضم في"
+msgstr ""
 
 msgid "Direct messages"
-msgstr "الرسائل المباشِرة"
+msgstr ""
 
 msgid "Lists"
-msgstr "القوائم"
+msgstr ""
 
 msgid "Open public profile"
-msgstr "افتح الملف الشخصي العام"
+msgstr ""
 
 msgid "My Lists"
-msgstr "قوائمي"
+msgstr ""
 
 msgid "Confirmation"
-msgstr "التأكيد"
+msgstr "Confirmación"
 
 msgid "Yes"
-msgstr "نعم"
+msgstr "Sí"
 
 msgid "Cancel"
-msgstr "إلغاء"
+msgstr "Cancelar"
 
 msgid "Prompt"
-msgstr "أطلب"
+msgstr ""
 
 msgid "Ok"
-msgstr "موافق"
+msgstr "Ok"
 
 msgid "Autocomplete enabled"
 msgstr ""
@@ -733,50 +742,51 @@ msgid "Vimeo embeds disabled"
 msgstr ""
 
 msgid "Thread"
-msgstr "المحادثة"
+msgstr ""
 
 msgid "Never"
-msgstr "أبدا"
+msgstr ""
 
 msgid "Don't change"
 msgstr ""
 
 msgid "Filter updated"
-msgstr "تم تحديث عامل التصفية"
+msgstr ""
 
+#, fuzzy
 msgid "Are you sure that you want to delete this filter?"
-msgstr "هل انت متأكد من أنك تريد حذف عامل التصفية هذا؟"
+msgstr "¿Seguro que quieres suprimir esta lista?"
 
 #, fuzzy
 msgid "Your filter has been deleted"
-msgstr "لقد تم حذف تبويقك"
+msgstr "Se ha suprimido la lista"
 
 msgid "Toot to"
 msgstr ""
 
 msgid "Administrated by"
-msgstr "يديره"
+msgstr ""
 
 msgid "Users"
-msgstr "مستخدم"
+msgstr ""
 
 msgid "Connections"
-msgstr "إتصالات"
+msgstr ""
 
 msgid "Notifications when tab closed"
 msgstr ""
 
 msgid "Filter settings"
-msgstr "إعدادات التصفية"
+msgstr ""
 
 msgid "Show toots of bots"
-msgstr "إظهار تبويقات الروبوتات"
+msgstr ""
 
 msgid "Add new filter"
-msgstr "إضافة عامل تصفية جديد"
+msgstr ""
 
 msgid "Create a filter"
-msgstr "أنشئ عامل تصفية"
+msgstr ""
 
 msgid "Word or phrase to filter"
 msgstr ""
@@ -785,13 +795,13 @@ msgid "Filter in the following timelines"
 msgstr ""
 
 msgid "Expires in"
-msgstr "تنتهي صلاحيته في"
+msgstr ""
 
 msgid "Autocomplete in compose field"
 msgstr ""
 
 msgid "Media settings"
-msgstr "إعدادات الوسائط"
+msgstr ""
 
 msgid "Play animated GIFs"
 msgstr ""
@@ -818,10 +828,10 @@ msgid "Custom profile fields"
 msgstr ""
 
 msgid "Name"
-msgstr "الاسم"
+msgstr "Nombre"
 
 msgid "Value"
-msgstr "القيمة"
+msgstr ""
 
 msgid ""
 "To verify that the links in your custom fields really belong to you, you can "
@@ -830,49 +840,49 @@ msgid ""
 msgstr ""
 
 msgid "Message"
-msgstr "الرسالة"
+msgstr ""
 
 msgid "Filter"
 msgstr ""
 
 msgid "second"
-msgstr "ثانية"
+msgstr ""
 
 msgid "seconds"
-msgstr "ثواني"
+msgstr ""
 
 msgid "minute"
-msgstr "دقيقة"
+msgstr ""
 
 msgid "minutes"
-msgstr "دقائق"
+msgstr ""
 
 msgid "hour"
-msgstr "ساعة"
+msgstr ""
 
 msgid "hours"
-msgstr "ساعات"
+msgstr ""
 
 msgid "day"
-msgstr "يوم"
+msgstr ""
 
 msgid "days"
-msgstr "أيام"
+msgstr ""
 
 msgid "week"
-msgstr "أسبوع"
+msgstr ""
 
 msgid "Filter posts irreversible"
 msgstr ""
 
 msgid "Whole word"
-msgstr "الكلمة كاملة"
+msgstr ""
 
 msgid "FILTERS"
-msgstr "عوامل التصفية"
+msgstr ""
 
 msgid "MEDIA"
-msgstr "الوسائط"
+msgstr ""
 
 msgid "Dark theme reset to standard"
 msgstr ""
@@ -890,34 +900,34 @@ msgid "Threads shown in chronological order"
 msgstr ""
 
 msgid "Final results"
-msgstr "النتائج النهائية"
+msgstr ""
 
 msgid "votes"
-msgstr "أصوات"
+msgstr ""
 
 msgid "left"
-msgstr "متبقي"
+msgstr ""
 
 msgid "Vote"
-msgstr "صوت"
+msgstr ""
 
 msgid "A poll you participated in has ended"
 msgstr ""
 
 msgid "Days"
-msgstr "أيام"
+msgstr ""
 
 msgid "Hours"
-msgstr "ساعات"
+msgstr ""
 
 msgid "Minutes"
-msgstr "دقائق"
+msgstr ""
 
 msgid "Multiple choice"
-msgstr "متعدد الخيارات"
+msgstr ""
 
 msgid "Poll finished"
-msgstr "انتهى استطلاع الرأي"
+msgstr ""
 
 msgid ""
 "If you close the overlay, your text will get deleted! Are you sure you want "
@@ -925,7 +935,7 @@ msgid ""
 msgstr ""
 
 msgid "Website"
-msgstr "موقع الويب"
+msgstr ""
 
 msgid "Show pictures in full height"
 msgstr ""
@@ -934,16 +944,16 @@ msgid "Show threads in thread view in timeline"
 msgstr ""
 
 msgid "Unblock"
-msgstr "ألغِ الحظر"
+msgstr ""
 
 msgid "Unmute"
-msgstr "إلغاء الكتم"
+msgstr ""
 
 msgid "Accept"
-msgstr "موافقة"
+msgstr ""
 
 msgid "Reject"
-msgstr "رفض"
+msgstr ""
 
 msgid "You can only add four pictures to one post!"
 msgstr ""
@@ -964,23 +974,23 @@ msgid "Share a link with your followers"
 msgstr ""
 
 msgid "Post a Toot on Mastodon"
-msgstr "انشر تبويقا على ماستدون"
+msgstr ""
 
 msgid ""
 "Toot posted successfully but your browser doesn't allow closing the window"
 msgstr ""
 
 msgid "Sign up"
-msgstr "لِج"
+msgstr ""
 
 msgid "Username"
-msgstr "اسم المستخدم"
+msgstr ""
 
 msgid "Log in and Toot"
-msgstr "لِج قصد التبويق"
+msgstr ""
 
 msgid "New to Mastodon?"
-msgstr "هل أنت جديد على ماستدون؟"
+msgstr ""
 
 msgid ""
 "Get instant updates from your friends, industry experts, favorite "
@@ -988,19 +998,19 @@ msgid ""
 msgstr ""
 
 msgid "What is Mastodon? Learn more."
-msgstr "ما هو ماستدون؟ تعلّم المزيد."
+msgstr ""
 
 msgid "Please describe what you can see in the picture."
-msgstr "يرجى وصف ما تراه على الصورة."
+msgstr ""
 
 msgid "Save"
-msgstr "احفظ"
+msgstr ""
 
 msgid "BLOCKS"
-msgstr "الحسابات المحظورة"
+msgstr ""
 
 msgid "MUTES"
-msgstr "الحسابات المكتومة"
+msgstr ""
 
 msgid "FOLLOW REQUESTS"
-msgstr "طلبات المتابَعة"
+msgstr ""
