@@ -176,6 +176,9 @@ border-radius: 5px;
 overflow: hidden;
 margin-left: 14px;
 }
+#autoCompleteDropDown .label_box {
+width:200px;
+}
 #header_status_form .status_main,#reply_status_form .status_main,#header_status_form .status_top,#reply_status_form .status_top {
 width: calc( 100% - 54px );
 margin-left: 54px;

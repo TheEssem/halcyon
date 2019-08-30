@@ -104,7 +104,7 @@ $(".profile_sendto").attr("acct","@"+userprofile.acct);
 $(".profile_sendto").attr("display_name",userprofile.display_name);
 api.get("accounts/"+userprofile.id+"/statuses",[{name:'pinned',data:'true'},{name:'limit',data:'40'}],function(statuses) {
 for(var i=0;i<statuses.length;i++) {
-timeline_pinned_template(statuses[i]).appendTo("#js-timeline");
+timeline_template(statuses[i],true).appendTo("#js-timeline");
 }
 replaceInternalLink();
 replace_emoji();

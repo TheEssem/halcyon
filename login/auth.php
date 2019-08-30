@@ -23,7 +23,7 @@ if(in_array($domain,json_decode(base64_decode("WyJnYWIuY29tIiwiZ2FiLmFpIl0="))))
 $URL= 'https://'.$domain;
 $api->selectInstance($URL);
 $response = $api->get_access_token($api->clientWebsite.'/auth?&host='.$domain, htmlspecialchars((string)filter_input(INPUT_GET, 'code'), ENT_QUOTES));
-if(isset($response) && is_array($response) && isset($response['html']) && is_array($response['html']) && isset($response['html']["access_token"]) && ctype_alnum($response['html']["access_token"])) {
+if(isset($response) && is_array($response) && isset($response['html']) && is_array($response['html']) && isset($response['html']["access_token"])) {
 $access_token = $response['html']["access_token"];
 $profile = $api->accounts_verify_credentials()['html'];
 $account_id = $profile['id'];

@@ -96,22 +96,6 @@ $(".toot_article a,.profile_bio a,.follows_profile_bio a").filter("[data-random=
 });
 }
 });
-$(".toot_article a").each(function(i) {
-const ytcom = $(this).attr('href').match(/https?:\/\/(www\.)?youtube\.com\/watch\?v=([a-zA-Z\d_-]+)/);
-const htcom = $(this).attr('href').match(/https?:\/\/(www\.)?hooktube\.com\/watch\?v=([a-zA-Z\d_-]+)/);
-const ivcom = $(this).attr('href').match(/https?:\/\/(www\.)?invidio\.us\/watch\?v=([a-zA-Z\d_-]+)/);
-const ytbe = $(this).attr('href').match(/https?:\/\/(www\.)?youtu\.be\/([a-zA-Z\d_-]+)/);
-const htbe = $(this).attr('href').match(/https?:\/\/(www\.)?hooktube\.com\/([a-zA-Z\d_-]+)/);
-const vimeo = $(this).attr('href').match(/https?:\/\/(www\.)?vimeo\.com\/([\d]+)/);
-const peertube = $(this).attr('href').match(/https?:\/\/.+..+\/videos\/watch\/([\da-z]{8}-[\da-z]{4}-[\da-z]{4}-[\da-z]{4}-[\da-z]{12})\/?$/);
-if(ytcom) embedMedia("youtube",$(this).closest(".toot_article"),ytcom[2]);
-else if(htcom) embedMedia("youtube",$(this).closest(".toot_article"),htcom[2]);
-else if(ivcom) embedMedia("youtube",$(this).closest(".toot_article"),ivcom[2]);
-else if(ytbe) embedMedia("youtube",$(this).closest(".toot_article"),ytbe[2]);
-else if(htbe) embedMedia("youtube",$(this).closest(".toot_article"),htbe[2]);
-else if(vimeo) embedMedia("vimeo",$(this).closest(".toot_article"),vimeo[2]);
-else if(peertube) embedMedia("peertube",$(this).closest(".toot_article"),peertube[0].replace("/watch/","/embed/"));
-});
 }
 function getConversionedDate(key, value) {
 if (value === null ||
@@ -491,16 +475,34 @@ $('.overlay_redirect_invidious').data("video",video);
 $('.overlay_redirect_invidious').removeClass('invisible');
 }
 }
-function embedMedia(source,element,watchid) {
-if(element.children(".media_views").length == 0) {
-let media_views = `<div class='media_views' sid="${element.parent().parent().parent().attr("sid")}" media_length='1' style="border:0;border-radius:0">`;
+function checkStatusLinks(text) {
+$(text).find("a").each(function(i) {
+const ytcom = $(this).attr('href').match(/https?:\/\/(www\.)?youtube\.com\/watch\?v=([a-zA-Z\d_-]+)/);
+const htcom = $(this).attr('href').match(/https?:\/\/(www\.)?hooktube\.com\/watch\?v=([a-zA-Z\d_-]+)/);
+const ivcom = $(this).attr('href').match(/https?:\/\/(www\.)?invidio\.us\/watch\?v=([a-zA-Z\d_-]+)/);
+const ytbe = $(this).attr('href').match(/https?:\/\/(www\.)?youtu\.be\/([a-zA-Z\d_-]+)/);
+const htbe = $(this).attr('href').match(/https?:\/\/(www\.)?hooktube\.com\/([a-zA-Z\d_-]+)/);
+const vimeo = $(this).attr('href').match(/https?:\/\/(www\.)?vimeo\.com\/([\d]+)/);
+const peertube = $(this).attr('href').match(/https?:\/\/.+..+\/videos\/watch\/([\da-z]{8}-[\da-z]{4}-[\da-z]{4}-[\da-z]{4}-[\da-z]{12})\/?$/);
+if(ytcom) text += embedMedia("youtube",ytcom[2]);
+else if(htcom) text += embedMedia("youtube",htcom[2]);
+else if(ivcom) text += embedMedia("youtube",ivcom[2]);
+else if(ytbe) text += embedMedia("youtube",ytbe[2]);
+else if(htbe) text += embedMedia("youtube",htbe[2]);
+else if(vimeo) text += embedMedia("vimeo",vimeo[2]);
+else if(peertube) text += embedMedia("peertube",peertube[0].replace("/watch/","/embed/"));
+});
+return text;
+}
+function embedMedia(source,watchid) {
+let media_views = `<div class='media_views' media_length='1' style="border:0;border-radius:0">`;
 if(source == "youtube" && server_setting_youplay == true && localStorage.setting_play_youplay == "true") {
 media_views += (`
 <div class="media_attachment" otype="video/gifv" mediacount="0">
 <iframe src="/media/youplay.php?id=${watchid}" frameborder="0" allowfullscreen></iframe>
 </div>`);
 }
-else if( source == "youtube" && localStorage.setting_play_invidious == "true") {
+else if(source == "youtube" && localStorage.setting_play_invidious == "true") {
 media_views += (`
 <div class="media_attachment" otype="video/gifv" mediacount="0">
 <iframe src="https://${server_setting_invidious}/embed/${watchid}" frameborder="0" allowfullscreen></iframe>
@@ -519,8 +521,8 @@ media_views += (`
 </div>`);
 }
 media_views += "</div>";
-if($(media_views).children().length != 0) element.append(media_views);
-}
+if($(media_views).children().length != 0) return media_views;
+else return "";
 }
 function enableAutoComplete(textarea) {
 if(localStorage.setting_compose_autocomplete == "true") {
@@ -566,4 +568,103 @@ else if(short_handle[1].length > 10) short = false;
 }
 else short = false;
 return short;
+}
+function prepareStatus(status) {
+if(status.reblog === null) {
+status.halcyon = new Object();
+for(i=0;i<status.emojis.length;i++) {
+status.content = status.content.replace(new RegExp(":"+status.emojis[i].shortcode+":","g"),"<img src='"+status.emojis[i].url+"' class='emoji'>");
+}
+status.account.display_name = htmlEscape(status.account.display_name);
+for(var i=0;i<status.account.emojis.length;i++) {
+status.account.display_name = status.account.display_name.replace(new RegExp(":"+status.account.emojis[i].shortcode+":","g"),"<img src='"+status.account.emojis[i].url+"' class='emoji'>");
+}
+for(var i=0;i<status.mentions.length;i++) {
+if(status.mentions[i].acct.indexOf("@") == -1) status.content = status.content.replace(new RegExp('href="'+status.mentions[i].url+'"',"g"),'href="/@'+status.mentions[i].acct+'@'+current_instance+'?mid='+status.mentions[i].id+'" data-mid="'+status.mentions[i].id+'"');
+else status.content = status.content.replace(new RegExp('href="'+status.mentions[i].url+'"',"g"),'href="/@'+status.mentions[i].acct+'?mid='+status.mentions[i].id+'" data-mid="'+status.mentions[i].id+'"');
+}
+if(!status.mentions.find(function(account) {
+return account.id == this;
+},status.account.id)) {
+var writtenby = new Object();
+writtenby.id = status.account.id;
+writtenby.username = status.account.username;
+writtenby.url = status.account.url;
+writtenby.acct = status.account.acct;
+status.mentions.push(writtenby);
+}
+if(status.account.acct.indexOf("@") == -1)  status.halcyon.account_link = "/@"+status.account.acct+"@"+current_instance+"?mid="+status.account.id;
+else status.halcyon.account_link = "/@"+status.account.acct+"?mid="+status.account.id;
+status.halcyon.datetime= getRelativeDatetime(Date.now(), getConversionedDate(null, status.created_at));
+status.halcyon.attr_datetime = getConversionedDate(null, status.created_at);
+status.halcyon.alert_text = "";
+status.halcyon.article_option = "";
+status.halcyon.media_views = "";
+status.halcyon.poll_object = "";
+status.halcyon.preview_object = "";
+if(status.spoiler_text && localStorage.setting_show_content_warning == "false") {
+status.halcyon.alert_text = "<span>"+status.spoiler_text+"</span><button class='cw_button'>"+__('SHOW MORE')+"</button>",
+status.halcyonarticle_option = "content_warning";
+}
+else if(status.spoiler_text && localStorage.setting_show_content_warning == "true")
+status.halcyon.alert_text = "<span>"+status.spoiler_text+"</span><button class='cw_button'>"+__('SHOW LESS')+"</button>";
+if(!status.replies_count) status.replies_count = "";
+if(!status.reblogs_count) status.reblogs_count = "";
+if(!status.favourites_count) status.favourites_count = "";
+if(status.media_attachments.length) status.halcyon.media_views = mediaattachments_template(status);
+if(status.poll) status.halcyon.poll_object = poll_template(status.poll);
+if(status.card) status.halcyon.preview_object = link_preview_template(status.card);
+if(status.account.display_name.length == 0) status.account.display_name = status.account.username;
+status.halcyon.checked_public = "";
+status.halcyon.checked_unlisted = "";
+status.halcyon.checked_private = "";
+status.halcyon.checked_direct = "";
+switch(status.visibility) {
+case "public":status.halcyon.privacy_mode=__("Public");status.halcyon.privacy_icon="globe";status.halcyon.checked_public=" checked";break;
+case "unlisted":status.halcyon.privacy_mode=__("Unlisted");status.halcyon.privacy_icon="unlock-alt";status.halcyon.checked_unlisted=" checked";break;
+case "private":status.halcyon.privacy_mode=__("Followers-only");status.halcyon.privacy_icon="lock";status.halcyon.checked_private=" checked";break;
+case "direct":status.halcyon.privacy_mode=__("Direct");status.halcyon.privacy_icon="envelope";status.halcyon.checked_direct=" checked";break;
+}
+if(status.halcyon.privacy_icon == "globe" || status.halcyon.privacy_icon == "unlock-alt") {
+status.halcyon.footer_width = " style='width:320px'";
+status.halcyon.reblog_button = (`<div class="toot_reaction">
+<button class="boost_button" tid="${status.id}" reblogged="${status.reblogged}">
+<i class="fa fa-fw fa-retweet"></i>
+<span class="reaction_count boost_count">${status.reblogs_count}</span>
+</button>
+</div>`);
+}
+else {
+status.halcyon.footer_width = "";
+status.halcyon.reblog_button = "";
+}
+if(status.account.acct == current_acct) {
+status.halcyon.own_toot_buttons = (`<li><a class="delete_button" tid="${status.id}">${__('Delete Toot')}</a></li>`);
+if(status.pinned == true) status.halcyon.own_toot_buttons += (`<li><a class="unpin_button" tid="${status.id}">${__('Unpin Toot')}</a></li>`);
+else status.halcyon.own_toot_buttons += (`<li><a class="pin_button" tid="${status.id}">${__('Pin Toot')}</a></li>`);
+}
+else {
+status.halcyon.own_toot_buttons = (`<li><a class="mute_button" mid="${status.account.id}" sid="${status.id}">${__('Mute')} @${status.account.username}</a></li>
+<li><a class="block_button" mid="${status.account.id}" sid="${status.id}">${__('Block')} @${status.account.username}</a></li>
+<li><a class="addlist_button" mid="${status.account.id}" sid="${status.id}" display_name="${status.account.display_name}">${__('Add to list')} @${status.account.username}</a></li>
+<li><a class="report_button" mid="${status.account.id}" sid="${status.id}" display_name="${status.account.display_name}">${__('Report this Toot')}</a></li>`);
+}
+status.halcyon.account_state_icons = "";
+if(status.account.locked == true) status.halcyon.account_state_icons += " <i class='fa fa-lock'></i>";
+if(status.account.bot == true) status.halcyon.account_state_icons += " <img src='/assets/images/robot.svg' class='emoji'>";
+status.content = checkStatusLinks(status.content);
+return status;
+}
+else {
+status.reblog = prepareStatus(status.reblog);
+status.halcyon = new Object();
+status.account.display_name = htmlEscape(status.account.display_name);
+for(i=0;i<status.account.emojis.length;i++) {
+status.account.display_name = status.account.display_name.replace(new RegExp(":"+status.account.emojis[i].shortcode+":","g"),"<img src='"+status.account.emojis[i].url+"' class='emoji'>");
+}
+if(status.account.acct.indexOf("@") == -1) status.halcyon.account_link = "/@"+status.account.acct+"@"+current_instance+"?mid="+status.account.id;
+else status.halcyon.account_link = "/@"+status.account.acct+"?mid="+status.account.id;
+if(status.account.display_name.length == 0) status.account.display_name = status.account.username;
+}
+return status;
 }
