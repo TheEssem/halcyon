@@ -476,7 +476,7 @@ $('.overlay_redirect_invidious').removeClass('invisible');
 }
 }
 function checkStatusLinks(text) {
-$(text).find("a").each(function(i) {
+$("<span>"+text+"</span>").find("a").each(function(i) {
 const ytcom = $(this).attr('href').match(/https?:\/\/(www\.)?youtube\.com\/watch\?v=([a-zA-Z\d_-]+)/);
 const htcom = $(this).attr('href').match(/https?:\/\/(www\.)?hooktube\.com\/watch\?v=([a-zA-Z\d_-]+)/);
 const ivcom = $(this).attr('href').match(/https?:\/\/(www\.)?invidio\.us\/watch\?v=([a-zA-Z\d_-]+)/);
