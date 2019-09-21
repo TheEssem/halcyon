@@ -36,7 +36,7 @@ else if(status.media_attachments[i].type === "gifv") {
 var vidprev = "";
 if(status.media_attachments[i].preview_url != status.media_attachments[i].url) vidprev = "<img src='"+status.media_attachments[i].preview_url+"'>";
 media_embeds.push(`
-<div class="media_attachment" otype="video/gifv" mediacount="${i}">
+<div class="media_attachment with_overlay" otype="video" sid="${status.id}" oid="${status.media_attachments[i].id}" url="${status.media_attachments[i].url}" mediacount="${i}">
 <video frameborder="0" title="${status.media_attachments[i].description}" autoplay loop muted>
 <source src="${status.media_attachments[i].url}">
 ${vidprev}
@@ -56,7 +56,7 @@ audio_embeds.push(audio_embed);
 }
 else if(status.media_attachments[i].type === "image") {
 media_embeds.push(`
-<div class="media_attachment" otype="image" sid="${status.id}" oid="${status.media_attachments[i].id}" url="${status.media_attachments[i].url}" mediacount="${i}">
+<div class="media_attachment with_overlay" otype="image" sid="${status.id}" oid="${status.media_attachments[i].id}" url="${status.media_attachments[i].url}" mediacount="${i}">
 <img src="${status.media_attachments[i].url}" title="${status.media_attachments[i].description}" window_view="enable"/>
 <div class='sensitive_alert'${blurbackground}>
 <span class="text1">${__('Sensitive content')}</span>
@@ -66,7 +66,7 @@ media_embeds.push(`
 }
 }
 if(status.media_attachments[0].type === "video" && localStorage.setting_play_video != "false" && dsplength == 1) border = ' style="border:0;border-radius:0"';
-if(localStorage.setting_full_height == "true" && status.media_attachments.length == 1 && (status.media_attachments[0].type == "image" || (status.media_attachments[0].type === "video" && localStorage.setting_play_video == "false") || (status.media_attachments[0].type === "gifv" && localStorage.setting_play_gif == "false")))
+if(localStorage.setting_full_height == "true" && status.media_attachments.length == 1 && (status.media_attachments[0].type == "image" || (status.media_attachments[0].type === "video" && localStorage.setting_play_video == "false") || status.media_attachments[0].type === "gifv"))
 mvfullheight = " media_full_height";
 if(media_embeds.length > 0) {
 media_views = `<div class='media_views${mvfullheight}' sid="${status.id}" media_length='${dsplength}'${border}>`;
@@ -666,7 +666,8 @@ var hidebackward = "";
 var hideforward ="";
 for(var i=0;i<status.media_attachments.length;i++) {
 if(status.media_attachments[i].remote_url != null) status.media_attachments[i].url = status.media_attachments[i].remote_url;
-if(status.media_attachments[i].type == "image") pictures.push(status.media_attachments[i].url);
+if(status.media_attachments[i].description == null) status.media_attachments[i].description = "";
+if(status.media_attachments[i].type == "image" || status.media_attachments[i].type == "gifv") pictures.push(status.media_attachments[i].url);
 }
 console.log(media);
 console.log(parseInt(media));
@@ -674,11 +675,20 @@ var mediacnt = pictures.indexOf(pictures.find(function(data) {if(data==this) ret
 console.log(mediacnt);
 if(mediacnt == 0) hidebackward = " style='display:none'";
 if(mediacnt == pictures.length-1) hideforward = " style='display:none'";
+if(status.media_attachments[media].type == "image") var player = `<img src="${status.media_attachments[media].url}" title="${status.media_attachments[media].description}">`;
+else if(status.media_attachments[media].type == "gifv") {
+var vidprev = "";
+if(status.media_attachments[media].preview_url != status.media_attachments[media].url) vidprev = "<img src='"+status.media_attachments[media].preview_url+"'>";
+var player = (`<video frameborder="0" title="${status.media_attachments[media].description}" autoplay loop muted style="width:100%">
+<source src="${status.media_attachments[media].url}">
+${vidprev}
+</video>`);
+}
 const status_template = timeline_template(status).html(),
 html = (`<div class="media_detail" pictures='${JSON.stringify(pictures)}' cid="${mediacnt}">
 <div class="media_box">
 <span class="media_backward"${hidebackward}><i class="fa fa-2x fa-chevron-left"></i></span>
-<img src="${status.media_attachments[media].url}">
+${player}
 <span class="media_forward"${hideforward}><i class="fa fa-2x fa-chevron-right"></i></span>
 </div>
 <div class="toot_entry" sid="${status.id}">

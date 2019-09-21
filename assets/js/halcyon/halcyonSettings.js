@@ -449,6 +449,12 @@ $("#setting_redirect_invidious")[0].checked = true;
 if(localStorage.setting_redirect_invidious != "unset") {
 $("#setting_redirect_invidious_reset").show();
 }
+if(localStorage.setting_redirect_nitter == "true") {
+$("#setting_redirect_nitter")[0].checked = true;
+}
+if(localStorage.setting_redirect_nitter != "unset") {
+$("#setting_redirect_nitter_reset").show();
+}
 });
 $("#setting_play_gif").change(function() {
 if(this.checked) {
@@ -536,6 +542,23 @@ localStorage.setItem("setting_redirect_invidious","unset");
 $("#setting_redirect_invidious_reset").fadeOut();
 $("#setting_redirect_invidious")[0].checked = false;
 putMessage(__("Youtube link redirect reset to default"));
+});
+$("#setting_redirect_nitter").change(function() {
+$("#setting_redirect_nitter_reset").fadeIn();
+if(this.checked) {
+localStorage.setItem("setting_redirect_nitter","true");
+putMessage(__("Twitter links redirected to Nitter"));
+}
+else {
+localStorage.setItem("setting_redirect_nitter","false");
+putMessage(__("Twitter links not redirected anymore"));
+}
+});
+$("#setting_redirect_nitter_reset").click(function() {
+localStorage.setItem("setting_redirect_nitter","unset");
+$("#setting_redirect_nitter_reset").fadeOut();
+$("#setting_redirect_nitter")[0].checked = false;
+putMessage(__("Twitter link redirect reset to default"));
 });
 }
 else if(window.location.pathname == "/settings/blocks") {

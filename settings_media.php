@@ -99,12 +99,26 @@
 </div>
 <div class="redirect_invidious_wrap" style="float:left;width:50%">
 <div class="switch" style="float:left">
-<input type="checkbox" id="setting_redirect_invidious" >
+<input type="checkbox" id="setting_redirect_invidious">
 <div class="switch-btn">
 <span></span>
 </div>
 </div>
 <a href="javascript:void(0)" id="setting_redirect_invidious_reset" style="float:left;display:none">
+<i class="fa fa-2x fa-times" style="margin-top:8px"></i>
+</a>
+</div>
+<div style="float:left;width:50%;text-align:right;margin-top:16px">
+<h3><?=_('Redirect Twitter to Nitter')?></h3>
+</div>
+<div class="redirect_nitter_wrap" style="float:left;width:50%">
+<div class="switch" style="float:left">
+<input type="checkbox" id="setting_redirect_nitter">
+<div class="switch-btn">
+<span></span>
+</div>
+</div>
+<a href="javascript:void(0)" id="setting_redirect_nitter_reset" style="float:left;display:none">
 <i class="fa fa-2x fa-times" style="margin-top:8px"></i>
 </a>
 </div>

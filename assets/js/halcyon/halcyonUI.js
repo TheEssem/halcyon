@@ -1214,7 +1214,7 @@ replace_emoji();
 });
 }
 $(function() {
-$(document).on('click','.media_attachment[otype="image"]', function(e) {
+$(document).on('click','.media_attachment.with_overlay', function(e) {
 e.stopPropagation();
 setOverlayMedia($(this).attr('sid'),$(this).attr('mediacount'));
 $('.media_detail .toot_entry .media_views').addClass('invisible');
@@ -2054,6 +2054,16 @@ $('.close_button').click();
 window.open("https://www.youtube.com/watch?v="+$(".overlay_redirect_invidious").data("video"),"_blank");
 if($("#redirect_invidious_permanent")[0].checked) localStorage.setting_redirect_invidious = "false";
 });
+$('.overlay_redirect_nitter_yes').click(function() {
+$('.close_button').click();
+window.open("https://"+server_setting_nitter+"/"+$(".overlay_redirect_nitter").data("path"),"_blank");
+if($("#redirect_nitter_permanent")[0].checked) localStorage.setting_redirect_nitter = "true";
+});
+$('.overlay_redirect_nitter_no').click(function() {
+$('.close_button').click();
+window.open("https://twitter.com/"+$(".overlay_redirect_nitter").data("path"),"_blank");
+if($("#redirect_nitter_permanent")[0].checked) localStorage.setting_redirect_nitter = "false";
+});
 if($("#js-overlay_content_wrap").hasClass("view")) $(document.body).css("overflow-y","hidden");
 $("#js-overlay_content_wrap").attrchange(function(attr) {
 if(attr == "class" && $("#js-overlay_content_wrap").hasClass("view")) $(document.body).css("overflow-y","hidden");
@@ -2099,8 +2109,10 @@ $(document).on('click','.link_preview',function(e) {
 e.stopPropagation();
 const ytcom = $(this).data("url").match(/https?:\/\/(www\.)?youtube\.com\/watch\?v=([a-zA-Z\d_-]+)/);
 const ytbe = $(this).data("url").match(/https?:\/\/(www\.)?youtu\.be\/([a-zA-Z\d_-]+)/);
+const twcom = $(this).data("url").match(/https?:\/\/(www\.)?twitter\.com\/(.*)/);
 if(ytcom) openVideo(ytcom[2]);
 else if(ytbe) openVideo(ytbe[2]);
+else if(twcom) openNitter(twcom[2]);
 else window.open($(this).data("url"),"_blank");
 });
 $(document).on('focus','.status_textarea textarea,.status_top .status_spoiler',function(e) {

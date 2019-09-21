@@ -75,6 +75,7 @@ server_setting_youplay = <?=$config["Media"]["youplay"] ? "true" : "false"?>;
 server_setting_vimeo = <?=$config["Media"]["vimeo"] ? "true" : "false"?>;
 server_setting_unshorten = <?=$config["App"]["url_unshortener"] ? "true" : "false"?>;
 server_setting_invidious = <?=$config["Media"]["invidious"] ? "'".$config["Media"]["invidious"]."'" : "'invidiou.sh'"?>;
+server_setting_nitter = <?=$config["Media"]["nitter"] ? "'".$config["Media"]["nitter"]."'" : "'nitter.nixnet.xyz'"?>;
 </script>
 </head>
 <body>

@@ -28,6 +28,7 @@ We moved our instances list to our webpage: https://www.halcyon.social/instances
 or read our new documentation pages to install it manually: https://www.halcyon.social/documentation.php?page=install
 
 ## Blog
+- Release of Version 2.4.4 - Option to rewrite all Twitter links to Nitter,click on animated GIF works like image now,full height for images option now works for animated GIF
 - Release of Version 2.4.3 - Fixed login,fixed YouPlay/Invidious embeds,fixed empty image placeholder when audio available,improved status template code
 - Release of Version 2.4.2 - Many bugfixes,add trending hashtags,add URL unshortener,redirect YouTube to Invidious,translation improvements,add Spanish translation
 - Release of Version 2.4.1 - Improve French and German translation,respect Pleromas/GlitchSocs custom poll limits,add extension download link,many bugfixes

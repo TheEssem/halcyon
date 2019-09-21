@@ -81,6 +81,8 @@ const ytcom = $(this).attr('href').match(/https?:\/\/(www\.)?youtube\.com\/watch
 if(ytcom) $(this).attr('target','_self').attr('href',"javascript:openVideo('"+ytcom[2]+"');void(0)");
 const ytbe = $(this).attr('href').match(/https?:\/\/(www\.)?youtu\.be\/([a-zA-Z\d_-]+)/);
 if(ytbe) $(this).attr('target','_self').attr('href',"javascript:openVideo('"+ytbe[2]+"');void(0)");
+const twcom = $(this).attr('href').match(/https?:\/\/(www\.)?twitter\.com\/(.*)/);
+if(twcom) $(this).attr('target','_self').attr('href',"javascript:openNitter('"+twcom[2]+"');void(0)");
 if(server_setting_unshorten && checkURLshortener($(this).attr('href'))) {
 var linkrand = Math.round(Math.random()*1000000);
 $(this).attr("data-random",linkrand);
@@ -473,6 +475,17 @@ $('#js-overlay_content_wrap').addClass('view');
 $('#js-overlay_content_wrap').addClass('black_08');
 $('.overlay_redirect_invidious').data("video",video);
 $('.overlay_redirect_invidious').removeClass('invisible');
+}
+}
+function openNitter(path) {
+if(localStorage.setting_redirect_nitter == "true") window.open("https://"+server_setting_nitter+"/"+path,"_blank");
+else if(localStorage.setting_redirect_nitter == "false") window.open("https://twitter.com/"+path,"_blank");
+else {
+$("#js-overlay_content_wrap .temporary_object").empty();
+$('#js-overlay_content_wrap').addClass('view');
+$('#js-overlay_content_wrap').addClass('black_08');
+$('.overlay_redirect_nitter').data("path",path);
+$('.overlay_redirect_nitter').removeClass('invisible');
 }
 }
 function checkStatusLinks(text) {
