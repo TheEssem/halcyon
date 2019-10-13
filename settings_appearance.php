@@ -123,6 +123,17 @@
 </div>
 </div>
 </div>
+<div style="float:left;width:50%;text-align:right;margin-top:16px">
+<h3><?=_('Show administrator options')?></h3>
+</div>
+<div class="show_admin_wrap" style="float:left;width:50%">
+<div class="switch">
+<input type="checkbox" id="setting_show_admin">
+<div class="switch-btn">
+<span></span>
+</div>
+</div>
+</div>
 <span style="visibility:hidden">-</span>
 </div>
 </article>

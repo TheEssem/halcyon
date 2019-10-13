@@ -10,7 +10,7 @@ $(this).children().remove();
 }
 else {
 settings = $.extend({
-width: 265,
+width: 280,
 height: 200,
 twemoji: false,
 closeOnSelect: true,
@@ -235,8 +235,17 @@ container.append(emoticon);
 }
 function createCustomEmojiTab(container,wrapper) {
 var customemojis = JSON.parse(localStorage.current_custom_emojis);
-for(var i = 0;i < customemojis.length;i++){
-var selectedEmoji = customemojis[i];
+var sortedemojis = new Object();
+for(var i = 0;i < customemojis.length;i++) {
+if(!customemojis[i].category) customemojis[i].category = __("General");
+if(!sortedemojis[customemojis[i].category]) sortedemojis[customemojis[i].category] = new Array();
+sortedemojis[customemojis[i].category].push(customemojis[i]);
+}
+for(var category in sortedemojis) {
+if(sortedemojis.hasOwnProperty(category)) {
+if(Object.keys(sortedemojis).length != 1 || !sortedemojis.hasOwnProperty(__("General"))) container.append($("<p>").text(category));
+for(var i=0;i < sortedemojis[category].length;i++) {
+var selectedEmoji = sortedemojis[category][i];
 var emoticon = $('<span></span>')
 .data('value',selectedEmoji.url)
 .attr('title',selectedEmoji.code)
@@ -252,6 +261,8 @@ wrapper.hide();
 }
 });
 container.append(emoticon);
+}
+}
 }
 }
 }(jQuery, window));

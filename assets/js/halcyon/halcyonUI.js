@@ -1771,7 +1771,7 @@ replace_emoji();
 });
 initStatusEditor("single_reply");
 $(document).on('click', function(e) {
-if(!$(e.target).closest('#header_status_form').length) {
+if(!$(e.target).closest('#header_status_form').length && !$(e.target).closest('.close_button').length) {
 $('#header_status_form .submit_status_label').removeClass('active_submit_button');
 $('#header_status_form .expand_privacy_menu').addClass('invisible');
 $('#header_status_form .status_textarea textarea').removeClass('focus');
@@ -1996,6 +1996,10 @@ $('#js-overlay_content_wrap .overlay_confirm').addClass('invisible');
 $('#js-overlay_content_wrap .overlay_prompt').addClass('invisible');
 $('#js-overlay_content_wrap .overlay_addlist').addClass('invisible');
 $('#js-overlay_content_wrap .overlay_filter').addClass('invisible');
+$('#js-overlay_content_wrap .overlay_redirect_invidious').addClass('invisible');
+$('#js-overlay_content_wrap .overlay_redirect_nitter').addClass('invisible');
+$('#js-overlay_content_wrap .overlay_rewrite_invidious').addClass('invisible');
+$('#js-overlay_content_wrap .overlay_rewrite_nitter').addClass('invisible');
 $('#js-overlay_content .temporary_object, #js-overlay_content .parmanent_object').removeClass('visible');
 $('#js-overlay_content_wrap .overlay_status.submit_status_label').removeClass('active_submit_button');
 $('#js-overlay_content_wrap .single_reply_status .submit_status_label').removeClass('active_submit_button');
@@ -2032,7 +2036,6 @@ $("#widget_ffdl").slideUp();
 $("#search_form").focus(function() {
 if($("#search_form").val() == "") searchlocalfill();
 else searchremotefill($("#search_form").val());
-$(".header_search_suggestions").removeClass("invisible");
 }).keyup(function() {
 if($("#search_form").val() == "") searchlocalfill();
 else searchremotefill($("#search_form").val());
@@ -2063,6 +2066,26 @@ $('.overlay_redirect_nitter_no').click(function() {
 $('.close_button').click();
 window.open("https://twitter.com/"+$(".overlay_redirect_nitter").data("path"),"_blank");
 if($("#redirect_nitter_permanent")[0].checked) localStorage.setting_redirect_nitter = "false";
+});
+$('.overlay_rewrite_invidious_yes').click(function() {
+$('.close_button').click();
+submitStatusArray($(".overlay_rewrite_invidious").data("params"),$(".overlay_rewrite_invidious").data("callback"),"true",$(".overlay_rewrite_invidious").data("nitter"));
+if($("#rewrite_invidious_permanent")[0].checked) localStorage.setting_rewrite_invidious = "true";
+});
+$('.overlay_rewrite_invidious_no').click(function() {
+$('.close_button').click();
+submitStatusArray($(".overlay_rewrite_invidious").data("params"),$(".overlay_rewrite_invidious").data("callback"),"false",$(".overlay_rewrite_invidious").data("nitter"));
+if($("#rewrite_invidious_permanent")[0].checked) localStorage.setting_rewrite_invidious = "false";
+});
+$('.overlay_rewrite_nitter_yes').click(function() {
+$('.close_button').click();
+submitStatusArray($(".overlay_rewrite_nitter").data("params"),$(".overlay_rewrite_nitter").data("callback"),$(".overlay_rewrite_nitter").data("invidious"),"true");
+if($("#rewrite_nitter_permanent")[0].checked) localStorage.setting_rewrite_nitter = "true";
+});
+$('.overlay_rewrite_nitter_no').click(function() {
+$('.close_button').click();
+submitStatusArray($(".overlay_rewrite_nitter").data("params"),$(".overlay_rewrite_nitter").data("callback"),$(".overlay_rewrite_nitter").data("invidious"),"false");
+if($("#rewrite_nitter_permanent")[0].checked) localStorage.setting_rewrite_nitter = "false";
 });
 if($("#js-overlay_content_wrap").hasClass("view")) $(document.body).css("overflow-y","hidden");
 $("#js-overlay_content_wrap").attrchange(function(attr) {

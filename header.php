@@ -124,7 +124,7 @@ server_setting_nitter = <?=$config["Media"]["nitter"] ? "'".$config["Media"]["ni
 <ul class="header_nav_list">
 <li class="header_nav_item search_form_wrap">
 <form class="search_form" action="/search" method="GET">
-<input id="search_form" class="search_form_input" placeholder="<?=_('Search Mastodon')?>" type="text" name="q" accesskey="/">
+<input id="search_form" class="search_form_input" placeholder="<?=_('Search Mastodon')?>" type="text" name="q" accesskey="/" autocomplete="off">
 <span class="search_form_submit">
 <button type="submit">
 <i class="fa fa-fw fa-search"></i>

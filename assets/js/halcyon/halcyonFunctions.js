@@ -244,6 +244,7 @@ for(i=0;i<data.length;i++) {
 var emoji = new Object();
 emoji.code = data[i].shortcode;
 emoji.url = data[i].url;
+if(data[i].category) emoji.category = data[i].category;
 emojis.push(emoji);
 }
 localStorage.setItem("current_custom_emojis",JSON.stringify(emojis));
@@ -546,7 +547,43 @@ textarea.trigger({"type":"keyup","key":":"});
 }});
 }
 }
-function submitStatusArray(params,callback) {
+function submitStatusArray(params,callback,invidious="unset",nitter="unset") {
+const ytcom = params.status.first().val().match(/https?:\/\/(www\.)?youtube\.com\/watch\?v=([a-zA-Z\d_-]+)/);
+const ytbe = params.status.first().val().match(/https?:\/\/(www\.)?youtu\.be\/([a-zA-Z\d_-]+)/);
+const twcom = params.status.first().val().match(/https?:\/\/(www\.)?twitter\.com\/(.*)/);
+if((ytcom || ytbe) && localStorage.setting_rewrite_invidious == "unset" && invidious == "unset") {
+$("#js-overlay_content_wrap .temporary_object").empty();
+$('#js-overlay_content_wrap').addClass('view');
+$('#js-overlay_content_wrap').addClass('black_08');
+$('.overlay_rewrite_invidious').data("params",params);
+$('.overlay_rewrite_invidious').data("callback",callback);
+$('.overlay_rewrite_invidious').data("nitter",nitter);
+$('.overlay_rewrite_invidious').removeClass('invisible');
+}
+else if(twcom && localStorage.setting_rewrite_nitter == "unset" && nitter == "unset") {
+$("#js-overlay_content_wrap .temporary_object").empty();
+$('#js-overlay_content_wrap').addClass('view');
+$('#js-overlay_content_wrap').addClass('black_08');
+$('.overlay_rewrite_nitter').data("params",params);
+$('.overlay_rewrite_nitter').data("callback",callback);
+$('.overlay_rewrite_nitter').data("invidious",invidious);
+$('.overlay_rewrite_nitter').removeClass('invisible');
+}
+if(ytcom && (localStorage.setting_rewrite_invidious == "true" || invidious == "true")) {
+params.status.first().val(params.status.first().val().replace(/https?:\/\/(www\.)?youtube\.com\/watch\?v=([a-zA-Z\d_-]+)/,"https://"+server_setting_invidious+"/watch?v=$2"));
+submitStatusArray(params,callback,invidious,nitter);
+}
+else if(ytbe && (localStorage.setting_rewrite_invidious == "true" || invidious == "true")) {
+params.status.first().val(params.status.first().val().replace(/https?:\/\/(www\.)?youtu\.be\/([a-zA-Z\d_-]+)/,"https://"+server_setting_invidious+"/watch?v=$2"));
+submitStatusArray(params,callback,invidious,nitter);
+}
+else if(twcom && (localStorage.setting_rewrite_nitter == "true" || nitter == "true")) {
+params.status.first().val(params.status.first().val().replace(/https?:\/\/(www\.)?twitter\.com\/(.*)/,"https://"+server_setting_nitter+"/$2"));
+submitStatusArray(params,callback,invidious,nitter);
+}
+else if(((!ytcom && !ytbe) || localStorage.setting_rewrite_invidious == "false" || invidious == "false") && (!twcom || localStorage.setting_rewrite_nitter == "false" || nitter == "false")) submitStatusArrayNow(params,callback);
+}
+function submitStatusArrayNow(params,callback,invidious,nitter) {
 var statuses = params.status;
 params.status = params.status.first().val();
 api.post("statuses",params,function(data) {
@@ -560,7 +597,7 @@ nparams.status = statuses;
 nparams.visibility = params.visibility;
 nparams.spoiler_text = params.spoiler_text;
 nparams.in_reply_to_id = data.id;
-submitStatusArray(nparams,callback);
+submitStatusArray(nparams,callback,invidious,nitter);
 }
 });
 }
@@ -617,7 +654,7 @@ status.halcyon.poll_object = "";
 status.halcyon.preview_object = "";
 if(status.spoiler_text && localStorage.setting_show_content_warning == "false") {
 status.halcyon.alert_text = "<span>"+status.spoiler_text+"</span><button class='cw_button'>"+__('SHOW MORE')+"</button>",
-status.halcyonarticle_option = "content_warning";
+status.halcyon.article_option = "content_warning";
 }
 else if(status.spoiler_text && localStorage.setting_show_content_warning == "true")
 status.halcyon.alert_text = "<span>"+status.spoiler_text+"</span><button class='cw_button'>"+__('SHOW LESS')+"</button>";
@@ -661,6 +698,10 @@ status.halcyon.own_toot_buttons = (`<li><a class="mute_button" mid="${status.acc
 <li><a class="block_button" mid="${status.account.id}" sid="${status.id}">${__('Block')} @${status.account.username}</a></li>
 <li><a class="addlist_button" mid="${status.account.id}" sid="${status.id}" display_name="${status.account.display_name}">${__('Add to list')} @${status.account.username}</a></li>
 <li><a class="report_button" mid="${status.account.id}" sid="${status.id}" display_name="${status.account.display_name}">${__('Report this Toot')}</a></li>`);
+if(localStorage.setting_show_admin && localStorage.setting_show_admin == "true") {
+status.halcyon.own_toot_buttons += (`</ul><ul><li><a href="https://${current_instance}/admin/accounts/${status.account.id}" target="_blank" class="admin_user_button">${__('Open user as admin')}</a></li>
+<li><a href="https://${current_instance}/admin/accounts/${status.account.id}/statuses/${status.id}" target="_blank" class="admin_post_button">${__('Open post as admin')}</a></li>`);
+}
 }
 status.halcyon.account_state_icons = "";
 if(status.account.locked == true) status.halcyon.account_state_icons += " <i class='fa fa-lock'></i>";

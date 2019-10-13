@@ -355,7 +355,7 @@ const html=$(`
 <li sid="${NotificationObj.status.id}" class="toot_entry">
 ${poll_notify}
 <div class="toot_entry_body">
-<a href="${NotificationObj.status.halcyon.author_link}">
+<a href="${notice_author_link}">
 <div class="icon_box">
 <img src="${NotificationObj.status.account.avatar}">
 </div>
@@ -363,7 +363,7 @@ ${poll_notify}
 <section class="toot_content">
 <header class="toot_header">
 <div class="text_ellipsis">
-<a href="${NotificationObj.status.halcyon.author_link}">
+<a href="${notice_author_link}">
 <span class="displayname emoji_poss">
 ${NotificationObj.status.account.display_name}
 </span>

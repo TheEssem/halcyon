@@ -10,6 +10,18 @@ $("#setting_post_sensitive")[0].checked = true;
 if(localStorage.setting_compose_autocomplete == "true") {
 $("#setting_compose_autocomplete")[0].checked = true;
 }
+if(localStorage.setting_rewrite_invidious == "true") {
+$("#setting_rewrite_invidious")[0].checked = true;
+}
+if(localStorage.setting_rewrite_invidious != "unset") {
+$("#setting_rewrite_invidious_reset").show();
+}
+if(localStorage.setting_rewrite_nitter == "true") {
+$("#setting_rewrite_nitter")[0].checked = true;
+}
+if(localStorage.setting_rewrite_nitter != "unset") {
+$("#setting_rewrite_nitter_reset").show();
+}
 if(localStorage.setting_who_to_follow == "true") {
 $("#setting_who_to_follow")[0].checked = true;
 }
@@ -40,6 +52,40 @@ else {
 localStorage.setItem("setting_compose_autocomplete","false");
 putMessage(__("Autocomplete disabled"));
 }
+});
+$("#setting_rewrite_invidious").change(function() {
+$("#setting_rewrite_invidious_reset").fadeIn();
+if(this.checked) {
+localStorage.setItem("setting_rewrite_invidious","true");
+putMessage(__("YouTube links rewritten to Invidious"));
+}
+else {
+localStorage.setItem("setting_rewrite_invidious","false");
+putMessage(__("Youtube links not rewritten anymore"));
+}
+});
+$("#setting_rewrite_invidious_reset").click(function() {
+localStorage.setItem("setting_rewrite_invidious","unset");
+$("#setting_rewrite_invidious_reset").fadeOut();
+$("#setting_rewrite_invidious")[0].checked = false;
+putMessage(__("Youtube link rewrite reset to default"));
+});
+$("#setting_rewrite_nitter").change(function() {
+$("#setting_rewrite_nitter_reset").fadeIn();
+if(this.checked) {
+localStorage.setItem("setting_rewrite_nitter","true");
+putMessage(__("Twitter links rewritten to Nitter"));
+}
+else {
+localStorage.setItem("setting_rewrite_nitter","false");
+putMessage(__("Twitter links not rewritten anymore"));
+}
+});
+$("#setting_rewrite_nitter_reset").click(function() {
+localStorage.setItem("setting_rewrite_nitter","unset");
+$("#setting_rewrite_nitter_reset").fadeOut();
+$("#setting_rewrite_nitter")[0].checked = false;
+putMessage(__("Twitter link rewrite reset to default"));
 });
 $(document).on('change',".local_instance_wrap input[name='local_instance']", function(e) {
 if($(this).val()) {
@@ -223,6 +269,9 @@ $("#setting_full_height")[0].checked = true;
 if(localStorage.setting_thread_view == "true") {
 $("#setting_thread_view")[0].checked = true;
 }
+if(localStorage.setting_show_admin == "true") {
+$("#setting_show_admin")[0].checked = true;
+}
 });
 $(document).on('change',".post_streaming_wrap input[name='post_streaming']:checked", function(e) {
 localStorage.setItem("setting_post_stream", $(this).val());
@@ -364,6 +413,16 @@ putMessage(__("Threads shown in thread view"));
 else {
 localStorage.setItem("setting_thread_view","false");
 putMessage(__("Threads shown in chronological order"));
+}
+});
+$("#setting_show_admin").change(function() {
+if(this.checked) {
+localStorage.setItem("setting_show_admin","true");
+putMessage(__("Administrator options shown"));
+}
+else {
+localStorage.setItem("setting_show_admin","false");
+putMessage(__("Administrator options hidden"));
 }
 });
 }

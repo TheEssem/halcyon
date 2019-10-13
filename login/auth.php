@@ -47,6 +47,7 @@ localStorage.setItem('setting_show_content_warning', 'false');
 localStorage.setItem('setting_show_nsfw', 'false');
 localStorage.setItem('setting_full_height', 'false');
 localStorage.setItem('setting_thread_view', 'true');
+localStorage.setItem('setting_show_admin','false');
 localStorage.setItem('setting_compose_autocomplete', 'true');
 localStorage.setItem('setting_play_gif','true');
 localStorage.setItem('setting_play_video','true');
@@ -59,6 +60,8 @@ localStorage.setItem('setting_post_privacy','".$profile["source"]["privacy"]."')
 localStorage.setItem('setting_post_sensitive','".$profile["source"]["sensitive"]."');
 localStorage.setItem('setting_redirect_invidious','unset');
 localStorage.setItem('setting_redirect_nitter','unset');
+localStorage.setItem('setting_rewrite_invidious','unset');
+localStorage.setItem('setting_rewrite_nitter','unset');
 $.cookie('darktheme','unset',{path:'/',expires:3650});
 if(sessionStorage.return && sessionStorage.return == 'share') location.href = '/intent/toot?action=send';
 else location.href = '/';

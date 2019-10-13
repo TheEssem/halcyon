@@ -1,4 +1,5 @@
 function searchlocalfill() {
+if(current_search_history.length > 0) {
 var dropdown = $("<ul>").addClass("account_list");
 var searchsuggestions = new Array();
 current_search_history.reverse();
@@ -15,6 +16,7 @@ searchsuggestions.push(current_search_history[i]);
 current_search_history.reverse();
 $(".header_search_suggestions").empty().removeClass("invisible").append(dropdown);
 replace_emoji();
+}
 }
 function searchremotefill(text) {
 if(text == "@") searchlocalfill();

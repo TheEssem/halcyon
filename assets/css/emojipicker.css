@@ -5,6 +5,12 @@ width: 33px;
 height: 35px;
 cursor: pointer;
 }
+.lsx-emojipicker-emoji p {
+font-size:12px;
+color:#66757F;
+text-align:center;
+border-bottom:1px solid #E6ECF0;
+}
 .lsx-emojipicker-appender {
 position: relative;
 }
@@ -42,7 +48,7 @@ ul.lsx-emojipicker-tabs li:HOVER {
 border-bottom: 3px solid #189EFC;
 }
 .lsx-emojipicker-tabs img.emoji {
-margin: 5px 10px;
+margin: 0;
 cursor: pointer;
 }
 .lsx-emojipicker-tabs img.emoji:HOVER,
