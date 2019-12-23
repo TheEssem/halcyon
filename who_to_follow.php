@@ -28,7 +28,7 @@ fcount = 30;
 }
 for(i=0;i<fcount;i++) {
 if(current_following_accts.indexOf(wtfprofiles[displayed+i]) == -1) {
-api.get('search',[{name:'q',data:"@"+wtfprofiles[displayed+i]},{name:'resolve',data:'true'}], function(search) {
+api.search('q='+encodeURIComponent(wtfprofiles[displayed+i])+"&resolve=true&limit=1",function(search) {
 follows_template(search.accounts[0]).appendTo("#js-follows_profile");
 replace_emoji();
 if(i = 29) {

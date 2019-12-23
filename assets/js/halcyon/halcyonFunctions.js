@@ -401,7 +401,7 @@ setWhoToFollow();
 }
 }
 function addFollowProfile(id,account) {
-api.get('search',[{name:'q',data:"@"+account},{name:'resolve',data:'true'}], function(search) {
+api.search('q='+encodeURIComponent("@"+account)+"&limit=1&resolve=true",function(search) {
 search.accounts[0].display_name = htmlEscape(search.accounts[0].display_name);
 for(i=0;i<search.accounts[0].emojis.length;i++) {
 search.accounts[0].display_name = search.accounts[0].display_name.replace(new RegExp(":"+search.accounts[0].emojis[i].shortcode+":","g"),"<img src='"+search.accounts[0].emojis[i].url+"' class='emoji'>");
@@ -454,7 +454,7 @@ ctx.fillText("😗",-2,4);
 return ctx.getImageData(0,0,1,1).data[3] > 0;
 }
 function openStatus(link) {
-api.get("search?q="+link,function(response) {
+api.search("q="+encodeURIComponent(link),function(response) {
 if(response.statuses.length > 0) {
 var data = response.statuses[0];
 if(data.account.acct.indexOf("@") == -1) {
@@ -541,7 +541,7 @@ else return "";
 function enableAutoComplete(textarea) {
 if(localStorage.setting_compose_autocomplete == "true") {
 textarea.autoCompleteToken({instance:1,startkey:"@",endkey:" ",arrayname:"accounts",resultname:"acct"});
-textarea.autoCompleteToken({instance:2,startkey:"#",endkey:" ",arrayname:"hashtags"});
+textarea.autoCompleteToken({instance:2,startkey:"#",endkey:" ",arrayname:"hashtags",resultname:"name"});
 textarea.autoCompleteToken({instance:3,startkey:":",endkey:";",source:actEmojiData,resultname:"name",callback:function() {
 textarea.trigger({"type":"keyup","key":":"});
 }});
@@ -721,4 +721,49 @@ else status.halcyon.account_link = "/@"+status.account.acct+"?mid="+status.accou
 if(status.account.display_name.length == 0) status.account.display_name = status.account.username;
 }
 return status;
+}
+function renderTimeline(statuses,show_replies,level) {
+for(let i in statuses) {
+var filterstatus = false;
+for(var a=0;a<current_filters.length;a++) {
+if(((level == "timelines/home" || level.indexOf("timelines/list/") != -1) && current_filters[a].context.indexOf("home") != -1 && current_filters[a].irreversible == false) || (!(level == "timelines/home" || level.indexOf("timelines/list/") != -1) && current_filters[a].context.indexOf("public") != -1)) {
+if(current_filters[a].whole_word == false) {
+if(statuses[i].content.match(new RegExp(current_filters[a].phrase))) filterstatus = true;
+}
+else {
+if(statuses[i].content.match(new RegExp("[^a-zA-Z1-9]"+current_filters[a].phrase+"[^a-zA-Z1-9]"))) filterstatus = true;
+}
+}
+}
+if(filterstatus == false && !(show_replies == "false" && statuses[i].in_reply_to_id) && !(localStorage.setting_show_bots == "false" && statuses[i].account.bot == true && !level.match(/accounts\/\d+\/statuses/)) && !(statuses[i].visibility == "direct" && level == "timelines/home")) {
+timeline_template(statuses[i]).appendTo("#js-timeline");
+if(statuses[i].in_reply_to_id && level === "timelines/home" | level === "timelines/public") {
+if(localStorage.setting_thread_view == "true") {
+(function(this_id) {
+api.get('statuses/'+statuses[i].id+"/context", function(context) {
+for(var b=0;b<context.ancestors.length;b++) {
+var filterreplystatus = false;
+for(var a=0;a<current_filters.length;a++) {
+if(current_filters[a].context.indexOf("thread") != -1) {
+if(current_filters[a].whole_word == false) {
+if(context.ancestors[b].content.match(new RegExp(current_filters[a].phrase))) filterreplystatus = true;
+}
+else {
+if(context.ancestors[b].content.match(new RegExp("[^a-zA-Z1-9]"+current_filters[a].phrase+"[^a-zA-Z1-9]"))) filterreplystatus = true;
+}
+}
+}
+if(filterreplystatus == false) {
+$("#js-timeline .toot_entry[sid='"+context.ancestors[b].id+"']").remove();
+$("#js-timeline .toot_entry[sid='"+this_id+"']").before(context_template(context.ancestors[b], 'ancestors_status default_padding'));
+timeline_hide_status.push(context.ancestors[b].id);
+replace_emoji();
+}
+}
+});
+})(statuses[i].id);
+}
+}
+}
+}
 }

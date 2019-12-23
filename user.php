@@ -91,7 +91,7 @@ $domain = preg_split("/@/",$_GET['user'])[2];
 $url= "https://$domain/@$name";
 ?>
 const query = '<?= htmlspecialchars((string)filter_input(INPUT_GET, 'user'), ENT_QUOTES) ?>';
-api.get('search',[{name:'q',data:query},{name:'resolve',data:'true'}],function(search) {
+api.search('q='+encodeURIComponent(query)+"&resolve=true&limit=1",function(search) {
 if(!search.accounts.length) {
 location.href = "/404.php";
 }

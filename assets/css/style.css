@@ -2993,3 +2993,16 @@ color:#FFFFFF;
 .media_attachments_delete_button i{
 margin:5px;
 }
+@media(max-width:899px) {
+#header .header_nav_wrap .header_left_box ul.header_nav_list li.header_nav_item a > span,
+#header .header_nav_wrap .header_right_box ul.header_nav_list li.search_form_wrap,
+#header .header_nav_wrap .header_right_box ul.header_nav_list li.toot_button_wrap .toot_button_label > span {
+display:none;
+}
+#header .header_nav_wrap .header_right_box ul.header_nav_list li.toot_button_wrap .toot_button {
+width:40px;
+}
+#header .header_nav_wrap .header_left_box ul.header_nav_list li.header_nav_item a {
+padding-right:4px;
+}
+}

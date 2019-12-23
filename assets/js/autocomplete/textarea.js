@@ -61,7 +61,6 @@ blurredEle && addToken(blurredEle,prepend,callback);
 blurredEle = null;
 getDropDown().removeClass('showDropDown').addClass('hideDropDown');
 });
-if(resultname) {
 if(resultname == "acct") {
 if(ele.display_name == "") ele.display_name = ele.username;
 ele.display_name = htmlEscape(ele.display_name);
@@ -71,6 +70,11 @@ ele.display_name = ele.display_name.replace(new RegExp(":"+ele.emojis[i].shortco
 $(liNode).data("value",prepend+ele[resultname]+" ");
 $(liNode).addClass("account_box").append($("<div>").addClass("icon_box").append($("<img>").attr("src",ele.avatar).css("float","left")))
 .append($("<div>").addClass("label_box").append($("<span>").addClass("dn").append($("<h3>").html(ele.display_name).addClass("emoji_poss"))).append($("<span>").addClass("un").html(prepend+ele.acct)));
+}
+else if(resultname == "name") {
+$(liNode).data("value",prepend+ele[resultname]+" ");
+$(liNode).addClass("account_box").append($("<div>").addClass("icon_box").append($("<span>").addClass("emoji_poss").html("#️⃣").css("float","left").css("font-size","32px")))
+.append($("<div>").addClass("label_box").append($("<span>").addClass("dn").append($("<h3>").html(prepend+ele[resultname]))));
 }
 else {
 $(liNode).data("value",prepend+ele[resultname]+": ");
@@ -82,12 +86,6 @@ else {
 $(liNode).addClass("account_box").append($("<div>").addClass("icon_box").append($("<img>").attr("src",ele.url).css("float","left")))
 .append($("<div>").addClass("label_box").append($("<span>").addClass("dn").append($("<h3>").html(ele.name))));
 }
-}
-}
-else {
-$(liNode).data("value",prepend+ele+" ");
-$(liNode).addClass("account_box").append($("<div>").addClass("icon_box").append($("<span>").addClass("emoji_poss").html("#️⃣").css("float","left").css("font-size","32px")))
-.append($("<div>").addClass("label_box").append($("<span>").addClass("dn").append($("<h3>").html(prepend+ele))));
 }
 node.append(liNode);
 }
@@ -184,7 +182,7 @@ return;
 }
 if(extractNewInputs(node,startKey).length > 1 && extractNewInputs(node,startKey).indexOf(endKey) == -1) {
 if(config.arrayname) {
-api.get("search?q="+encodeURIComponent(extractNewInputs(node,startKey))+"&resolve=false&limit=5",function(matchedData) {
+api.search("q="+encodeURIComponent(extractNewInputs(node,startKey))+"&resolve=false&limit=5",function(matchedData) {
 matchedData = matchedData[config.arrayname];
 if(matchedData.length) {
 if(hasDropDown()){

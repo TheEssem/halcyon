@@ -21,14 +21,14 @@ replace_emoji();
 function searchremotefill(text) {
 if(text == "@") searchlocalfill();
 else {
-api.get("search?q="+encodeURIComponent(text)+"&resolve=false&limit=5",function(data) {
+api.search("q="+encodeURIComponent(text)+"&resolve=false&limit=5",function(data) {
 if(data.hashtags.length == 0 && data.accounts.length == 0) $(".header_search_suggestions").addClass("invisible");
 else {
 var dropdown = $("<ul>").addClass("account_list");
 for(var i=0;i<data.hashtags.length;i++) {
 if(i == 5) break;
-dropdown.append($("<li>").data("value",data.hashtags[i]).addClass("account_box").append($("<div>").addClass("icon_box").append($("<span>").addClass("emoji_poss").html("#️⃣").css("float","left").css("font-size","32px")))
-.append($("<div>").addClass("label_box").append($("<span>").addClass("dn").append($("<h3>").html("#"+data.hashtags[i])))).click(function() {
+dropdown.append($("<li>").data("value",data.hashtags[i].name).addClass("account_box").append($("<div>").addClass("icon_box").append($("<span>").addClass("emoji_poss").html("#️⃣").css("float","left").css("font-size","32px")))
+.append($("<div>").addClass("label_box").append($("<span>").addClass("dn").append($("<h3>").html("#"+data.hashtags[i].name)))).click(function() {
 window.location.href = "/search?q="+encodeURIComponent($(this).data("value"));
 }));
 }

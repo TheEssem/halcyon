@@ -329,8 +329,59 @@ location.href = "/logout";
 }
 });
 },
+search: function (queryString) {
+var queryData,callback,failback,queryStringAppend = "?";
+if (typeof arguments[1] === "function") {
+queryData = {};
+callback = arguments[1];
+if(arguments[2]) failback = arguments[2];
+} else {
+queryData = arguments[1];
+callback = arguments[2];
+if(arguments[3]) failback = arguments[3];
+}
+if(typeof queryData == "string") {
+queryStringAppend = queryData;
+}
+else {
+for (var i in queryData) {
+if (queryData.hasOwnProperty(i)) {
+if (typeof queryData[i] === "string") {
+queryStringAppend += queryData[i] + "&";
+} else if (typeof queryData[i] === "object") {
+queryStringAppend += queryData[i].name + "="+ queryData[i].data + "&";
+}
+}
+}
+}
+var xquerydata = queryData;
+$.ajax({
+url: config.instance + "/api/v2/search?" + queryString + queryStringAppend,
+type: "GET",
+headers: {"Authorization": "Bearer " + config.api_user_token},
+success: function(data, textStatus, xhr) {
+console.log("Successful GET API request to " +config.instance + "/api/v2/search");
+responce_headers = xhr.getAllResponseHeaders();
+callback(data,textStatus);
+},
+error: function(xhr, textStatus, errorThrown) {
+if(xhr.readyState == 0) {
+api.search(queryString,queryStringAppend,callback);
+}
+else if(typeof failback == "function") failback();
+else {
+if(xhr.responseText.length > 0) {
+putMessage(`[${xhr.status}] ${xhr.responseJSON['error']}`);
+if ( xhr.status === 401 ) {
+location.href = "/logout";
+}
+}
+}
+}
+});
+},
 stream: function (streamType, onData) {
-var es = new WebSocket("wss://" + apiBase.substr(8) + "streaming?access_token=" + config.api_user_token + "&stream=" + streamType);
+var es = new WebSocket("wss://" + apiBase.substr(8) + "streaming/?access_token=" + config.api_user_token + "&stream=" + streamType);
 var listener = function(event) {
 console.log("Got Data from Stream " + streamType);
 if(event.data.length != 0) {

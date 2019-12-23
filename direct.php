@@ -37,7 +37,7 @@ View <span></span> new Toots
 </main>
 <script>
 current_file = location.pathname;
-setTimeline("timelines/direct",[],"true");
+setDirectTimeline();
 $('title').text('Halcyon / Direct');
 </script>
 <?php include ('footer.php'); ?>
