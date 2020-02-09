@@ -19,7 +19,7 @@ $vdata = vimeo(htmlspecialchars($_GET["id"]));
 if($vdata) {
 $vlink = $vdata["dl"];
 ?>
-<video class="video-js vjs-default-skin" controls id="player" poster="image.php?url=<?=urlencode($vdata["info"]["Thumbnail"])?>" title="<?=$vdata["info"]["Title"]?>" style="width:100%;height:100%">
+<video class="video-js vjs-default-skin" controls id="player" poster="image.php?url=<?=urlencode($vdata["info"]["Thumbnail"])?>" title="<?=htmlspecialchars($vdata["info"]["Title"])?>" style="width:100%;height:100%">
 <?php
 for($i=0;$i<count($vdata["info"]["Captions"]);$i++) {
 echo "<track kind='captions' label='".$vdata["info"]["Captions"][$i]["title"]."' src='vimeocaption.php?url=".urlencode($vdata["info"]["Captions"][$i]["url"])."'>";

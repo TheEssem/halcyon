@@ -22,6 +22,18 @@ $("#setting_rewrite_nitter")[0].checked = true;
 if(localStorage.setting_rewrite_nitter != "unset") {
 $("#setting_rewrite_nitter_reset").show();
 }
+if(localStorage.setting_rewrite_bibliogram == "true") {
+$("#setting_rewrite_bibliogram")[0].checked = true;
+}
+if(localStorage.setting_rewrite_bibliogram != "unset") {
+$("#setting_rewrite_bibliogram_reset").show();
+}
+if(localStorage.setting_rewrite_nofb == "true") {
+$("#setting_rewrite_nofb")[0].checked = true;
+}
+if(localStorage.setting_rewrite_nofb != "unset") {
+$("#setting_rewrite_nofb_reset").show();
+}
 if(localStorage.setting_who_to_follow == "true") {
 $("#setting_who_to_follow")[0].checked = true;
 }
@@ -86,6 +98,40 @@ localStorage.setItem("setting_rewrite_nitter","unset");
 $("#setting_rewrite_nitter_reset").fadeOut();
 $("#setting_rewrite_nitter")[0].checked = false;
 putMessage(__("Twitter link rewrite reset to default"));
+});
+$("#setting_rewrite_bibliogram").change(function() {
+$("#setting_rewrite_bibliogram_reset").fadeIn();
+if(this.checked) {
+localStorage.setItem("setting_rewrite_bibliogram","true");
+putMessage(__("Instagram links rewritten to Bibliogram"));
+}
+else {
+localStorage.setItem("setting_rewrite_bibliogram","false");
+putMessage(__("Instagram links not rewritten anymore"));
+}
+});
+$("#setting_rewrite_bibliogram_reset").click(function() {
+localStorage.setItem("setting_rewrite_bibliogram","unset");
+$("#setting_rewrite_bibliogram_reset").fadeOut();
+$("#setting_rewrite_bibliogram")[0].checked = false;
+putMessage(__("Instagram link rewrite reset to default"));
+});
+$("#setting_rewrite_nofb").change(function() {
+$("#setting_rewrite_nofb_reset").fadeIn();
+if(this.checked) {
+localStorage.setItem("setting_rewrite_nofb","true");
+putMessage(__("Facebook links rewritten to NoFB"));
+}
+else {
+localStorage.setItem("setting_rewrite_nofb","false");
+putMessage(__("Facebook links not rewritten anymore"));
+}
+});
+$("#setting_rewrite_nofb_reset").click(function() {
+localStorage.setItem("setting_rewrite_nofb","unset");
+$("#setting_rewrite_nofb_reset").fadeOut();
+$("#setting_rewrite_nofb")[0].checked = false;
+putMessage(__("Facebook link rewrite reset to default"));
 });
 $(document).on('change',".local_instance_wrap input[name='local_instance']", function(e) {
 if($(this).val()) {
@@ -514,6 +560,18 @@ $("#setting_redirect_nitter")[0].checked = true;
 if(localStorage.setting_redirect_nitter != "unset") {
 $("#setting_redirect_nitter_reset").show();
 }
+if(localStorage.setting_redirect_bibliogram == "true") {
+$("#setting_redirect_bibliogram")[0].checked = true;
+}
+if(localStorage.setting_redirect_bibliogram != "unset") {
+$("#setting_redirect_bibliogram_reset").show();
+}
+if(localStorage.setting_redirect_nofb == "true") {
+$("#setting_redirect_nofb")[0].checked = true;
+}
+if(localStorage.setting_redirect_nofb != "unset") {
+$("#setting_redirect_nofb_reset").show();
+}
 });
 $("#setting_play_gif").change(function() {
 if(this.checked) {
@@ -618,6 +676,40 @@ localStorage.setItem("setting_redirect_nitter","unset");
 $("#setting_redirect_nitter_reset").fadeOut();
 $("#setting_redirect_nitter")[0].checked = false;
 putMessage(__("Twitter link redirect reset to default"));
+});
+$("#setting_redirect_bibliogram").change(function() {
+$("#setting_redirect_bibliogram_reset").fadeIn();
+if(this.checked) {
+localStorage.setItem("setting_redirect_bibliogram","true");
+putMessage(__("Instagram links redirected to Bibliogram"));
+}
+else {
+localStorage.setItem("setting_redirect_bibliogram","false");
+putMessage(__("Instagram links not redirected anymore"));
+}
+});
+$("#setting_redirect_bibliogram_reset").click(function() {
+localStorage.setItem("setting_redirect_bibliogram","unset");
+$("#setting_redirect_bibliogram_reset").fadeOut();
+$("#setting_redirect_bibliogram")[0].checked = false;
+putMessage(__("Instagram link redirect reset to default"));
+});
+$("#setting_redirect_nofb").change(function() {
+$("#setting_redirect_nofb_reset").fadeIn();
+if(this.checked) {
+localStorage.setItem("setting_redirect_nofb","true");
+putMessage(__("Facebook links redirected to NoFB"));
+}
+else {
+localStorage.setItem("setting_redirect_nofb","false");
+putMessage(__("Facebook links not redirected anymore"));
+}
+});
+$("#setting_redirect_nofb_reset").click(function() {
+localStorage.setItem("setting_redirect_nofb","unset");
+$("#setting_redirect_nofb_reset").fadeOut();
+$("#setting_redirect_nofb")[0].checked = false;
+putMessage(__("Facebook link redirect reset to default"));
 });
 }
 else if(window.location.pathname == "/settings/blocks") {

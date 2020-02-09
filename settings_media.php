@@ -122,6 +122,34 @@
 <i class="fa fa-2x fa-times" style="margin-top:8px"></i>
 </a>
 </div>
+<div style="float:left;width:50%;text-align:right;margin-top:16px">
+<h3><?=_('Redirect Instagram to Bibliogram')?></h3>
+</div>
+<div class="redirect_bibliogram_wrap" style="float:left;width:50%">
+<div class="switch" style="float:left">
+<input type="checkbox" id="setting_redirect_bibliogram">
+<div class="switch-btn">
+<span></span>
+</div>
+</div>
+<a href="javascript:void(0)" id="setting_redirect_bibliogram_reset" style="float:left;display:none">
+<i class="fa fa-2x fa-times" style="margin-top:8px"></i>
+</a>
+</div>
+<div style="float:left;width:50%;text-align:right;margin-top:16px">
+<h3><?=_('Redirect Facebook to NoFB')?></h3>
+</div>
+<div class="redirect_nofb_wrap" style="float:left;width:50%">
+<div class="switch" style="float:left">
+<input type="checkbox" id="setting_redirect_nofb">
+<div class="switch-btn">
+<span></span>
+</div>
+</div>
+<a href="javascript:void(0)" id="setting_redirect_nofb_reset" style="float:left;display:none">
+<i class="fa fa-2x fa-times" style="margin-top:8px"></i>
+</a>
+</div>
 <span style="visibility:hidden">-</span>
 </div>
 </article>

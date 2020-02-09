@@ -17,8 +17,12 @@ include dirname(__FILE__).('/widgets/overlay_prompt.php');
 include dirname(__FILE__).('/widgets/overlay_addlist.php');
 include dirname(__FILE__).('/widgets/overlay_redirect_invidious.php');
 include dirname(__FILE__).('/widgets/overlay_redirect_nitter.php');
+include dirname(__FILE__).('/widgets/overlay_redirect_bibliogram.php');
+include dirname(__FILE__).('/widgets/overlay_redirect_nofb.php');
 include dirname(__FILE__).('/widgets/overlay_rewrite_invidious.php');
 include dirname(__FILE__).('/widgets/overlay_rewrite_nitter.php');
+include dirname(__FILE__).('/widgets/overlay_rewrite_bibliogram.php');
+include dirname(__FILE__).('/widgets/overlay_rewrite_nofb.php');
 if($_SERVER["REQUEST_URI"] == "/settings/filters") include dirname(__FILE__).('/widgets/overlay_filter.php');
 ?>
 </div>

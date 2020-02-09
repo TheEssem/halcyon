@@ -83,6 +83,12 @@ const ytbe = $(this).attr('href').match(/https?:\/\/(www\.)?youtu\.be\/([a-zA-Z\
 if(ytbe) $(this).attr('target','_self').attr('href',"javascript:openVideo('"+ytbe[2]+"');void(0)");
 const twcom = $(this).attr('href').match(/https?:\/\/(www\.)?twitter\.com\/(.*)/);
 if(twcom) $(this).attr('target','_self').attr('href',"javascript:openNitter('"+twcom[2]+"');void(0)");
+const igpost = $(this).attr('href').match(/https?:\/\/(www\.)?instagram\.com\/p\/([a-zA-Z\d_-]+)/);
+if(igpost) $(this).attr('target','_self').attr('href',"javascript:openBibliogram('p/"+igpost[2]+"');void(0)");
+const igacc = $(this).attr('href').match(/https?:\/\/(www\.)?instagram\.com\/([a-zA-Z\d_\.]+)/);
+if(igacc) $(this).attr('target','_self').attr('href',"javascript:openBibliogram('u/"+igacc[2]+"');void(0)");
+const fbcom = $(this).attr('href').match(/https?:\/\/(www\.)?facebook\.com\/(.*)/);
+if(fbcom) $(this).attr('target','_self').attr('href',"javascript:openNoFB('"+fbcom[2]+"');void(0)");
 if(server_setting_unshorten && checkURLshortener($(this).attr('href'))) {
 var linkrand = Math.round(Math.random()*1000000);
 $(this).attr("data-random",linkrand);
@@ -489,6 +495,28 @@ $('.overlay_redirect_nitter').data("path",path);
 $('.overlay_redirect_nitter').removeClass('invisible');
 }
 }
+function openBibliogram(path) {
+if(localStorage.setting_redirect_bibliogram == "true") window.open("https://"+server_setting_bibliogram+"/"+path,"_blank");
+else if(localStorage.setting_redirect_bibliogram == "false") window.open("https://www.instagram.com/"+path,"_blank");
+else {
+$("#js-overlay_content_wrap .temporary_object").empty();
+$('#js-overlay_content_wrap').addClass('view');
+$('#js-overlay_content_wrap').addClass('black_08');
+$('.overlay_redirect_bibliogram').data("path",path);
+$('.overlay_redirect_bibliogram').removeClass('invisible');
+}
+}
+function openNoFB(path) {
+if(localStorage.setting_redirect_nofb == "true") window.open("https://nofb.pw/?p="+encodeURIComponent("https://www.facebook.com/"+path),"_blank");
+else if(localStorage.setting_redirect_nofb == "false") window.open("https://www.facebook.com/"+path,"_blank");
+else {
+$("#js-overlay_content_wrap .temporary_object").empty();
+$('#js-overlay_content_wrap').addClass('view');
+$('#js-overlay_content_wrap').addClass('black_08');
+$('.overlay_redirect_nofb').data("path",path);
+$('.overlay_redirect_nofb').removeClass('invisible');
+}
+}
 function checkStatusLinks(text) {
 $("<span>"+text+"</span>").find("a").each(function(i) {
 const ytcom = $(this).attr('href').match(/https?:\/\/(www\.)?youtube\.com\/watch\?v=([a-zA-Z\d_-]+)/);
@@ -519,7 +547,7 @@ media_views += (`
 else if(source == "youtube" && localStorage.setting_play_invidious == "true") {
 media_views += (`
 <div class="media_attachment" otype="video/gifv" mediacount="0">
-<iframe src="https://${server_setting_invidious}/embed/${watchid}" frameborder="0" allowfullscreen></iframe>
+<iframe src="/media/invidious.php?server=${server_setting_invidious}&id=${watchid}" frameborder="0" allowfullscreen></iframe>
 </div>`);
 }
 else if(source == "vimeo" && server_setting_vimeo == true && localStorage.setting_play_vimeo == "true") {
@@ -547,10 +575,13 @@ textarea.trigger({"type":"keyup","key":":"});
 }});
 }
 }
-function submitStatusArray(params,callback,invidious="unset",nitter="unset") {
+function submitStatusArray(params,callback,invidious="unset",nitter="unset",bibliogram="unset",nofb="unset") {
 const ytcom = params.status.first().val().match(/https?:\/\/(www\.)?youtube\.com\/watch\?v=([a-zA-Z\d_-]+)/);
 const ytbe = params.status.first().val().match(/https?:\/\/(www\.)?youtu\.be\/([a-zA-Z\d_-]+)/);
 const twcom = params.status.first().val().match(/https?:\/\/(www\.)?twitter\.com\/(.*)/);
+const igpost = params.status.first().val().match(/https?:\/\/(www\.)?instagram\.com\/p\/([a-zA-Z\d_-]+)/);
+const igacc = params.status.first().val().match(/https?:\/\/(www\.)?instagram\.com\/([a-zA-Z\d_\.]+)/);
+const fbcom = params.status.first().val().match(/https?:\/\/(www\.)?facebook\.com\/(.*)/);
 if((ytcom || ytbe) && localStorage.setting_rewrite_invidious == "unset" && invidious == "unset") {
 $("#js-overlay_content_wrap .temporary_object").empty();
 $('#js-overlay_content_wrap').addClass('view');
@@ -558,6 +589,8 @@ $('#js-overlay_content_wrap').addClass('black_08');
 $('.overlay_rewrite_invidious').data("params",params);
 $('.overlay_rewrite_invidious').data("callback",callback);
 $('.overlay_rewrite_invidious').data("nitter",nitter);
+$('.overlay_rewrite_invidious').data("bibliogram",bibliogram);
+$('.overlay_rewrite_invidious').data("nofb",nofb);
 $('.overlay_rewrite_invidious').removeClass('invisible');
 }
 else if(twcom && localStorage.setting_rewrite_nitter == "unset" && nitter == "unset") {
@@ -567,23 +600,59 @@ $('#js-overlay_content_wrap').addClass('black_08');
 $('.overlay_rewrite_nitter').data("params",params);
 $('.overlay_rewrite_nitter').data("callback",callback);
 $('.overlay_rewrite_nitter').data("invidious",invidious);
+$('.overlay_rewrite_nitter').data("bibliogram",bibliogram);
+$('.overlay_rewrite_nitter').data("nofb",nofb);
 $('.overlay_rewrite_nitter').removeClass('invisible');
+}
+else if((igpost || igacc) && localStorage.setting_rewrite_bibliogram == "unset" && bibliogram == "unset") {
+$("#js-overlay_content_wrap .temporary_object").empty();
+$('#js-overlay_content_wrap').addClass('view');
+$('#js-overlay_content_wrap').addClass('black_08');
+$('.overlay_rewrite_bibliogram').data("params",params);
+$('.overlay_rewrite_bibliogram').data("callback",callback);
+$('.overlay_rewrite_bibliogram').data("invidious",invidious);
+$('.overlay_rewrite_bibliogram').data("nitter",nitter);
+$('.overlay_rewrite_bibliogram').data("nofb",nofb);
+$('.overlay_rewrite_bibliogram').removeClass('invisible');
+}
+else if(fbcom && localStorage.setting_rewrite_nofb == "unset" && nofb == "unset") {
+$("#js-overlay_content_wrap .temporary_object").empty();
+$('#js-overlay_content_wrap').addClass('view');
+$('#js-overlay_content_wrap').addClass('black_08');
+$('.overlay_rewrite_nofb').data("params",params);
+$('.overlay_rewrite_nofb').data("callback",callback);
+$('.overlay_rewrite_nofb').data("invidious",invidious);
+$('.overlay_rewrite_nofb').data("nitter",nitter);
+$('.overlay_rewrite_nofb').data("bibliogram",bibliogram);
+$('.overlay_rewrite_nofb').removeClass('invisible');
 }
 if(ytcom && (localStorage.setting_rewrite_invidious == "true" || invidious == "true")) {
 params.status.first().val(params.status.first().val().replace(/https?:\/\/(www\.)?youtube\.com\/watch\?v=([a-zA-Z\d_-]+)/,"https://"+server_setting_invidious+"/watch?v=$2"));
-submitStatusArray(params,callback,invidious,nitter);
+submitStatusArray(params,callback,invidious,nitter,bibliogram,nofb);
 }
 else if(ytbe && (localStorage.setting_rewrite_invidious == "true" || invidious == "true")) {
 params.status.first().val(params.status.first().val().replace(/https?:\/\/(www\.)?youtu\.be\/([a-zA-Z\d_-]+)/,"https://"+server_setting_invidious+"/watch?v=$2"));
-submitStatusArray(params,callback,invidious,nitter);
+submitStatusArray(params,callback,invidious,nitter,bibliogram,nofb);
 }
 else if(twcom && (localStorage.setting_rewrite_nitter == "true" || nitter == "true")) {
 params.status.first().val(params.status.first().val().replace(/https?:\/\/(www\.)?twitter\.com\/(.*)/,"https://"+server_setting_nitter+"/$2"));
-submitStatusArray(params,callback,invidious,nitter);
+submitStatusArray(params,callback,invidious,nitter,bibliogram,nofb);
 }
-else if(((!ytcom && !ytbe) || localStorage.setting_rewrite_invidious == "false" || invidious == "false") && (!twcom || localStorage.setting_rewrite_nitter == "false" || nitter == "false")) submitStatusArrayNow(params,callback);
+else if(igpost && (localStorage.setting_rewrite_bibliogram == "true" || bibliogram == "true")) {
+params.status.first().val(params.status.first().val().replace(/https?:\/\/(www\.)?instagram\.com\/p\/([a-zA-Z\d_-]+)/,"https://"+server_setting_bibliogram+"/p/$2"));
+submitStatusArray(params,callback,invidious,nitter,bibliogram,nofb);
 }
-function submitStatusArrayNow(params,callback,invidious,nitter) {
+else if(igacc && (localStorage.setting_rewrite_bibliogram == "true" || bibliogram == "true")) {
+params.status.first().val(params.status.first().val().replace(/https?:\/\/(www\.)?instagram\.com\/([a-zA-Z\d_\.]+)/,"https://"+server_setting_bibliogram+"/u/$2"));
+submitStatusArray(params,callback,invidious,nitter,bibliogram,nofb);
+}
+else if(fbcom && (localStorage.setting_rewrite_nofb == "true" || nofb == "true")) {
+params.status.first().val(params.status.first().val().replace(/https?:\/\/(www\.)?facebook\.com\/(.*)/,"https://nofb.pw/?p=https%3A%2F%2Fwww.facebook.com%2F$2"));
+submitStatusArray(params,callback,invidious,nitter,bibliogram,nofb);
+}
+else if(((!ytcom && !ytbe) || localStorage.setting_rewrite_invidious == "false" || invidious == "false") && (!twcom || localStorage.setting_rewrite_nitter == "false" || nitter == "false") && ((!igpost && !igacc) || localStorage.setting_rewrite_bibliogram == "false" || bibliogram == "false") && (!fbcom || localStorage.setting_rewrite_nofb == "false" || nofb == "false")) submitStatusArrayNow(params,callback,invidious,nitter,bibliogram,nofb);
+}
+function submitStatusArrayNow(params,callback,invidious,nitter,bibliogram,nofb) {
 var statuses = params.status;
 params.status = params.status.first().val();
 api.post("statuses",params,function(data) {
@@ -597,7 +666,7 @@ nparams.status = statuses;
 nparams.visibility = params.visibility;
 nparams.spoiler_text = params.spoiler_text;
 nparams.in_reply_to_id = data.id;
-submitStatusArray(nparams,callback,invidious,nitter);
+submitStatusArray(nparams,callback,invidious,nitter,bibliogram,nofb);
 }
 });
 }

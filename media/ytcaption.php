@@ -20,8 +20,8 @@ return $result;
 return FALSE;
 }
 function timevtt($gtime) {
-if(strlen(date("H",intval($gtime))-1) == 1) $hour = "0".intval(date("H",intval($gtime))-1);
-else $hour = intval(date("H",intval($gtime))-1);
+if(strlen(date("H",intval($gtime))) == 1) $hour = "0".intval(date("H",intval($gtime)));
+else $hour = intval(date("H",intval($gtime)));
 if(strlen(explode(".",$gtime)[1]) == 3) return $hour.":".date("i:s",intval($gtime)).".".explode(".",$gtime)[1];
 if(strlen(explode(".",$gtime)[1]) == 2) return $hour.":".date("i:s",intval($gtime)).".".explode(".",$gtime)[1]."0";
 if(strlen(explode(".",$gtime)[1]) == 1) return $hour.":".date("i:s",intval($gtime)).".".explode(".",$gtime)[1]."00";

@@ -28,6 +28,7 @@ We moved our instances list to our webpage: https://www.halcyon.social/instances
 or read our new documentation pages to install it manually: https://www.halcyon.social/documentation.php?page=install
 
 ## Blog
+- Release of Version 2.4.7 - Repair emoji autocomplete,repair YouPlay,improve Invidious embed,change Vinayaka instance,add Bibliogram and NoFB redirects
 - Release of Version 2.4.6 - Replace some removed Mastodon APIs,fix Toot button not locking on CTRL+Enter,make navbar a bit more responsive
 - Release of Version 2.4.5 - Support for emoji categories,added links to admin panel,rewrite links to Invidious and Nitter at compose,bugfixes
 - Release of Version 2.4.4 - Option to rewrite all Twitter links to Nitter,click on animated GIF works like image now,full height for images option now works for animated GIF

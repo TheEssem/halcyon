@@ -71,7 +71,7 @@ $(liNode).data("value",prepend+ele[resultname]+" ");
 $(liNode).addClass("account_box").append($("<div>").addClass("icon_box").append($("<img>").attr("src",ele.avatar).css("float","left")))
 .append($("<div>").addClass("label_box").append($("<span>").addClass("dn").append($("<h3>").html(ele.display_name).addClass("emoji_poss"))).append($("<span>").addClass("un").html(prepend+ele.acct)));
 }
-else if(resultname == "name") {
+else if(prepend == "#") {
 $(liNode).data("value",prepend+ele[resultname]+" ");
 $(liNode).addClass("account_box").append($("<div>").addClass("icon_box").append($("<span>").addClass("emoji_poss").html("#️⃣").css("float","left").css("font-size","32px")))
 .append($("<div>").addClass("label_box").append($("<span>").addClass("dn").append($("<h3>").html(prepend+ele[resultname]))));

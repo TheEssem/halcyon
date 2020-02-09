@@ -60,8 +60,12 @@ localStorage.setItem('setting_post_privacy','".$profile["source"]["privacy"]."')
 localStorage.setItem('setting_post_sensitive','".$profile["source"]["sensitive"]."');
 localStorage.setItem('setting_redirect_invidious','unset');
 localStorage.setItem('setting_redirect_nitter','unset');
+localStorage.setItem('setting_redirect_bibliogram','unset');
+localStorage.setItem('setting_redirect_nofb','unset');
 localStorage.setItem('setting_rewrite_invidious','unset');
 localStorage.setItem('setting_rewrite_nitter','unset');
+localStorage.setItem('setting_rewrite_bibliogram','unset');
+localStorage.setItem('setting_rewrite_nofb','unset');
 $.cookie('darktheme','unset',{path:'/',expires:3650});
 if(sessionStorage.return && sessionStorage.return == 'share') location.href = '/intent/toot?action=send';
 else location.href = '/';

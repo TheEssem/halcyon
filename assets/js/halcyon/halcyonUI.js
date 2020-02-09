@@ -2015,8 +2015,12 @@ $('#js-overlay_content_wrap .overlay_addlist').addClass('invisible');
 $('#js-overlay_content_wrap .overlay_filter').addClass('invisible');
 $('#js-overlay_content_wrap .overlay_redirect_invidious').addClass('invisible');
 $('#js-overlay_content_wrap .overlay_redirect_nitter').addClass('invisible');
+$('#js-overlay_content_wrap .overlay_redirect_bibliogram').addClass('invisible');
+$('#js-overlay_content_wrap .overlay_redirect_nofb').addClass('invisible');
 $('#js-overlay_content_wrap .overlay_rewrite_invidious').addClass('invisible');
 $('#js-overlay_content_wrap .overlay_rewrite_nitter').addClass('invisible');
+$('#js-overlay_content_wrap .overlay_rewrite_bibliogram').addClass('invisible');
+$('#js-overlay_content_wrap .overlay_rewrite_nofb').addClass('invisible');
 $('#js-overlay_content .temporary_object, #js-overlay_content .parmanent_object').removeClass('visible');
 $('#js-overlay_content_wrap .overlay_status.submit_status_label').removeClass('active_submit_button');
 $('#js-overlay_content_wrap .single_reply_status .submit_status_label').removeClass('active_submit_button');
@@ -2084,25 +2088,65 @@ $('.close_button').click();
 window.open("https://twitter.com/"+$(".overlay_redirect_nitter").data("path"),"_blank");
 if($("#redirect_nitter_permanent")[0].checked) localStorage.setting_redirect_nitter = "false";
 });
+$('.overlay_redirect_bibliogram_yes').click(function() {
+$('.close_button').click();
+window.open("https://"+server_setting_bibliogram+"/"+$(".overlay_redirect_bibliogram").data("path"),"_blank");
+if($("#redirect_bibliogram_permanent")[0].checked) localStorage.setting_redirect_bibliogram = "true";
+});
+$('.overlay_redirect_bibliogram_no').click(function() {
+$('.close_button').click();
+window.open("https://www.instagram.com/"+$(".overlay_redirect_bibliogram").data("path"),"_blank");
+if($("#redirect_bibliogram_permanent")[0].checked) localStorage.setting_redirect_bibliogram = "false";
+});
+$('.overlay_redirect_nofb_yes').click(function() {
+$('.close_button').click();
+window.open("https://nofb.pw/?p="+encodeURIComponent("https://www.facebook.com/"+$(".overlay_redirect_nofb").data("path")),"_blank");
+if($("#redirect_nofb_permanent")[0].checked) localStorage.setting_redirect_nofb = "true";
+});
+$('.overlay_redirect_nofb_no').click(function() {
+$('.close_button').click();
+window.open("https://www.facebook.com/"+$(".overlay_redirect_nofb").data("path"),"_blank");
+if($("#redirect_nofb_permanent")[0].checked) localStorage.setting_redirect_nofb = "false";
+});
 $('.overlay_rewrite_invidious_yes').click(function() {
 $('.close_button').click();
-submitStatusArray($(".overlay_rewrite_invidious").data("params"),$(".overlay_rewrite_invidious").data("callback"),"true",$(".overlay_rewrite_invidious").data("nitter"));
+submitStatusArray($(".overlay_rewrite_invidious").data("params"),$(".overlay_rewrite_invidious").data("callback"),"true",$(".overlay_rewrite_invidious").data("nitter"),$(".overlay_rewrite_invidious").data("bibliogram"),$(".overlay_rewrite_invidious").data("nofb"));
 if($("#rewrite_invidious_permanent")[0].checked) localStorage.setting_rewrite_invidious = "true";
 });
 $('.overlay_rewrite_invidious_no').click(function() {
 $('.close_button').click();
-submitStatusArray($(".overlay_rewrite_invidious").data("params"),$(".overlay_rewrite_invidious").data("callback"),"false",$(".overlay_rewrite_invidious").data("nitter"));
+submitStatusArray($(".overlay_rewrite_invidious").data("params"),$(".overlay_rewrite_invidious").data("callback"),"false",$(".overlay_rewrite_invidious").data("nitter"),$(".overlay_rewrite_invidious").data("bibliogram"),$(".overlay_rewrite_invidious").data("nofb"));
 if($("#rewrite_invidious_permanent")[0].checked) localStorage.setting_rewrite_invidious = "false";
 });
 $('.overlay_rewrite_nitter_yes').click(function() {
 $('.close_button').click();
-submitStatusArray($(".overlay_rewrite_nitter").data("params"),$(".overlay_rewrite_nitter").data("callback"),$(".overlay_rewrite_nitter").data("invidious"),"true");
+submitStatusArray($(".overlay_rewrite_nitter").data("params"),$(".overlay_rewrite_nitter").data("callback"),$(".overlay_rewrite_nitter").data("invidious"),"true",$(".overlay_rewrite_nitter").data("bibliogram"),$(".overlay_rewrite_nitter").data("bibliogram"));
 if($("#rewrite_nitter_permanent")[0].checked) localStorage.setting_rewrite_nitter = "true";
 });
 $('.overlay_rewrite_nitter_no').click(function() {
 $('.close_button').click();
-submitStatusArray($(".overlay_rewrite_nitter").data("params"),$(".overlay_rewrite_nitter").data("callback"),$(".overlay_rewrite_nitter").data("invidious"),"false");
+submitStatusArray($(".overlay_rewrite_nitter").data("params"),$(".overlay_rewrite_nitter").data("callback"),$(".overlay_rewrite_nitter").data("invidious"),"false",$(".overlay_rewrite_nitter").data("bibliogram"),$(".overlay_rewrite_nitter").data("bibliogram"));
 if($("#rewrite_nitter_permanent")[0].checked) localStorage.setting_rewrite_nitter = "false";
+});
+$('.overlay_rewrite_bibliogram_yes').click(function() {
+$('.close_button').click();
+submitStatusArray($(".overlay_rewrite_bibliogram").data("params"),$(".overlay_rewrite_bibliogram").data("callback"),$(".overlay_rewrite_bibliogram").data("invidious"),$(".overlay_rewrite_bibliogram").data("nitter"),"true",$(".overlay_rewrite_bibliogram").data("nofb"));
+if($("#rewrite_bibliogram_permanent")[0].checked) localStorage.setting_rewrite_bibliogram = "true";
+});
+$('.overlay_rewrite_bibliogram_no').click(function() {
+$('.close_button').click();
+submitStatusArray($(".overlay_rewrite_bibliogram").data("params"),$(".overlay_rewrite_bibliogram").data("callback"),$(".overlay_rewrite_bibliogram").data("invidious"),$(".overlay_rewrite_bibliogram").data("nitter"),"false",$(".overlay_rewrite_bibliogram").data("nofb"));
+if($("#rewrite_bibliogram_permanent")[0].checked) localStorage.setting_rewrite_bibliogram = "false";
+});
+$('.overlay_rewrite_nofb_yes').click(function() {
+$('.close_button').click();
+submitStatusArray($(".overlay_rewrite_nofb").data("params"),$(".overlay_rewrite_nofb").data("callback"),$(".overlay_rewrite_nofb").data("invidious"),$(".overlay_rewrite_nofb").data("nitter"),$(".overlay_rewrite_nofb").data("bibliogram"),"true");
+if($("#rewrite_nofb_permanent")[0].checked) localStorage.setting_rewrite_nofb = "true";
+});
+$('.overlay_rewrite_nofb_no').click(function() {
+$('.close_button').click();
+submitStatusArray($(".overlay_rewrite_nofb").data("params"),$(".overlay_rewrite_nofb").data("callback"),$(".overlay_rewrite_nofb").data("invidious"),$(".overlay_rewrite_nofb").data("nitter"),$(".overlay_rewrite_nofb").data("bibliogram"),"false");
+if($("#rewrite_nofb_permanent")[0].checked) localStorage.setting_rewrite_nofb = "false";
 });
 if($("#js-overlay_content_wrap").hasClass("view")) $(document.body).css("overflow-y","hidden");
 $("#js-overlay_content_wrap").attrchange(function(attr) {
@@ -2150,9 +2194,15 @@ e.stopPropagation();
 const ytcom = $(this).data("url").match(/https?:\/\/(www\.)?youtube\.com\/watch\?v=([a-zA-Z\d_-]+)/);
 const ytbe = $(this).data("url").match(/https?:\/\/(www\.)?youtu\.be\/([a-zA-Z\d_-]+)/);
 const twcom = $(this).data("url").match(/https?:\/\/(www\.)?twitter\.com\/(.*)/);
+const igpost = $(this).data("url").match(/https?:\/\/(www\.)?instagram\.com\/p\/([a-zA-Z\d_-]+)/);
+const igacc = $(this).data("url").match(/https?:\/\/(www\.)?instagram\.com\/([a-zA-Z\d_\.]+)/);
+const fbcom = $(this).data("url").match(/https?:\/\/(www\.)?facebook\.com\/(.*)/);
 if(ytcom) openVideo(ytcom[2]);
 else if(ytbe) openVideo(ytbe[2]);
 else if(twcom) openNitter(twcom[2]);
+else if(igpost) openBibliogram("p/"+igpost[2]);
+else if(igacc) openBibliogram("u/"+igacc[2]);
+else if(fbcom) openNoFB(fbcom[2]);
 else window.open($(this).data("url"),"_blank");
 });
 $(document).on('focus','.status_textarea textarea,.status_top .status_spoiler',function(e) {
