@@ -26,6 +26,7 @@ transition: all 0.5s ease-in-out;
 -webkit-transition: all 0.5s ease-in-out;
 display: none;
 font-family:"apple color emoji","segoe ui emoji",notocoloremoji,"segoe ui symbol","android emoji",emojisymbols,"emojione mozilla";
+color:initial;
 }
 ul.lsx-emojipicker-tabs {
 margin: 0;

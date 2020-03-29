@@ -6,7 +6,7 @@ var settings = {};
 $.fn.lsxEmojiPicker = function(options) {
 if(options == "destroy") {
 $(this).off("click");
-$(this).children().remove();
+$(this).children(".lsx-emojipicker-appender").remove();
 }
 else {
 settings = $.extend({
@@ -14,7 +14,9 @@ width: 280,
 height: 200,
 twemoji: false,
 closeOnSelect: true,
-onSelect: function(em){}
+customEmojis: true,
+onSelect: function(em){},
+onClose: function(){}
 }, options);
 var appender = $('<div></div>')
 .addClass('lsx-emojipicker-appender');
@@ -29,7 +31,7 @@ var spinner = $('<div></div>')
 spinnerContainer.append(spinner);
 var customemojis = JSON.parse(localStorage.current_custom_emojis);
 var addhide = "";
-if(customemojis.length > 0) {
+if(customemojis.length > 0 && settings.customEmojis) {
 addhide = " hidden";
 var emojiCustomContainer = $('<div></div>')
 .addClass('lsx-emojipicker-emoji lsx-emoji-tab lsx-emoji-custom')
@@ -61,7 +63,7 @@ var emojiFlagsContainer = $('<div></div>')
 .css({'width': settings.width, 'height': settings.height});
 var tabs = $('<ul></ul>')
 .addClass('lsx-emojipicker-tabs');
-if(customemojis.length > 0) {
+if(customemojis.length > 0 && settings.customEmojis) {
 var customEmoji = $('<li></li>')
 .addClass('selected')
 .html("&#x2A;&#x20E3")
@@ -82,7 +84,7 @@ $(this).addClass('selected');
 $('.lsx-emoji-tab').addClass('hidden');
 emojiPeopleContainer.removeClass('hidden');
 });
-if(customemojis.length == 0) {
+if(customemojis.length == 0 || !settings.customEmojis) {
 peopleEmoji.addClass("selected");
 }
 var natureEmoji = $('<li></li>')
@@ -148,7 +150,7 @@ $(this).addClass('selected');
 $('.lsx-emoji-tab').addClass('hidden');
 emojiFlagsContainer.removeClass('hidden');
 });
-if(customemojis.length > 0) {
+if(customemojis.length > 0 && settings.customEmojis) {
 tabs.append(customEmoji);
 }
 tabs.append(peopleEmoji)
@@ -159,7 +161,7 @@ tabs.append(peopleEmoji)
 .append(objectsEmoji)
 .append(symbolsEmoji)
 .append(flagsEmoji);
-if(customemojis.length > 0) {
+if(customemojis.length > 0 && settings.customEmojis) {
 createCustomEmojiTab(emojiCustomContainer,container);
 }
 createEmojiTab('people',emojiPeopleContainer,container);
@@ -172,7 +174,7 @@ createEmojiTab('symbols',emojiSymbolsContainer,container);
 createEmojiTab('flags',emojiFlagsContainer,container);
 //wrapper.append(spinnerContainer);
 wrapper.append(tabs);
-if(customemojis.length > 0) {
+if(customemojis.length > 0 && settings.customEmojis) {
 wrapper.append(emojiCustomContainer);
 }
 wrapper.append(emojiPeopleContainer)
@@ -205,6 +207,7 @@ if(!$(e.target).parent().hasClass('lsx-emojipicker-tabs')
 && !$(e.target).parent().parent().hasClass('lsx-emoji-tab')){
 if(container.is(':visible')){
 container.hide();
+settings.onClose();
 } else {
 container.show();
 }
@@ -228,6 +231,7 @@ settings.onSelect({
 });
 if(settings.closeOnSelect){
 wrapper.hide();
+settings.onClose();
 }
 });
 container.append(emoticon);
@@ -247,17 +251,17 @@ if(Object.keys(sortedemojis).length != 1 || !sortedemojis.hasOwnProperty(__("Gen
 for(var i=0;i < sortedemojis[category].length;i++) {
 var selectedEmoji = sortedemojis[category][i];
 var emoticon = $('<span></span>')
-.data('value',selectedEmoji.url)
 .attr('title',selectedEmoji.code)
 .html($("<img>").addClass("emoji").attr("src",selectedEmoji.url));
 emoticon.click(function(e){
 e.preventDefault();
 settings.onSelect({
 'name':$(this).attr('title'),
-'value':$(this).data('value')
+'value':$(this).attr('title')
 });
 if(settings.closeOnSelect){
 wrapper.hide();
+settings.onClose();
 }
 });
 container.append(emoticon);

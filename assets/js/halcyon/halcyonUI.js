@@ -100,43 +100,131 @@ $(this).html('<i class="fa fa-fw fa-user-plus"></i><span>'+__('Follow')+'</span>
 putMessage(__("Unblocked this user"));
 return false;
 });
-$(document).on('click','.boost_button', function(e) {
+$(document).on('click','.boost_button',function(e) {
 e.stopPropagation();
 if($(this).attr('reblogged') !== 'true'){
-api.post("statuses/"+$(this).attr('tid')+"/reblog", function (data) {
+api.post("statuses/"+$(this).attr('tid')+"/reblog",function(data) {
 });
-$(this).attr('reblogged', "true");
-$(this).toggleClass('active');
+$(this).attr('reblogged',"true");
+$(this).addClass('active');
 $(".js_current_toots_count").html(++localStorage.current_statuses_count);
-} else {
-api.post("statuses/"+$(this).attr('tid')+"/unreblog", function (data) {
+}
+else {
+api.post("statuses/"+$(this).attr('tid')+"/unreblog",function(data) {
 });
-$(this).attr('reblogged', "hold");
-$(this).toggleClass('active');
+$(this).attr('reblogged',"null");
+$(this).removeClass('active');
 $(".js_current_toots_count").html(--localStorage.current_statuses_count);
-$(this).mouseout(function(e) {
-$(this).attr('reblogged', "null");
-});
 }
 return false;
 });
-$(document).on('click','.fav_button', function(e) {
+$(document).on('click','.fav_button',function(e) {
 e.stopPropagation();
 if($(this).attr('favourited') !== 'true'){
-api.post("statuses/"+$(this).attr('tid')+"/favourite", function (data) {
+api.post("statuses/"+$(this).attr('tid')+"/favourite",function(data) {
 });
-$(this).attr('favourited', "true");
-$(this).toggleClass('active');
-} else {
-api.post("statuses/"+$(this).attr('tid')+"/unfavourite", function (data) {
+$(this).attr('favourited',"true");
+$(this).addClass('active');
+}
+else {
+api.post("statuses/"+$(this).attr('tid')+"/unfavourite",function(data) {
 });
-$(this).attr('favourited', "hold");
-$(this).toggleClass('active');
-$(this).mouseout(function(e) {
-$(this).attr('favourited', "null");
-});
+$(this).attr('favourited',"null");
+$(this).removeClass('active');
 }
 return false;
+});
+$(document).on('click','.bookmark_button',function(e) {
+e.stopPropagation();
+if($(this).attr('bookmarked') !== 'true') {
+api.post("statuses/"+$(this).attr('tid')+"/bookmark",function(data) {
+});
+$(this).attr('bookmarked',"true");
+$(this).addClass('active');
+}
+else {
+api.post("statuses/"+$(this).attr('tid')+"/unbookmark",function(data) {
+});
+$(this).attr('bookmarked',"null");
+$(this).removeClass('active');
+}
+return false;
+});
+$(document).on('click','.announcement .emoreact',function(e) {
+e.stopPropagation();
+if($(this).hasClass('active')) {
+(function(that) {
+api.delete("announcements/"+$(that).closest('.announcement').attr("aid")+"/reactions/"+$(that).attr("emoji"),function(data) {
+$(that).removeClass('active');
+});
+})(this);
+}
+else {
+(function(that) {
+api.put("announcements/"+$(that).closest('.announcement').attr("aid")+"/reactions/"+$(that).attr("emoji"),function(data) {
+$(that).addClass('active');
+});
+})(this);
+}
+return false;
+});
+$(document).on('click','.status_reactions .emoreact',function(e) {
+e.stopPropagation();
+if($(this).hasClass('active')) {
+(function(that) {
+if($(that).closest('.toot_detail.main_status').length == 1) var sid = $(that).closest('.toot_detail.main_status').attr("sid");
+else var sid = $(that).closest('.toot_entry').attr("sid");
+api.delete("pleroma/statuses/"+sid+"/reactions/"+$(that).attr("emoji"),function(status) {
+$(".toot_entry[sid="+sid+"]").find(".status_reactions").children().remove();
+$(".toot_entry[sid="+sid+"]").find(".status_reactions").append(parse_reactions(status.pleroma.emoji_reactions));
+$(".toot_detail.main_status[sid="+sid+"]").find(".status_reactions").children().remove();
+$(".toot_detail.main_status[sid="+sid+"]").find(".status_reactions").append(parse_reactions(status.pleroma.emoji_reactions));
+replace_emoji();
+});
+})(this);
+}
+else {
+(function(that) {
+if($(that).closest('.toot_detail.main_status').length == 1) var sid = $(that).closest('.toot_detail.main_status').attr("sid");
+else var sid = $(that).closest('.toot_entry').attr("sid");
+api.put("pleroma/statuses/"+sid+"/reactions/"+$(that).attr("emoji"),function(status) {
+$(".toot_entry[sid="+sid+"]").find(".status_reactions").children().remove();
+$(".toot_entry[sid="+sid+"]").find(".status_reactions").append(parse_reactions(status.pleroma.emoji_reactions));
+$(".toot_detail.main_status[sid="+sid+"]").find(".status_reactions").children().remove();
+$(".toot_detail.main_status[sid="+sid+"]").find(".status_reactions").append(parse_reactions(status.pleroma.emoji_reactions));
+replace_emoji();
+});
+})(this);
+}
+return false;
+});
+$(document).on('click','.status_reactions .emoreact_add',function(e) {
+e.stopPropagation();
+});
+$(document).on('click','.status_reactions .emoreact_add:not(.active)',function() {
+$(this).addClass("active");
+(function(that) {
+if($(that).closest('.toot_detail.main_status').length == 1) var sid = $(that).closest('.toot_detail.main_status').attr("sid");
+else var sid = $(that).closest('.toot_entry').attr("sid");
+$(that).lsxEmojiPicker({
+closeOnSelect:true,
+customEmojis:false,
+twemoji:!checkEmojiSupport(),
+onSelect:function(emoji) {
+api.put("pleroma/statuses/"+sid+"/reactions/"+emoji.value,function(status) {
+$(".toot_entry[sid="+sid+"]").find(".status_reactions").children().remove();
+$(".toot_entry[sid="+sid+"]").find(".status_reactions").append(parse_reactions(status.pleroma.emoji_reactions));
+$(".toot_detail.main_status[sid="+sid+"]").find(".status_reactions").children().remove();
+$(".toot_detail.main_status[sid="+sid+"]").find(".status_reactions").append(parse_reactions(status.pleroma.emoji_reactions));
+replace_emoji();
+});
+},
+onClose:function() {
+$(that).lsxEmojiPicker("destroy");
+setTimeout(function() {$(that).removeClass("active")},0);
+}
+}).click();
+})(this);
 });
 $(document).on('click','.delete_button', function(e) {
 const sid = $(this).attr('tid');
@@ -1097,8 +1185,28 @@ if ( current_count ) {
 $('#header .header_nav_list .notification_badge').removeClass('invisible');
 $('#header .header_nav_list .notification_badge').text( current_count );
 }
-api.stream("user", function(userstream) {
-if(userstream.event === "update" & location.pathname !== "/") {
+api.stream("user",function(userstream) {
+if(userstream.event == "filters_changed") {
+api.get("filters",function(data) {
+localStorage.setItem("current_filters",JSON.stringify(data));
+current_filters = data;
+});
+}
+else if(userstream.event == "announcement.reaction") {
+if($(".announcement[aid="+userstream.payload.announcement_id+"]").find(".emoreact[emoji="+userstream.payload.name+"]").length == 1) {
+if(userstream.payload.count == 0) $(".announcement[aid="+userstream.payload.announcement_id+"]").find(".emoreact[emoji="+userstream.payload.name+"]").remove();
+else $(".announcement[aid="+userstream.payload.announcement_id+"]").find(".emoreact[emoji="+userstream.payload.name+"]").find(".emoreact_count").text(userstream.payload.count);
+}
+else {
+var emoji;
+if(userstream.payload.url) emoji = (`<span><img class="emoji" src="${userstream.payload.url}"></span>`);
+else emoji = (`<span class="emoji_poss">${userstream.payload.name}</span>`);
+var reaction = (`<span class="emoreact" emoji="${userstream.payload.name}">${emoji}<span class="emoreact_count">${userstream.payload.count}</span></span>`);
+$(".announcement[aid="+userstream.payload.announcement_id+"]").find(".emoreact_add").before(reaction);
+replace_emoji();
+}
+}
+else if(userstream.event === "update" & location.pathname !== "/") {
 $('#header .header_nav_list .home_badge').removeClass('invisible');
 }
 else if(userstream.event === "notification" & location.pathname !== "/notifications") {
@@ -1116,6 +1224,7 @@ userstream.payload.account.display_name = userstream.payload.account.username;
 switch(userstream.payload.type) {
 case "favourite":pushNotification(__("New favourite"),userstream.payload.account.display_name+" "+__("favourited your toot"));break;
 case "reblog":pushNotification(__("New boost"),userstream.payload.account.display_name+" "+__("boosted your toot"));break;
+case "pleroma:emoji_reaction":pushNotification(__("New reaction"),userstream.payload.account.display_name+" "+__("reacted to your toot"));break;
 case "follow":pushNotification(__("New follower"),userstream.payload.account.display_name+" "+__("followed you"));$(".js_current_followers_count").html(++localStorage.current_followers_count);break;
 case "mention":pushNotification(__("New mention"),userstream.payload.account.display_name+" "+__("mentioned you"));break;
 case "poll":pushNotification(__("Poll finished"),__("A poll you participated in has ended"));break;
@@ -2325,5 +2434,18 @@ location.href=current_favourites_link;
 });
 shortcut.add("esc",function() {
 $("#js-overlay_content_wrap").click();
+});
+});
+$(document).ready(function() {
+api.get("announcements",function(data) {
+if(data.length > 0) {
+$(".article_wrap").before($("<div>").addClass("announcement_wrap"));
+for(var i=0;i<data.length;i++) {
+$(".announcement_wrap").append(announcement_template(data[i]));
+}
+replace_emoji();
+replaceInternalLink();
+$(".announcement").each(function() {enableReactionPicker(this)});
+}
 });
 });

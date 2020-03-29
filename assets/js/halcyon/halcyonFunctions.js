@@ -60,7 +60,7 @@ di[re[4]] = re[3];
 return di;
 }
 function replaceInternalLink() {
-$(".toot_article a,.profile_bio a,.follows_profile_bio a").each(function(i) {
+$(".toot_article a,.profile_bio a,.follows_profile_bio a,.announcement_text a").each(function(i) {
 const pltags = $(this).attr('href').match(/https?:\/\/.+..+\/tag\/([a-zA-Z\d_%]+)\/?$/);
 if(pltags) $(this).attr('target','_self').attr('href','/search?q='+pltags[1]);
 const mstags = $(this).attr('href').match(/https?:\/\/.+..+\/tags\/([a-zA-Z\d_%]+)\/?$/);
@@ -745,7 +745,7 @@ case "private":status.halcyon.privacy_mode=__("Followers-only");status.halcyon.p
 case "direct":status.halcyon.privacy_mode=__("Direct");status.halcyon.privacy_icon="envelope";status.halcyon.checked_direct=" checked";break;
 }
 if(status.halcyon.privacy_icon == "globe" || status.halcyon.privacy_icon == "unlock-alt") {
-status.halcyon.footer_width = " style='width:320px'";
+status.halcyon.footer_width = " style='width:400px'";
 status.halcyon.reblog_button = (`<div class="toot_reaction">
 <button class="boost_button" tid="${status.id}" reblogged="${status.reblogged}">
 <i class="fa fa-fw fa-retweet"></i>
@@ -775,6 +775,8 @@ status.halcyon.own_toot_buttons += (`</ul><ul><li><a href="https://${current_ins
 status.halcyon.account_state_icons = "";
 if(status.account.locked == true) status.halcyon.account_state_icons += " <i class='fa fa-lock'></i>";
 if(status.account.bot == true) status.halcyon.account_state_icons += " <img src='/assets/images/robot.svg' class='emoji'>";
+status.halcyon.reactions = "";
+if(status.pleroma && status.pleroma.emoji_reactions) status.halcyon.reactions = (`<div class="status_reactions">${parse_reactions(status.pleroma.emoji_reactions)}</div>`);
 status.content = checkStatusLinks(status.content);
 return status;
 }
@@ -835,4 +837,50 @@ replace_emoji();
 }
 }
 }
+}
+function prepareAnnouncement(announcement) {
+for(i=0;i<announcement.emojis.length;i++) {
+announcement.content = announcement.content.replace(new RegExp(":"+announcement.emojis[i].shortcode+":","g"),"<img src='"+announcement.emojis[i].url+"' class='emoji'>");
+}
+for(var i=0;i<announcement.mentions.length;i++) {
+if(announcement.mentions[i].acct.indexOf("@") == -1) announcement.content = announcement.content.replace(new RegExp('href="'+announcement.mentions[i].url+'"',"g"),'href="/@'+announcement.mentions[i].acct+'@'+current_instance+'?mid='+announcement.mentions[i].id+'" data-mid="'+announcement.mentions[i].id+'"');
+else announcement.content = announcement.content.replace(new RegExp('href="'+announcement.mentions[i].url+'"',"g"),'href="/@'+announcement.mentions[i].acct+'?mid='+announcement.mentions[i].id+'" data-mid="'+announcement.mentions[i].id+'"');
+}
+return announcement;
+}
+function parse_reactions(reaction_data) {
+var reactions = (`<div class="emoreact_wrap">`);
+for(var i=0;i<reaction_data.length;i++) {
+var is_active = "";
+if(reaction_data[i].me) is_active = " active";
+var emoji;
+if(reaction_data[i].url) emoji = (`<span><img class="emoji" src="${reaction_data[i].url}"></span>`);
+else emoji = (`<span class="emoji_poss">${reaction_data[i].name}</span>`);
+reactions += (`<span class="emoreact${is_active}" emoji="${reaction_data[i].name}">${emoji}<span class="emoreact_count">${reaction_data[i].count}</span></span>`);
+}
+reactions += (`<span class="emoreact_add"><i class="fa fa-smile-o"></i></span>`);
+reactions += (`</div>`);
+return reactions;
+}
+function enableReactionPicker(that) {
+$(that).find(".emoreact_add").click(function() {
+$(this).off("click");
+(function(that) {
+$(that).lsxEmojiPicker({
+closeOnSelect:true,
+twemoji:!checkEmojiSupport(),
+onSelect:function(emoji) {
+api.put("announcements/"+$(that).closest(".announcement").attr("aid")+"/reactions/"+emoji.value,function() {});
+},
+onClose:function() {
+$(that).lsxEmojiPicker("destroy");
+setTimeout(function() {enableReactionPicker($(that).closest(".announcement"))},0);
+}
+}).click();
+})(this);
+});
+}
+function addZero(num) {
+if(num < 10) return "0"+num;
+else return num;
 }

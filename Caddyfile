@@ -67,6 +67,12 @@ halcyon.domain.tld {
     r ^/notifications/?$
     to /notifications.php
   }
+  
+  # Bookmarks
+  rewrite {
+    r ^/bookmarks/?$
+    to /bookmarks.php
+  }
 
   # Who to follow
   rewrite {

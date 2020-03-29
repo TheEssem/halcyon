@@ -226,6 +226,7 @@ ${status.content}
 </span>
 ${status.halcyon.preview_object}
 </article>
+${status.halcyon.reactions}
 <footer class="toot_footer"${status.halcyon.footer_width}>
 <div class="toot_reaction">
 <button class="reply_button" tid="${status.id}" mentions='${JSON.stringify(status.mentions)}' display_name="${status.account.display_name}" privacy="${status.visibility}" content_warning="${htmlEscape(status.spoiler_text)}">
@@ -238,6 +239,11 @@ ${status.halcyon.reblog_button}
 <button class="fav_button" tid="${status.id}" favourited="${status.favourited}">
 <i class="fa fa-fw fa-star"></i>
 <span class="reaction_count fav_count">${status.favourites_count}</span>
+</button>
+</div>
+<div class="toot_reaction">
+<button class="bookmark_button" tid="${status.id}" bookmarked="${status.bookmarked}">
+<i class="fa fa-fw fa-bookmark"></i>
 </button>
 </div>
 <div class="toot_reaction">
@@ -340,6 +346,45 @@ ${NotificationObj.status.account.display_name}
 </li>`);
 return $(html);
 }
+else if(NotificationObj.type === 'pleroma:emoji_reaction') {
+NotificationObj.status = prepareStatus(NotificationObj.status);
+const html = (`
+<li sid="${NotificationObj.status.id}" class="notice_entry emoji_reaction toot_entry">
+<div class="notice_author_box">
+<a href="${notice_author_link}">
+<div class="icon_box">
+<img src="${NotificationObj.account.avatar}">
+</div>
+</a>
+<i class="fa fa-fw fa-smile-o font-icon reaction"></i>
+<a class="notice_author" href="${notice_author_link}">
+<span class="emoji_poss">${NotificationObj.account.display_name}</span> ${__('reacted to Your Toot')}
+</a>
+</div>
+<div class="notice_entry_body">
+<span class="notice_emoji emoji_poss">${NotificationObj.emoji}</span>
+<section class="toot_content">
+<header class="toot_header">
+<div class="text_ellipsis">
+<a href="${NotificationObj.status.halcyon.author_link}">
+<span class="displayname emoji_poss">
+${NotificationObj.status.account.display_name}
+</span>
+<span class="username">
+@${NotificationObj.status.account.acct}${NotificationObj.status.halcyon.account_state_icons}
+</span>
+</a>
+</div>
+</header>
+<article class="toot_article emoji_poss">
+<p>${NotificationObj.status.content}</p>
+</article>
+<footer class="toot_footer"></footer>
+</section>
+</div>
+</li>`);
+return $(html);
+}
 else if(NotificationObj.type === 'mention' || NotificationObj.type === 'poll') {
 NotificationObj.status = prepareStatus(NotificationObj.status);
 var poll_notify = "";
@@ -395,6 +440,7 @@ ${NotificationObj.status.content}
 </span>
 ${NotificationObj.status.halcyon.preview_object}
 </article>
+${NotificationObj.status.halcyon.reactions}
 <footer class="toot_footer"${NotificationObj.status.halcyon.footer_width}>
 <div class="toot_reaction">
 <button class="reply_button" tid="${NotificationObj.status.id}" mentions='${JSON.stringify(NotificationObj.status.mentions)}' display_name="${NotificationObj.account.display_name}" privacy="${NotificationObj.status.visibility}" content_warning="${htmlEscape(NotificationObj.status.spoiler_text)}">
@@ -407,6 +453,11 @@ ${NotificationObj.status.halcyon.reblog_button}
 <button class="fav_button" tid="${NotificationObj.status.id}" favourited="${NotificationObj.status.favourited}">
 <i class="fa fa-fw fa-star"></i>
 <span class="reaction_count fav_count">${NotificationObj.status.favourites_count}</span>
+</button>
+</div>
+<div class="toot_reaction">
+<button class="bookmark_button" tid="${NotificationObj.status.id}" bookmarked="${NotificationObj.status.bookmarked}">
+<i class="fa fa-fw fa-bookmark"></i>
 </button>
 </div>
 <div class="toot_reaction">
@@ -526,6 +577,7 @@ ${status.content}
 ${status.halcyon.preview_object}
 </article>
 <time datetime="${status.halcyon.attr_datetime}">${status.halcyon.attr_datetime}</time>
+${status.halcyon.reactions}
 </section>
 <footer class="toot_footer"${status.halcyon.footer_width}>
 <div class="toot_reaction">
@@ -539,6 +591,11 @@ ${status.halcyon.reblog_button}
 <button class="fav_button" tid="${status.id}" favourited="${status.favourited}">
 <i class="fa fa-fw fa-star"></i>
 <span class="reaction_count fav_count">${status.favourites_count}</span>
+</button>
+</div>
+<div class="toot_reaction">
+<button class="bookmark_button" tid="${status.id}" bookmarked="${status.bookmarked}">
+<i class="fa fa-fw fa-bookmark"></i>
 </button>
 </div>
 <div class="toot_reaction">
@@ -749,6 +806,7 @@ ${status.halcyon.alert_text}
 ${status.content}
 </span>
 </article>
+${status.halcyon.reactions}
 <footer class="toot_footer"${status.halcyon.footer_width}>
 <div class="toot_reaction">
 <button class="reply_button" tid="${status.id}" mentions='${JSON.stringify(status.mentions)}' display_name="${status.account.display_name}" privacy="${status.visibility}" content_warning="${htmlEscape(status.spoiler_text)}">
@@ -764,6 +822,11 @@ ${status.halcyon.reblog_button}
 </button>
 </div>
 <div class="toot_reaction">
+<button class="bookmark_button" tid="${status.id}" bookmarked="${status.bookmarked}">
+<i class="fa fa-fw fa-bookmark"></i>
+</button>
+</div>
+<div class="toot_reaction">
 <button>
 <i class="fa fa-fw fa-${status.halcyon.privacy_icon}" title="${status.halcyon.privacy_mode}"></i>
 </button>
@@ -774,5 +837,27 @@ ${status.halcyon.reblog_button}
 </div>`);
 html.find(".toot_article").append(status.halcyon.media_views);
 html.find(".toot_article").append(status.halcyon.poll_object);
+return html;
+}
+function announcement_template(announcement) {
+var reactions;
+var datetime = "";
+reactions = parse_reactions(announcement.reactions);
+if(announcement.starts_at && announcement.ends_at) {
+var start = new Date(announcement.starts_at);
+var end = new Date(announcement.ends_at);
+datetime = (`<i class="fa fa-calendar"></i> ${start.getFullYear()}-${addZero(start.getMonth()+1)}-${addZero(start.getDate())}`);
+if(!announcement.all_day) datetime += (` <i class="fa fa-clock-o"></i> ${addZero(start.getHours())}:${addZero(start.getMinutes())}`);
+datetime += (` - <i class="fa fa-calendar"></i> ${end.getFullYear()}-${addZero(end.getMonth()+1)}-${addZero(end.getDate())}`);
+if(!announcement.all_day) datetime += (` <i class="fa fa-clock-o"></i> ${addZero(end.getHours())}:${addZero(end.getMinutes())}`);
+}
+announcement = prepareAnnouncement(announcement);
+const html=(`<div class="announcement" aid="${announcement.id}">
+<div class="announcement_icon"><i class="fa fa-3x fa-exclamation-triangle"></i></div>
+<div class="announcement_content">
+<div class="announcement_text emoji_poss">${announcement.content}</div>
+<div class="announcement_reactions">${reactions}</div>
+<div class="announcement_date">${datetime}</div>
+</div></div>`);
 return html;
 }

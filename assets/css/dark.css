@@ -587,7 +587,7 @@ border-bottom:0 solid #E6ECF0;
 background-color:#189EFC;
 color:#fff;
 }
-.toot_entry .toot_entry_body .toot_content .toot_article a,#main .article_wrap .left_column .profile_section_wrap > .profile_bio a {
+.toot_entry .toot_entry_body .toot_content .toot_article a,#main .article_wrap .left_column .profile_section_wrap > .profile_bio a,.announcement .announcement_content .announcement_text a {
 color:#189EFC;
 }
 .toot_entry .toot_entry_body .toot_content .toot_reaction button,.toot_detail .toot_footer .toot_reaction button {
@@ -689,4 +689,36 @@ color:#189EFC;
 .media_attachments_caption_button:hover {
 background-color:#189EFC;
 color:#1B2836;
+}
+.announcement {
+background-color:#243447;
+border:1px solid #000;
+}
+.announcement_icon {
+color:#AAB8C2;
+}
+.announcement_text {
+color:#EEE;
+}
+.emoreact {
+border:1px solid #189EFC;
+}
+.emoreact .emoreact_count {
+color:#189EFC;
+}
+.emoreact.active,
+.emoreact:hover {
+background-color:#189EFC;
+}
+.emoreact.active .emoreact_count,
+.emoreact:hover .emoreact_count {
+color:#FFFFFF;
+}
+.emoreact_add {
+border:1px solid #189EFC;
+color:#189EFC;
+}
+.emoreact_add:hover {
+background-color:#189EFC;
+color:#FFFFFF;
 }

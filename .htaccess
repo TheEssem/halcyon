@@ -31,6 +31,10 @@ RewriteRule ^federated/?$ federated\.php [NC,L]
 RewriteBase /notifications
 RewriteRule ^notifications/?$ notifications\.php [NC,L]
 
+# Bookmarks
+RewriteBase /bookmarks
+RewriteRule ^bookmarks/?$ bookmarks\.php [NC,L]
+
 # Who to follow
 RewriteBase /whotofollow
 RewriteRule ^whotofollow/?$ who_to_follow\.php [NC,L]

@@ -154,6 +154,9 @@ server_setting_bibliogram = <?=$config["Media"]["bibliogram"] ? "'".$config["Med
 <a href="/direct"><?=_('Direct')?></a>
 </li>
 <li>
+<a href="/bookmarks"><?=_('Bookmarks')?></a>
+</li>
+<li>
 <a href="/settings"><?=_('Settings')?></a>
 </li>
 <li>
