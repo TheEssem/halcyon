@@ -284,6 +284,7 @@ const html = (`
 <i class="fa fa-fw fa-star font-icon favourite"></i>
 <a class="notice_author" href="${notice_author_link}">
 <span class="emoji_poss">${NotificationObj.account.display_name}</span> ${__('favourited Your Toot')}
+<time datetime="${getConversionedDate(null, NotificationObj.created_at)}">${getRelativeDatetime(Date.now(), getConversionedDate(null, NotificationObj.created_at))}</time>
 </a>
 </div>
 <div class="notice_entry_body">
@@ -322,8 +323,8 @@ html = (`
 <i class="fa fa-fw fa-retweet font-icon boost"></i>
 <a class="notice_author" href="${notice_author_link}">
 <span class="emoji_poss" >${NotificationObj.account.display_name}</span> ${__('boosted Your Toot')}
+<time datetime="${getConversionedDate(null, NotificationObj.created_at)}">${getRelativeDatetime(Date.now(), getConversionedDate(null, NotificationObj.created_at))}</time>
 </a>
-<time datetime="${getConversionedDate(null, NotificationObj.status.created_at)}">${getRelativeDatetime(Date.now(), getConversionedDate(null, NotificationObj.status.created_at))}</time>
 </div>
 <blockquote class="notice_entry_body">
 <section class="toot_content">
@@ -486,6 +487,7 @@ const html=(`
 <i class="fa fa-fw fa-user font-icon follow"></i>
 <a class="notice_author" href="${notice_author_link}">
 <span class="emoji_poss">${NotificationObj.account.display_name}</span> ${__('followed you')}
+<time datetime="${getConversionedDate(null, NotificationObj.created_at)}">${getRelativeDatetime(Date.now(), getConversionedDate(null, NotificationObj.created_at))}</time>
 </a>
 </div>
 </li>`);
