@@ -16,6 +16,9 @@ curl_exec($ch);
 $httpcode = curl_getinfo($ch,CURLINFO_HTTP_CODE);
 curl_close($ch);
 if($httpcode == 301 || $httpcode == 302) return checkRedirect($config,$url);
+elseif($httpcode == 000) {
+return http_response_code(400);
+}
 else return $url;
 }
 else return $url;
@@ -35,4 +38,3 @@ if(isset($redirect) && !empty($redirect)) return checkCode($config,$redirect);
 else return $url;
 }
 echo checkCode($config,$_GET['url']);
-?>

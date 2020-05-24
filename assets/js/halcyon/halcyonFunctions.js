@@ -92,7 +92,8 @@ if(fbcom) $(this).attr('target','_self').attr('href',"javascript:openNoFB('"+fbc
 if(server_setting_unshorten && checkURLshortener($(this).attr('href'))) {
 var linkrand = Math.round(Math.random()*1000000);
 $(this).attr("data-random",linkrand);
-$.ajax("/unshorten.php?url="+encodeURIComponent($(this).attr('href'))).done(function(data) {
+$.ajax("/unshorten.php?url="+encodeURIComponent($(this).attr('href'))).done(function(data, textStatus, xhr) {
+if(xhr.status == 400) return;
 $(".toot_article a,.profile_bio a,.follows_profile_bio a").filter("[data-random="+linkrand+"]").attr("href",data);
 $(".toot_article a,.profile_bio a,.follows_profile_bio a").filter("[data-random="+linkrand+"]").children().eq(1).text(data.split("//")[0]);
 link = data.replace("https://","");

@@ -103,7 +103,8 @@ if(server_setting_unshorten && checkURLshortener(card.url)) {
 var linkrand = Math.round(Math.random()*1000000);
 randattr = ' data-random="'+linkrand+'"';
 $(this).attr("data-random",linkrand);
-$.ajax("/unshorten.php?url="+encodeURIComponent(card.url)).done(function(data) {
+$.ajax("/unshorten.php?url="+encodeURIComponent(card.url)).done(function(data, textStatus, xhr) {
+if(xhr.status == 400) return;
 $(".media_views.link_preview").filter("[data-random="+linkrand+"]").data("url",data);
 $(".media_views.link_preview").filter("[data-random="+linkrand+"]").find(".card_link").text(data);
 });
