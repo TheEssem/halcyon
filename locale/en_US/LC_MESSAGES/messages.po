@@ -358,7 +358,7 @@ msgid "Edit profile"
 msgstr "Edit profile"
 
 msgid "FAVOURITES"
-msgstr "FAVOURITES"
+msgstr "FAVORITES"
 
 msgid "Show"
 msgstr "Show"
@@ -564,10 +564,10 @@ msgid "Toots"
 msgstr "Posts"
 
 msgid "Favourites"
-msgstr "Favourites"
+msgstr "Favorites"
 
 msgid "New favourite"
-msgstr "New favourite"
+msgstr "New favorite"
 
 msgid "New boost"
 msgstr "New boost"
