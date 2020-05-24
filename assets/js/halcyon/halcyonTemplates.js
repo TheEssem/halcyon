@@ -323,6 +323,7 @@ html = (`
 <a class="notice_author" href="${notice_author_link}">
 <span class="emoji_poss" >${NotificationObj.account.display_name}</span> ${__('boosted Your Toot')}
 </a>
+<time datetime="${getConversionedDate(null, NotificationObj.status.created_at)}">${getRelativeDatetime(Date.now(), getConversionedDate(null, NotificationObj.status.created_at))}</time>
 </div>
 <blockquote class="notice_entry_body">
 <section class="toot_content">
