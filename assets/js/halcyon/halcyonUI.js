@@ -2438,7 +2438,7 @@ $("#js-overlay_content_wrap").click();
 });
 $(document).ready(function() {
 api.get("announcements",function(data) {
-if(data.length > 0) {
+if(data.length > 0 && window.current_file && current_file !== "/user") {
 $(".article_wrap").before($("<div>").addClass("announcement_wrap"));
 for(var i=0;i<data.length;i++) {
 $(".announcement_wrap").append(announcement_template(data[i]));
