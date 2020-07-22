@@ -218,14 +218,14 @@ postData = arguments[1];
 callback = arguments[2];
 }
 $.ajax({
-url: apiBase + endpoint,
+url: config.instance + "/api/v2/" + endpoint,
 type: "POST",
 data: postData,
 contentType: false,
 processData: false,
 headers: {"Authorization": "Bearer " + config.api_user_token},
 success: function(data, textStatus) {
-console.log("Successful POST API request to " +apiBase+endpoint);
+console.log("Successful POST API request to " +config.instance + "/api/v2/"+endpoint);
 callback(data,textStatus)
 },
 error: function(xhr, textStatus, errorThrown) {

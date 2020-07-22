@@ -19,15 +19,15 @@ url_unshortener = true
 youplay = true
 vimeo = true
 youplay_fallback = true
-invidious = invidiou.sh
+invidious = invidious.snopyta.org
 nitter = nitter.13ad.de
-bibliogram = bibliogram.dsrev.ru
+bibliogram = bibliogram.ggc-project.de
 
 ; The proxy can be used optionally to resolve data for privacy-friendly media embeds on the server side - It is not used for Mastodon API requests on login
-; Proxy type can be set to none, socks5, socks4, http or https - Example settings for locally installed Tor client
+; Proxy type can be set to none, socks5, socks4, http or https
 [Proxy]
-type = socks5
-domain = 127.0.0.1
-port = 9050
+type = none
+domain =
+port =
 username = 
 password = 

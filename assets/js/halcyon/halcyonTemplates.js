@@ -131,8 +131,9 @@ else if(expires_at.getUTCMinutes() == 1) expires_string = "1 "+__("minute");
 else if(expires_at.getUTCMinutes() > 1) expires_string = expires_at.getUTCMinutes()+" "+__("minutes");
 else if(expires_at.getUTCSeconds() == 1) expires_string = "1 "+__("second");
 else expires_string = expires_at.getUTCSeconds()+" "+__("seconds");
-if(poll.voted || poll.expired) {
-poll_html = (`<div class="poll_box">`);
+const poll_random = Math.round(Math.random()*1000);
+if(poll.voted || poll.expired || poll.seeresult) {
+poll_html = (`<div class="poll_box poll_${poll.id}" data-poll="${poll.id}" data-random="${poll_random}" id="poll_${poll.id}_${poll_random}">`);
 optionsort = [...poll.options];
 optionsort.sort(function(a,b) {return a.votes_count - b.votes_count});
 optionsort.reverse();
@@ -143,11 +144,11 @@ if(poll.options[i].winner) winner = " poll_winner";
 poll_html += (`<div class="poll_result_option"><span class="poll_bar${winner}" style="width:${poll.options[i].votes_count/poll.votes_count*100}%"></div>
 <label class="poll_result_label"><strong>${Math.round(poll.options[i].votes_count/poll.votes_count*100) || 0}%</strong> <span class="emoji_poss">${poll.options[i].title}</span></label>`);
 }
-if(poll.expired) poll_html += (`<br/><span class="poll_footer">${poll.votes_count} ${__("votes")} &bull; ${__("Final results")}</span>`);
-else poll_html += (`<br/><span class="poll_footer">${poll.votes_count} ${__("votes")} &bull; ${expires_string} ${__("left")}</span>`);
+if(poll.expired) poll_html += (`<br/><span class="poll_footer">${poll.votes_count} ${__("votes")} &bull; ${__("Final results")} &bull; <a href="javascript:void(0)" class="poll_refresh">${__("Refresh")}</a></span></span>`);
+else if(poll.seeresult) poll_html += (`<br/><span class="poll_footer">${poll.votes_count} ${__("votes")} &bull; ${expires_string} ${__("left")} &bull; <a href="javascript:void(0)" class="poll_refresh">${__("Back")}</a></span>`);
+else poll_html += (`<br/><span class="poll_footer">${poll.votes_count} ${__("votes")} &bull; ${expires_string} ${__("left")} &bull; <a href="javascript:void(0)" class="poll_refresh">${__("Refresh")}</a></span>`);
 }
 else {
-const poll_random = Math.round(Math.random()*1000);
 poll_html = (`<div class="poll_box poll_box_form poll_${poll.id}" data-poll="${poll.id}" data-random="${poll_random}" id="poll_${poll.id}_${poll_random}">`);
 for(var i=0;i<poll.options.length;i++) {
 if(poll.multiple) {
@@ -160,7 +161,7 @@ poll_html += (`<div class="radiobox"><input type="radio" id="poll_${poll.id}_${p
 }
 }
 poll_html += (`<button class="halcyon_button poll_vote"><span>${__("Vote")}</span></button>
-${poll.votes_count} ${__("votes")} &bull; ${expires_string} ${__("left")}`);
+${poll.votes_count} ${__("votes")} &bull; ${expires_string} ${__("left")} &bull; <a href="javascript:void(0)" class="poll_show_result">${__("Show results")}</a>`);
 }
 poll_html += (`</div>`);
 return poll_html;
@@ -289,7 +290,7 @@ const html = (`
 <section class="toot_content">
 <header class="toot_header">
 <div class="text_ellipsis">
-<a href="${NotificationObj.status.halcyon.author_link}">
+<a href="${NotificationObj.status.halcyon.account_link}">
 <span class="displayname emoji_poss">
 ${NotificationObj.status.account.display_name}
 </span>
@@ -327,7 +328,7 @@ html = (`
 <section class="toot_content">
 <header class="toot_header">
 <div class="text_ellipsis">
-<a href="${NotificationObj.status.halcyon.author_link}">
+<a href="${NotificationObj.status.halcyon.account_link}">
 <span class="displayname emoji_poss">
 ${NotificationObj.status.account.display_name}
 </span>
@@ -366,7 +367,7 @@ const html = (`
 <section class="toot_content">
 <header class="toot_header">
 <div class="text_ellipsis">
-<a href="${NotificationObj.status.halcyon.author_link}">
+<a href="${NotificationObj.status.halcyon.account_link}">
 <span class="displayname emoji_poss">
 ${NotificationObj.status.account.display_name}
 </span>
@@ -474,7 +475,7 @@ html.find(".toot_article").append(NotificationObj.status.halcyon.poll_object);
 return html;
 } else if(NotificationObj.type === 'follow') {
 const html=(`
-<li sid="${NotificationObj.id}" class="notice_entry fol toot_entry">
+<li class="notice_entry fol toot_entry">
 <div class="notice_author_box">
 <a href="${notice_author_link}">
 <div class="icon_box">

@@ -234,10 +234,10 @@ api.get("instance",function(data) {
 if(!data.max_toot_chars) data.max_toot_chars = 500;
 if(!data.poll_limits) {
 data.poll_limits = new Object();
-data.poll_limits.max_options	= 4;
-data.poll_limits.max_option_chars	= 25;
-data.poll_limits.min_expiration =	300;
-data.poll_limits.max_expiration =	2629746;
+data.poll_limits.max_options = 4;
+data.poll_limits.max_option_chars = 25;
+data.poll_limits.min_expiration = 300;
+data.poll_limits.max_expiration = 2629746;
 }
 localStorage.setItem("current_instance_charlimit",data.max_toot_chars);
 current_instance_charlimit = data.max_toot_chars;
@@ -460,7 +460,7 @@ ctx.fillText("😗",-2,4);
 return ctx.getImageData(0,0,1,1).data[3] > 0;
 }
 function openStatus(link) {
-api.search("q="+encodeURIComponent(link),function(response) {
+api.search("q="+encodeURIComponent(link)+"&resolve=true",function(response) {
 if(response.statuses.length > 0) {
 var data = response.statuses[0];
 if(data.account.acct.indexOf("@") == -1) {
