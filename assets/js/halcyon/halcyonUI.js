@@ -1316,7 +1316,7 @@ $(document).on('click','.player',function(e) {
 e.stopPropagation();
 });
 $(document).on('click','.toot_entry', function(e) {
-setOverlayStatus($(this).attr('sid'));
+if($(this).attr('sid')) setOverlayStatus($(this).attr('sid'));
 });
 })
 function setOverlayMedia(sid,mediacount) {
@@ -2295,6 +2295,29 @@ $(".poll_"+poll_id).after(poll_template(data));
 $(".poll_"+poll_id).remove();
 });
 }
+}
+return false;
+});
+$(document).on('click','.poll_show_result',function(e) {
+var poll_id = $(this).parent().data('poll');
+var poll_random = $(this).parent().data('random');
+if(poll_id !== null && poll_random !== null) {
+api.get('polls/'+poll_id,function(data) {
+data.seeresult = true;
+$("#poll_"+poll_id+"_"+poll_random).after(poll_template(data));
+$("#poll_"+poll_id+"_"+poll_random).remove();
+});
+}
+return false;
+});
+$(document).on('click','.poll_refresh',function(e) {
+var poll_id = $(this).parent().parent().data('poll');
+var poll_random = $(this).parent().parent().data('random');
+if(poll_id !== null && poll_random !== null) {
+api.get('polls/'+poll_id,function(data) {
+$("#poll_"+poll_id+"_"+poll_random).after(poll_template(data));
+$("#poll_"+poll_id+"_"+poll_random).remove();
+});
 }
 return false;
 });

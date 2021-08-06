@@ -28,6 +28,7 @@ We moved our instances list to our webpage: https://www.halcyon.social/instances
 or read our new documentation pages to install it manually: https://www.halcyon.social/documentation.php?page=install
 
 ## Blog
+- Release of Version 2.4.9 - View state of ongoing polls,Fix some links,fix search for urls,add Chinese translation,update media API
 - Release of Version 2.4.8 - Add support for bookmarks,add support for announcements,add support for emoji reactions
 - Release of Version 2.4.7 - Repair emoji autocomplete,repair YouPlay,improve Invidious embed,change Vinayaka instance,add Bibliogram and NoFB redirects
 - Release of Version 2.4.6 - Replace some removed Mastodon APIs,fix Toot button not locking on CTRL+Enter,make navbar a bit more responsive

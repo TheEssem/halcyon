@@ -1,4 +1,4 @@
 config.ini
 .ftpconfig
 data/
-
+.htpasswd
