@@ -114,7 +114,7 @@ margin: auto;
 margin-left: 4px;
 }
 html {
-font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 font-size: 100%;
 line-height: normal;
 color: #333;
@@ -216,7 +216,7 @@ height: 18px;
 border: none;
 max-width: 100%;
 font-size: 14px;
-font-family : "Helvetica Neue",Helvetica,Arial,sans-serif;
+font-family : -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 line-height: normal;
 outline: 0;
 overflow: hidden;
@@ -545,7 +545,7 @@ max-width: 100%;
 height: auto;
 min-height: 72px;
 border-radius: 5px;
-font-family : "Helvetica Neue",Helvetica,Arial,sans-serif;
+font-family : -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 font-size: 14px;
 padding: 4px;
 outline: 0;
